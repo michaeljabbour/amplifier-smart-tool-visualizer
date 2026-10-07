@@ -1,0 +1,11 @@
+bundle:
+  name: knowledge-behavior
+  version: 0.1.0
+  description: Adds the knowledge smart-tool skill to an Amplifier host. The agent installs and runs the knowledge CLI.
+
+tools:
+  - module: tool-skills
+    source: git+https://github.com/microsoft/amplifier-bundle-skills@main#subdirectory=modules/tool-skills
+    config:
+      skills:
+        - "git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer@main#subdirectory=skills"

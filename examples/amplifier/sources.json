@@ -1,0 +1,162 @@
+[
+ {
+  "file": "amplifier-docs--docs--architecture--overview.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/architecture/overview.md",
+  "commit": "923c3769f9365fa07f96795bc73b617f5647e10e",
+  "date": "2025-12-08",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/923c3769f9365fa07f96795bc73b617f5647e10e/docs/architecture/overview.md"
+ },
+ {
+  "file": "amplifier-docs--docs--architecture--kernel.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/architecture/kernel.md",
+  "commit": "9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd",
+  "date": "2025-12-02",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd/docs/architecture/kernel.md"
+ },
+ {
+  "file": "amplifier-docs--docs--architecture--modules.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/architecture/modules.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/architecture/modules.md"
+ },
+ {
+  "file": "amplifier-docs--docs--architecture--mount_plans.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/architecture/mount_plans.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/architecture/mount_plans.md"
+ },
+ {
+  "file": "amplifier-docs--docs--architecture--events.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/architecture/events.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/architecture/events.md"
+ },
+ {
+  "file": "amplifier-docs--docs--user_guide--agents.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/user_guide/agents.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/user_guide/agents.md"
+ },
+ {
+  "file": "amplifier-docs--docs--user_guide--sessions.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/user_guide/sessions.md",
+  "commit": "9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd",
+  "date": "2025-12-02",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd/docs/user_guide/sessions.md"
+ },
+ {
+  "file": "amplifier-docs--docs--user_guide--collections.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/user_guide/collections.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/user_guide/collections.md"
+ },
+ {
+  "file": "amplifier-docs--docs--user_guide--profiles.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/user_guide/profiles.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/user_guide/profiles.md"
+ },
+ {
+  "file": "amplifier-docs--docs--getting_started--providers.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/getting_started/providers.md",
+  "commit": "b276882df5d3d13f7f7ee67ed75899b9bb703105",
+  "date": "2025-12-02",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/b276882df5d3d13f7f7ee67ed75899b9bb703105/docs/getting_started/providers.md"
+ },
+ {
+  "file": "amplifier-docs--docs--developer--contracts--tool.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/developer/contracts/tool.md",
+  "commit": "9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd",
+  "date": "2025-12-02",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/9325c5a6e36f3fc1de45ced726c2a5e93e3da0fd/docs/developer/contracts/tool.md"
+ },
+ {
+  "file": "amplifier-docs--docs--developer--contracts--hook.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/developer/contracts/hook.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/developer/contracts/hook.md"
+ },
+ {
+  "file": "amplifier-docs--docs--developer--contracts--orchestrator.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/developer/contracts/orchestrator.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/developer/contracts/orchestrator.md"
+ },
+ {
+  "file": "amplifier-docs--docs--developer--contracts--context.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/developer/contracts/context.md",
+  "commit": "f1255b7f0ec1756df871250e7803b1ec04a86a01",
+  "date": "2025-12-01",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/f1255b7f0ec1756df871250e7803b1ec04a86a01/docs/developer/contracts/context.md"
+ },
+ {
+  "file": "amplifier-docs--docs--community--roadmap.md",
+  "repo": "microsoft/amplifier-docs",
+  "path": "docs/community/roadmap.md",
+  "commit": "6a9f37f26fc47a169f0397318bb7cdba1667d3ac",
+  "date": "2025-12-02",
+  "uri": "https://github.com/microsoft/amplifier-docs/blob/6a9f37f26fc47a169f0397318bb7cdba1667d3ac/docs/community/roadmap.md"
+ },
+ {
+  "file": "amplifier-smart-tools--spec--README.md",
+  "repo": "microsoft/amplifier-smart-tools",
+  "path": "spec/README.md",
+  "commit": "990d2437756e5c4be338cbed30c7a87885516d2c",
+  "date": "2026-10-01",
+  "uri": "https://github.com/microsoft/amplifier-smart-tools/blob/990d2437756e5c4be338cbed30c7a87885516d2c/spec/README.md"
+ },
+ {
+  "file": "amplifier-smart-tools--spec--structure.md",
+  "repo": "microsoft/amplifier-smart-tools",
+  "path": "spec/structure.md",
+  "commit": "990d2437756e5c4be338cbed30c7a87885516d2c",
+  "date": "2026-10-01",
+  "uri": "https://github.com/microsoft/amplifier-smart-tools/blob/990d2437756e5c4be338cbed30c7a87885516d2c/spec/structure.md"
+ },
+ {
+  "file": "amplifier-smart-tools--spec--manifest.md",
+  "repo": "microsoft/amplifier-smart-tools",
+  "path": "spec/manifest.md",
+  "commit": "990d2437756e5c4be338cbed30c7a87885516d2c",
+  "date": "2026-10-01",
+  "uri": "https://github.com/microsoft/amplifier-smart-tools/blob/990d2437756e5c4be338cbed30c7a87885516d2c/spec/manifest.md"
+ },
+ {
+  "file": "amplifier-smart-tools--spec--invocation.md",
+  "repo": "microsoft/amplifier-smart-tools",
+  "path": "spec/invocation.md",
+  "commit": "990d2437756e5c4be338cbed30c7a87885516d2c",
+  "date": "2026-10-01",
+  "uri": "https://github.com/microsoft/amplifier-smart-tools/blob/990d2437756e5c4be338cbed30c7a87885516d2c/spec/invocation.md"
+ },
+ {
+  "file": "amplifier-smart-tools--spec--packaging.md",
+  "repo": "microsoft/amplifier-smart-tools",
+  "path": "spec/packaging.md",
+  "commit": "990d2437756e5c4be338cbed30c7a87885516d2c",
+  "date": "2026-10-01",
+  "uri": "https://github.com/microsoft/amplifier-smart-tools/blob/990d2437756e5c4be338cbed30c7a87885516d2c/spec/packaging.md"
+ }
+]

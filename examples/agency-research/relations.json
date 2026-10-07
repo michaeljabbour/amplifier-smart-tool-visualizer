@@ -1,0 +1,30 @@
+{
+  "agent": "researcher",
+  "source": {"uri": "example:agent-notes", "title": "Researcher's extraction (fictional)"},
+  "nodes": [
+    {"label": "delegation reduces perceived agency", "type": "claim",
+     "summary": "Handing tasks to an agent lowers people's sense of agency."},
+    {"label": "experiment 14", "type": "evidence", "summary": "Survey of perceived agency before and after two weeks of delegation."},
+    {"label": "2025 boundary survey", "type": "evidence", "summary": "People who set the agent's boundaries felt more in control."},
+    {"label": "prepared actions", "type": "method", "summary": "The agent drafts; the person approves."}
+  ],
+  "edges": [
+    {"from": "experiment 14", "to": "delegation reduces perceived agency", "relation": "supports",
+     "description": "Perceived agency fell after two weeks of delegation.", "confidence": 0.7, "valid_from": "2026-02-01"},
+    {"from": "2025 boundary survey", "to": "delegation reduces perceived agency", "relation": "contradicts",
+     "description": "People who chose what to delegate felt more in control.", "confidence": 0.6, "valid_from": "2026-03-10"},
+    {"from": "prepared actions", "to": "perceived agency", "relation": "preserves",
+     "description": "Approving drafts kept perceived agency near baseline.", "confidence": 0.65, "valid_from": "2026-02-01"},
+    {"from": "human oversight", "to": "perceived agency", "relation": "increases",
+     "description": "Oversight matters more than the amount of delegation.", "confidence": 0.6, "valid_from": "2026-02-01"},
+    {"from": "delegation", "to": "perceived agency", "relation": "decreases",
+     "description": "Delegating routine tasks lowered perceived agency.", "confidence": 0.6, "valid_from": "2026-02-01"},
+    {"from": "delegation", "to": "perceived agency", "relation": "increases",
+     "description": "When people choose what to delegate, delegation can increase their sense of control.",
+     "confidence": 0.55, "valid_from": "2026-03-10"},
+    {"from": "model routing", "to": "inference cost", "relation": "reduces",
+     "description": "Routing cut inference cost by about forty percent.", "confidence": 0.8, "valid_from": "2026-01-15"},
+    {"from": "caching", "to": "latency", "relation": "reduces", "confidence": 0.8, "valid_from": "2026-01-15"},
+    {"from": "model selection", "to": "cost per token", "relation": "depends_on", "confidence": 0.7, "valid_from": "2026-01-15"}
+  ]
+}

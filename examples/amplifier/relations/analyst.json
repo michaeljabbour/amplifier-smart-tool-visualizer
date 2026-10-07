@@ -1,0 +1,2178 @@
+{
+ "agent": "analyst",
+ "nodes": [
+  {
+   "label": "kernel",
+   "type": "component",
+   "summary": "The kernel (amplifier-core) provides Mount Plan validation."
+  },
+  {
+   "label": "mount plan validation",
+   "type": "method",
+   "summary": "Validation asserts the mount plan has a session with orchestrator and context."
+  },
+  {
+   "label": "module discovery and loading",
+   "type": "method"
+  },
+  {
+   "label": "session lifecycle management",
+   "type": "method"
+  },
+  {
+   "label": "event",
+   "type": "concept"
+  },
+  {
+   "label": "coordinator",
+   "type": "component",
+   "summary": "The kernel coordinator mounts provider modules under the providers mount point."
+  },
+  {
+   "label": "provider",
+   "type": "component",
+   "summary": "Providers are a module type implementing LLM API integrations."
+  },
+  {
+   "label": "module",
+   "type": "concept",
+   "summary": "Modules are the building blocks of Amplifier."
+  },
+  {
+   "label": "hook",
+   "type": "component",
+   "summary": "Hooks are a module type for observability and control."
+  },
+  {
+   "label": "orchestrator",
+   "type": "component",
+   "summary": "Orchestrators are a module type implementing execution strategies."
+  },
+  {
+   "label": "tiny kernel",
+   "type": "principle",
+   "summary": "The design decision for a tiny kernel shapes amplifier-core, justified by stability, auditability, maintainability and flexibility."
+  },
+  {
+   "label": "stability",
+   "type": "claim"
+  },
+  {
+   "label": "innovation at the edges",
+   "type": "principle"
+  },
+  {
+   "label": "module contract",
+   "type": "contract",
+   "summary": "Module contracts allow any module to be replaced without touching others."
+  },
+  {
+   "label": "module swappability",
+   "type": "claim"
+  },
+  {
+   "label": "module independence",
+   "type": "claim"
+  },
+  {
+   "label": "tool:pre",
+   "type": "concept"
+  },
+  {
+   "label": "prompt:complete",
+   "type": "concept"
+  },
+  {
+   "label": "extensibility through composition",
+   "type": "principle",
+   "summary": "New behavior comes from plugging in different modules rather than toggling kernel flags."
+  },
+  {
+   "label": "mount plan",
+   "type": "artifact",
+   "summary": "Module configuration passed to mount comes from the mount plan."
+  },
+  {
+   "label": "mechanism not policy",
+   "type": "principle",
+   "summary": "Kernel responsibilities are mechanisms; policies such as orchestration strategies and provider selection are non-goals."
+  },
+  {
+   "label": "capability enforcement",
+   "type": "method"
+  },
+  {
+   "label": "orchestration strategy",
+   "type": "concept",
+   "summary": "Orchestration strategies are a policy kept out of the kernel (so they live in orchestrator modules)."
+  },
+  {
+   "label": "non-interference",
+   "type": "principle",
+   "summary": "An invariant of the kernel: faulty modules can't crash it."
+  },
+  {
+   "label": "backward compatibility",
+   "type": "principle",
+   "summary": "Invariant: existing modules work across kernel updates."
+  },
+  {
+   "label": "additive first",
+   "type": "principle",
+   "summary": "Kernel evolution extends contracts without breaking them."
+  },
+  {
+   "label": "amplifier",
+   "type": "concept",
+   "summary": "Amplifier supports multiple LLM providers."
+  },
+  {
+   "label": "tool",
+   "type": "component",
+   "summary": "Tools are a module type providing agent capabilities, mounted at tools."
+  },
+  {
+   "label": "context manager",
+   "type": "component",
+   "summary": "Context modules are a module type for memory management, mounted at context."
+  },
+  {
+   "label": "python entry point",
+   "type": "method"
+  },
+  {
+   "label": "mount function",
+   "type": "contract",
+   "summary": "The mount function receives the ModuleCoordinator as infrastructure context."
+  },
+  {
+   "label": "hookhandler protocol",
+   "type": "contract",
+   "summary": "The handler returns a HookResult with actions continue, deny, modify, inject_context, ask_user."
+  },
+  {
+   "label": "mount point",
+   "type": "concept"
+  },
+  {
+   "label": "capability registry",
+   "type": "method"
+  },
+  {
+   "label": "contribution channel",
+   "type": "method"
+  },
+  {
+   "label": "agent",
+   "type": "concept",
+   "summary": "Invoking an agent runs a sub-session with the agent's configuration, whose results return to the main session."
+  },
+  {
+   "label": "session",
+   "type": "concept",
+   "summary": "Resuming a session preserves conversation history."
+  },
+  {
+   "label": "validationerror",
+   "type": "artifact"
+  },
+  {
+   "label": "always specify source",
+   "type": "principle",
+   "summary": "Best practice: always specify source rather than relying on installed packages."
+  },
+  {
+   "label": "pin with git tags",
+   "type": "principle",
+   "summary": "Best practice: use git tags for production to pin versions."
+  },
+  {
+   "label": "hookresult",
+   "type": "contract",
+   "summary": "HookResult injections can be ephemeral, not stored in history."
+  },
+  {
+   "label": "context injection",
+   "type": "method"
+  },
+  {
+   "label": "approval",
+   "type": "method"
+  },
+  {
+   "label": "hooks-logging",
+   "type": "component",
+   "summary": "hooks-logging is a hook module."
+  },
+  {
+   "label": "sub-agent",
+   "type": "concept",
+   "summary": "Sub-sessions from agent delegation get IDs derived from the parent span plus the agent name."
+  },
+  {
+   "label": "explorer",
+   "type": "component",
+   "summary": "explorer is an agent for breadth-first exploration of codebases with citations."
+  },
+  {
+   "label": "bug-hunter",
+   "type": "component",
+   "summary": "bug-hunter is an agent for systematic debugging and issue identification."
+  },
+  {
+   "label": "zen-architect",
+   "type": "component",
+   "summary": "zen-architect is an agent for system design with ruthless simplicity."
+  },
+  {
+   "label": "ruthless simplicity",
+   "type": "principle",
+   "summary": "zen-architect designs systems following ruthless simplicity."
+  },
+  {
+   "label": "cli",
+   "type": "component",
+   "summary": "The CLI lists available agents with `amplifier agents list`."
+  },
+  {
+   "label": "amplifier agents list",
+   "type": "method"
+  },
+  {
+   "label": "profile",
+   "type": "artifact",
+   "summary": "Troubleshooting checks that the profile includes the agent."
+  },
+  {
+   "label": "agents directory",
+   "type": "artifact"
+  },
+  {
+   "label": "conversation history",
+   "type": "artifact"
+  },
+  {
+   "label": "multi-turn workflow",
+   "type": "concept"
+  },
+  {
+   "label": "amplifier continue",
+   "type": "method"
+  },
+  {
+   "label": "collection",
+   "type": "concept",
+   "summary": "A collection directory has a profiles/ folder."
+  },
+  {
+   "label": "context file",
+   "type": "artifact"
+  },
+  {
+   "label": "collection search path",
+   "type": "method",
+   "summary": "Collections are resolved project, then user, then bundled; first match wins."
+  },
+  {
+   "label": "dev profile",
+   "type": "artifact",
+   "summary": "dev is a profile with full development capabilities."
+  },
+  {
+   "label": "base profile",
+   "type": "artifact"
+  },
+  {
+   "label": "full profile",
+   "type": "artifact",
+   "summary": "full includes everything in dev plus experimental tools and all hooks."
+  },
+  {
+   "label": "artifact",
+   "type": "concept"
+  },
+  {
+   "label": "anthropic provider",
+   "type": "component",
+   "summary": "Anthropic is a supported, recommended provider."
+  },
+  {
+   "label": "ollama provider",
+   "type": "component",
+   "summary": "Ollama is a supported provider for local/offline use."
+  },
+  {
+   "label": "anthropic_api_key",
+   "type": "artifact"
+  },
+  {
+   "label": "observability",
+   "type": "concept"
+  },
+  {
+   "label": "ephemeral injection",
+   "type": "concept"
+  },
+  {
+   "label": "prompt:submit",
+   "type": "concept"
+  },
+  {
+   "label": "provider:request",
+   "type": "concept"
+  },
+  {
+   "label": "provider:response",
+   "type": "concept"
+  },
+  {
+   "label": "tool:post",
+   "type": "concept"
+  },
+  {
+   "label": "orchestrator:complete",
+   "type": "concept"
+  },
+  {
+   "label": "parallel tool execution",
+   "type": "concept"
+  },
+  {
+   "label": "context:pre_compact",
+   "type": "concept"
+  },
+  {
+   "label": "context:post_compact",
+   "type": "concept"
+  },
+  {
+   "label": "context:include",
+   "type": "concept"
+  },
+  {
+   "label": "compaction",
+   "type": "method"
+  },
+  {
+   "label": "message format",
+   "type": "contract"
+  },
+  {
+   "label": "metacognitive recipe",
+   "type": "concept",
+   "summary": "The roadmap expands structured workflows mixing tasks with philosophy and decision rationale."
+  },
+  {
+   "label": "richer memory",
+   "type": "question",
+   "summary": "The roadmap imagines richer approaches to memory, knowledge synthesis and team context sharing beyond current context modules."
+  },
+  {
+   "label": "standard artifacts",
+   "type": "concept",
+   "summary": "The roadmap evolves conventions for sub-agent definitions and other artifacts so they plug into other Amplifier instances."
+  },
+  {
+   "label": "library",
+   "type": "component",
+   "summary": "A smart tool is built from layers, including a library core."
+  },
+  {
+   "label": "smart tool",
+   "type": "concept",
+   "summary": "Invocation covers a smart tool's self-description as a skill."
+  },
+  {
+   "label": "manifest",
+   "type": "artifact",
+   "summary": "The manifest describes what a smart tool is, what it is for, and what it runs on, and ships with the tool."
+  },
+  {
+   "label": "registry",
+   "type": "concept"
+  },
+  {
+   "label": "descriptor",
+   "type": "artifact",
+   "summary": "Packaging covers publishing, installing, launching, and the descriptor."
+  },
+  {
+   "label": "skill",
+   "type": "concept"
+  },
+  {
+   "label": "loud failure",
+   "type": "principle",
+   "summary": "A tool failing with an empty result or bare stack trace hands back a problem its caller cannot resolve."
+  },
+  {
+   "label": "model-backed capability",
+   "type": "concept",
+   "summary": "Smart paths are ordinary capabilities of the library living alongside deterministic ones."
+  },
+  {
+   "label": "deterministic capability",
+   "type": "concept",
+   "summary": "A deterministic path returns the same answer every time and costs nothing beyond compute."
+  },
+  {
+   "label": "ai capability disclosure",
+   "type": "principle",
+   "summary": "Callers should know which features are AI-enabled; if ambiguous it can be explicitly stated."
+  },
+  {
+   "label": "implementation is the tool's business",
+   "type": "principle",
+   "summary": "Which model, how many calls, and the code/inference mix are the tool's business."
+  },
+  {
+   "label": "smart_tool_format",
+   "type": "artifact",
+   "summary": "smart_tool_format is the manifest schema version, not the tool's version."
+  },
+  {
+   "label": "schema version",
+   "type": "concept"
+  },
+  {
+   "label": "requires",
+   "type": "artifact"
+  },
+  {
+   "label": "use_cases",
+   "type": "artifact"
+  },
+  {
+   "label": "platforms",
+   "type": "artifact"
+  },
+  {
+   "label": "digital-twin-universe",
+   "type": "component",
+   "summary": "digital-twin-universe is the example smart tool in the manifest spec."
+  },
+  {
+   "label": "manifest completeness rule",
+   "type": "principle",
+   "summary": "A field that is present but empty is not satisfied."
+  },
+  {
+   "label": "reproducible result",
+   "type": "claim"
+  },
+  {
+   "label": "model provider",
+   "type": "concept"
+  },
+  {
+   "label": "no credentials to load",
+   "type": "principle",
+   "summary": "The tool must not require model credentials in order to load."
+  },
+  {
+   "label": "model use is implementation detail",
+   "type": "principle",
+   "summary": "Consulting a model is an implementation detail, not a different calling convention."
+  },
+  {
+   "label": "agent skill",
+   "type": "artifact",
+   "summary": "A tool may optionally ship an Agent Skill so hosts that know nothing about smart tools can discover it."
+  },
+  {
+   "label": "single source of guidance",
+   "type": "principle",
+   "summary": "The skill defers to --help so it stays correct when the tool changes and guidance lives in one place."
+  },
+  {
+   "label": "context payload",
+   "type": "concept"
+  },
+  {
+   "label": "non-zero exit on failure",
+   "type": "principle"
+  },
+  {
+   "label": "non-interactive completion",
+   "type": "principle",
+   "summary": "Invoked non-interactively, a tool completes or fails rather than blocking on a prompt."
+  },
+  {
+   "label": "missing prerequisite failure",
+   "type": "principle"
+  },
+  {
+   "label": "no silent fallback",
+   "type": "principle",
+   "summary": "A smart path with no provider configured fails rather than falling back to a degraded deterministic answer."
+  },
+  {
+   "label": "partial result rule",
+   "type": "principle",
+   "summary": "A partial result is a failure unless partial completion is documented as valid."
+  }
+ ],
+ "edges": [
+  {
+   "from": "kernel",
+   "to": "mount plan validation",
+   "relation": "provides",
+   "description": "The kernel (amplifier-core) provides Mount Plan validation.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Mount Plan validation",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "kernel",
+   "to": "module discovery and loading",
+   "relation": "provides",
+   "description": "The kernel provides module discovery and loading.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Module discovery and loading",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "kernel",
+   "to": "session lifecycle management",
+   "relation": "provides",
+   "description": "The kernel provides session lifecycle management.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Session lifecycle management",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "kernel",
+   "to": "event",
+   "relation": "emits",
+   "description": "Event emission is one of the kernel's listed responsibilities.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Event emission",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "kernel",
+   "to": "coordinator",
+   "relation": "provides",
+   "description": "The kernel provides coordinator infrastructure.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Coordinator infrastructure",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "provider",
+   "to": "module",
+   "relation": "is_a",
+   "description": "Providers are a module type implementing LLM API integrations.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Providers**: LLM API integrations",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "hook",
+   "to": "module",
+   "relation": "is_a",
+   "description": "Hooks are a module type for observability and control.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Hooks**: Observability and control",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "module",
+   "relation": "is_a",
+   "description": "Orchestrators are a module type implementing execution strategies.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Orchestrators**: Execution strategies",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "coordinator",
+   "to": "provider",
+   "relation": "mounts",
+   "description": "The kernel coordinator mounts provider modules under the providers mount point.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "coordinator.mount(\"providers\", provider, name=\"anthropic\")",
+   "chunk": "s-aa9fefe58937#1"
+  },
+  {
+   "from": "tiny kernel",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "The design decision for a tiny kernel shapes amplifier-core, justified by stability, auditability, maintainability and flexibility.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "### Why a Tiny Kernel?",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "tiny kernel",
+   "to": "stability",
+   "relation": "enables",
+   "description": "Fewer kernel changes mean fewer breaking changes.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "claim",
+   "evidence": "**Stability**: Fewer changes = fewer breaking changes",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "tiny kernel",
+   "to": "innovation at the edges",
+   "relation": "enables",
+   "description": "A tiny kernel means all innovation happens at the edges.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "principle",
+   "evidence": "**Flexibility**: All innovation happens at edges",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "module contract",
+   "to": "module swappability",
+   "relation": "enables",
+   "description": "Module contracts allow any module to be replaced without touching others.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "claim",
+   "evidence": "**Swappability**: Replace any module without touching others",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "module contract",
+   "to": "module independence",
+   "relation": "enables",
+   "description": "Module contracts let modules develop independently.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "claim",
+   "evidence": "**Independence**: Modules develop independently",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool:pre",
+   "relation": "emits",
+   "description": "During the execution loop, tool:pre is emitted before each tool executes.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "emit(\"tool:pre\", {...})",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "orchestrator",
+   "to": "prompt:complete",
+   "relation": "emits",
+   "description": "The final response step emits prompt:complete.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "emit(\"prompt:complete\", {...})",
+   "chunk": "s-aa9fefe58937#5"
+  },
+  {
+   "from": "extensibility through composition",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "New behavior comes from plugging in different modules rather than toggling kernel flags.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "New behavior comes from plugging in different modules, not from toggleing flags.",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "extensibility through composition",
+   "to": "mount plan",
+   "relation": "supports",
+   "description": "Composition is expressed in a mount plan that names orchestrator and hooks instead of configuration flags.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "# This (composition)",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "mechanism not policy",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Kernel responsibilities are mechanisms; policies such as orchestration strategies and provider selection are non-goals.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "### Kernel Responsibilities (Mechanisms)",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "kernel",
+   "to": "capability enforcement",
+   "relation": "provides",
+   "description": "The kernel enforces capabilities such as permission checks and approvals.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "**Capability enforcement**: Permission checks, approvals",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "orchestration strategy",
+   "to": "orchestrator",
+   "relation": "part_of",
+   "description": "Orchestration strategies are a policy kept out of the kernel (so they live in orchestrator modules).",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Orchestration strategies",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "non-interference",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "An invariant of the kernel: faulty modules can't crash it.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "**Non-interference**: Faulty modules can't crash the kernel",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "backward compatibility",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Invariant: existing modules work across kernel updates.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "**Backward compatibility**: Existing modules work across kernel updates",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "additive first",
+   "to": "module contract",
+   "relation": "constrains",
+   "description": "Kernel evolution extends contracts without breaking them.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "contract",
+   "evidence": "Extend contracts without breaking them.",
+   "chunk": "s-6c7239446fe1#1"
+  },
+  {
+   "from": "module",
+   "to": "amplifier",
+   "relation": "part_of",
+   "description": "Modules are the building blocks of Amplifier.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Modules are the building blocks of Amplifier.",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "module",
+   "to": "module contract",
+   "relation": "implements",
+   "description": "Modules implement specific functionality according to stable contracts.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "They implement specific functionality according to stable contracts.",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "tool",
+   "to": "module",
+   "relation": "is_a",
+   "description": "Tools are a module type providing agent capabilities, mounted at tools.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| **Tool** | Agent capabilities | `tools` |",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "context manager",
+   "to": "module",
+   "relation": "is_a",
+   "description": "Context modules are a module type for memory management, mounted at context.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| **Context** | Memory management | `context` |",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "kernel",
+   "to": "python entry point",
+   "relation": "loads",
+   "description": "Modules are discovered via Python entry points in the amplifier.modules group.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Modules are discovered via Python entry points",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "module",
+   "to": "mount function",
+   "relation": "provides",
+   "description": "Every module exposes a mount function.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "Every module exposes a `mount` function",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "mount function",
+   "to": "coordinator",
+   "relation": "depends_on",
+   "description": "The mount function receives the ModuleCoordinator as infrastructure context.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "coordinator: Infrastructure context",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "module",
+   "relation": "configures",
+   "description": "Module configuration passed to mount comes from the mount plan.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "config: Module configuration from Mount Plan",
+   "chunk": "s-ea73d36235e0#0"
+  },
+  {
+   "from": "hook",
+   "to": "hookhandler protocol",
+   "relation": "implements",
+   "description": "The hook contract is the HookHandler protocol taking an event and data and returning a HookResult.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class HookHandler(Protocol):",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "mount point",
+   "relation": "provides",
+   "description": "The ModuleCoordinator provides infrastructure context and exposes mount points for orchestrator, context, providers, tools, and hooks.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "The `ModuleCoordinator` provides infrastructure context to modules",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "orchestrator",
+   "relation": "contains",
+   "description": "The coordinator holds the orchestrator mount point.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "orchestrator: Orchestrator",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "context manager",
+   "relation": "contains",
+   "description": "The coordinator holds the context mount point typed as ContextManager.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "context: ContextManager",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "capability registry",
+   "relation": "provides",
+   "description": "The coordinator lets modules register and get named capabilities.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "def register_capability(self, name: str, impl: Any) -> None",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "contribution channel",
+   "relation": "provides",
+   "description": "The coordinator offers contribution channels for registering contributors and collecting contributions.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "# Contribution channels",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "module",
+   "to": "event",
+   "relation": "depends_on",
+   "description": "Modules communicate through events.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Modules communicate through events",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "hook",
+   "to": "event",
+   "relation": "supports",
+   "description": "Hooks observe events emitted through coordinator.hooks.emit.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "# Observer (hook)",
+   "chunk": "s-ea73d36235e0#4"
+  },
+  {
+   "from": "mount plan",
+   "to": "agent",
+   "relation": "configures",
+   "description": "A mount plan contains agent definitions for sub-session delegation.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Agent definitions for sub-session delegation",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "orchestrator",
+   "relation": "requires",
+   "description": "The session section of a mount plan requires an orchestrator module ID.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"orchestrator\": str,    # Required: module ID",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "context manager",
+   "relation": "requires",
+   "description": "The session section of a mount plan requires a context module ID.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"context\": str,         # Required: module ID",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "provider",
+   "relation": "configures",
+   "description": "Mount plans list providers with module, source and config.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"providers\": [",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "hook",
+   "relation": "configures",
+   "description": "Mount plans list hooks with module, source and config.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"hooks\": [",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "tool",
+   "relation": "configures",
+   "description": "Mount plans list tools with module, source and config.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"tools\": [",
+   "chunk": "s-e6d77329d8a8#1"
+  },
+  {
+   "from": "kernel",
+   "to": "mount plan",
+   "relation": "constrains",
+   "description": "The kernel validates mount plans before loading.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "The kernel validates Mount Plans before loading",
+   "chunk": "s-e6d77329d8a8#5"
+  },
+  {
+   "from": "mount plan validation",
+   "to": "session",
+   "relation": "requires",
+   "description": "Validation asserts the mount plan has a session with orchestrator and context.",
+   "confidence": 0.9,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "assert \"session\" in mount_plan",
+   "chunk": "s-e6d77329d8a8#5"
+  },
+  {
+   "from": "mount plan validation",
+   "to": "validationerror",
+   "relation": "emits",
+   "description": "Invalid mount plans raise ValidationError with details.",
+   "confidence": 0.95,
+   "from_type": "method",
+   "to_type": "artifact",
+   "evidence": "Invalid Mount Plans raise `ValidationError` with details.",
+   "chunk": "s-e6d77329d8a8#5"
+  },
+  {
+   "from": "always specify source",
+   "to": "mount plan",
+   "relation": "constrains",
+   "description": "Best practice: always specify source rather than relying on installed packages.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "**Always specify source**: Don't rely on packages being installed",
+   "chunk": "s-e6d77329d8a8#5"
+  },
+  {
+   "from": "pin with git tags",
+   "to": "mount plan",
+   "relation": "constrains",
+   "description": "Best practice: use git tags for production to pin versions.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "**Use git tags for production**: Pin to specific versions",
+   "chunk": "s-e6d77329d8a8#5"
+  },
+  {
+   "from": "hook",
+   "to": "hookresult",
+   "relation": "provides",
+   "description": "Hooks return a HookResult whose actions include deny and inject_context.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "return HookResult(action=\"continue\")",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "hook",
+   "to": "tool",
+   "relation": "constrains",
+   "description": "A safety hook on tool:pre can deny a destructive bash command.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "reason=\"Destructive command blocked\"",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "hook",
+   "to": "context injection",
+   "relation": "supports",
+   "description": "A hook can return inject_context to add content (e.g. linter errors) to the conversation.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "action=\"inject_context\"",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "hook",
+   "to": "approval",
+   "relation": "supports",
+   "description": "The ask_user action requests approval.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "| `ask_user` | Request approval |",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "hooks-logging",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "hooks-logging is a hook module.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "The `hooks-logging` module logs all events to JSONL",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "hooks-logging",
+   "to": "event",
+   "relation": "calls",
+   "description": "The hooks-logging module logs all events to JSONL.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "logs all events to JSONL",
+   "chunk": "s-a2704086281a#3"
+  },
+  {
+   "from": "agent",
+   "to": "sub-agent",
+   "relation": "is_a",
+   "description": "Invoking an agent runs a sub-session with the agent's configuration, whose results return to the main session.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Sub-session with explorer config",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "agent",
+   "to": "session",
+   "relation": "configures",
+   "description": "Agent-specific tools and instructions are applied to the delegated sub-session.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Agent-specific tools and instructions are applied",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "explorer",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "explorer is an agent for breadth-first exploration of codebases with citations.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Purpose**: Breadth-first exploration of codebases with citations.",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "bug-hunter",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "bug-hunter is an agent for systematic debugging and issue identification.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Purpose**: Systematic debugging and issue identification.",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "zen-architect",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "zen-architect is an agent for system design with ruthless simplicity.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Purpose**: System design with ruthless simplicity.",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "ruthless simplicity",
+   "to": "zen-architect",
+   "relation": "constrains",
+   "description": "zen-architect designs systems following ruthless simplicity.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "System design with ruthless simplicity",
+   "chunk": "s-7df67a4219af#1"
+  },
+  {
+   "from": "cli",
+   "to": "amplifier agents list",
+   "relation": "provides",
+   "description": "The CLI lists available agents with `amplifier agents list`.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "amplifier agents list",
+   "chunk": "s-7df67a4219af#5"
+  },
+  {
+   "from": "profile",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Troubleshooting checks that the profile includes the agent.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "# Check profile includes agent",
+   "chunk": "s-7df67a4219af#5"
+  },
+  {
+   "from": "agent",
+   "to": "agents directory",
+   "relation": "part_of",
+   "description": "Agents are located in ~/.amplifier/agents/ and .amplifier/agents/.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "ls ~/.amplifier/agents/",
+   "chunk": "s-7df67a4219af#5"
+  },
+  {
+   "from": "session",
+   "to": "conversation history",
+   "relation": "contains",
+   "description": "Resuming a session preserves conversation history.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "- Conversation history",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "session",
+   "to": "profile",
+   "relation": "loads",
+   "description": "On resume, the current (not original) profile configuration is reloaded.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "Profile configuration (current, not original)",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "session",
+   "to": "multi-turn workflow",
+   "relation": "enables",
+   "description": "Sessions enable sophisticated multi-turn workflows.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Sessions enable sophisticated multi-turn workflows",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "sub-agent",
+   "to": "session",
+   "relation": "part_of",
+   "description": "Sub-sessions from agent delegation get IDs derived from the parent span plus the agent name.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "{parent-span}-{child-span}_{agent-name}",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "session",
+   "to": "event",
+   "relation": "emits",
+   "description": "Each session keeps an events.jsonl log for debugging.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "events.jsonl",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "cli",
+   "to": "amplifier continue",
+   "relation": "provides",
+   "description": "The CLI continues sessions with `amplifier continue`.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "amplifier continue \"What security issues did you find?\"",
+   "chunk": "s-fa6363569877#3"
+  },
+  {
+   "from": "profile",
+   "to": "collection",
+   "relation": "depends_on",
+   "description": "Profiles can extend collection resources, e.g. collection:foundation/base.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "extends: collection:foundation/base",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "agent",
+   "to": "collection",
+   "relation": "depends_on",
+   "description": "Agents can extend agents defined in collections.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "extends: collection:developer-expertise/agents/code-reviewer",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "contains",
+   "description": "A collection directory has a profiles/ folder.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "\u251c\u2500\u2500 profiles/",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "collection",
+   "to": "agent",
+   "relation": "contains",
+   "description": "A collection directory has an agents/ folder.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "\u251c\u2500\u2500 agents/",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "collection",
+   "to": "context file",
+   "relation": "contains",
+   "description": "A collection directory has a context/ folder.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "\u251c\u2500\u2500 context/",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "collection search path",
+   "to": "collection",
+   "relation": "loads",
+   "description": "Collections are resolved project, then user, then bundled; first match wins.",
+   "confidence": 0.9,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "First match wins.",
+   "chunk": "s-3c4c04103e1d#1"
+  },
+  {
+   "from": "dev profile",
+   "to": "profile",
+   "relation": "is_a",
+   "description": "dev is a profile with full development capabilities.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "Full development capabilities",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "dev profile",
+   "to": "base profile",
+   "relation": "depends_on",
+   "description": "dev includes everything in base.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "Everything in `base`",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "full profile",
+   "to": "dev profile",
+   "relation": "depends_on",
+   "description": "full includes everything in dev plus experimental tools and all hooks.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "Everything in `dev`",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "dev profile",
+   "to": "explorer",
+   "relation": "contains",
+   "description": "The dev profile includes explorer, bug-hunter, zen-architect and researcher agents.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "**Agents**: explorer, bug-hunter, zen-architect, researcher",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "profile",
+   "to": "orchestrator",
+   "relation": "configures",
+   "description": "Profiles can override session settings such as orchestrator and context.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "# Optional - override session settings",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "profile",
+   "to": "provider",
+   "relation": "configures",
+   "description": "Profiles can configure providers.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "# Optional - configure providers",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "profile",
+   "to": "artifact",
+   "relation": "is_a",
+   "description": "Profiles are YAML files with markdown frontmatter.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Profiles are YAML files with markdown frontmatter.",
+   "chunk": "s-22f6622f3dd1#1"
+  },
+  {
+   "from": "amplifier",
+   "to": "provider",
+   "relation": "supports",
+   "description": "Amplifier supports multiple LLM providers.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Amplifier supports multiple LLM providers.",
+   "chunk": "s-f86f994e7caa#0"
+  },
+  {
+   "from": "anthropic provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Anthropic is a supported, recommended provider.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "## Anthropic (Recommended)",
+   "chunk": "s-f86f994e7caa#0"
+  },
+  {
+   "from": "ollama provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Ollama is a supported provider for local/offline use.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "| **Ollama** | Llama, Mistral, etc. | Local/offline, privacy, experimentation |",
+   "chunk": "s-f86f994e7caa#0"
+  },
+  {
+   "from": "cli",
+   "to": "provider",
+   "relation": "configures",
+   "description": "The CLI selects a provider with `amplifier provider use`.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier provider use anthropic",
+   "chunk": "s-f86f994e7caa#0"
+  },
+  {
+   "from": "anthropic provider",
+   "to": "anthropic_api_key",
+   "relation": "requires",
+   "description": "Anthropic setup requires setting the ANTHROPIC_API_KEY environment variable.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "export ANTHROPIC_API_KEY=\"sk-ant-...\"",
+   "chunk": "s-f86f994e7caa#0"
+  },
+  {
+   "from": "hook",
+   "to": "hookhandler protocol",
+   "relation": "implements",
+   "description": "Hooks implement a runtime-checkable HookHandler protocol.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "@runtime_checkable",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "hook",
+   "to": "observability",
+   "relation": "provides",
+   "description": "Hooks participate in the loop by observing events (logging, metrics).",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Observing events (logging, metrics)",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "hook",
+   "to": "tool",
+   "relation": "constrains",
+   "description": "Hooks block operations for security and validation.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Blocking operations (security, validation)",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "hookresult",
+   "to": "ephemeral injection",
+   "relation": "supports",
+   "description": "HookResult injections can be ephemeral, not stored in history.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "ephemeral: bool  # Not stored in history",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "hookhandler protocol",
+   "to": "hookresult",
+   "relation": "provides",
+   "description": "The handler returns a HookResult with actions continue, deny, modify, inject_context, ask_user.",
+   "confidence": 0.95,
+   "from_type": "contract",
+   "to_type": "contract",
+   "evidence": "action: str  # \"continue\", \"deny\", \"modify\", \"inject_context\", \"ask_user\"",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "hook",
+   "to": "mount function",
+   "relation": "replaces",
+   "description": "Hooks register handlers rather than mounting.",
+   "confidence": 0.6,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "Hooks register handlers rather than mounting",
+   "chunk": "s-6bcd4faaa0f6#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "prompt:submit",
+   "relation": "emits",
+   "description": "Orchestrators should emit prompt:submit.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `prompt:submit` |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider:request",
+   "relation": "emits",
+   "description": "Orchestrators should emit provider:request.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `provider:request` |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider:response",
+   "relation": "emits",
+   "description": "Orchestrators should emit provider:response.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `provider:response` |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool:post",
+   "relation": "emits",
+   "description": "Orchestrators should emit tool:post.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `tool:post` |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "orchestrator:complete",
+   "relation": "emits",
+   "description": "Orchestrators should emit orchestrator:complete.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `orchestrator:complete` |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider",
+   "relation": "calls",
+   "description": "The basic orchestrator picks a provider and calls it each iteration.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "provider = list(providers.values())[0]",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "context manager",
+   "relation": "calls",
+   "description": "The orchestrator adds the user prompt to context and reads messages each iteration.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await context.add_message({\"role\": \"user\", \"content\": prompt})",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "parallel tool execution",
+   "relation": "supports",
+   "description": "Orchestrators can be configured to execute tools in parallel.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `parallel_tools` | bool | Execute tools in parallel |",
+   "chunk": "s-64b6b3bedb13#1"
+  },
+  {
+   "from": "context manager",
+   "to": "context:pre_compact",
+   "relation": "emits",
+   "description": "Context managers should emit context:pre_compact.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `context:pre_compact` |",
+   "chunk": "s-309152feb654#1"
+  },
+  {
+   "from": "context manager",
+   "to": "context:post_compact",
+   "relation": "emits",
+   "description": "Context managers should emit context:post_compact.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `context:post_compact` |",
+   "chunk": "s-309152feb654#1"
+  },
+  {
+   "from": "context manager",
+   "to": "context:include",
+   "relation": "emits",
+   "description": "Context managers should emit context:include.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "| `context:include` |",
+   "chunk": "s-309152feb654#1"
+  },
+  {
+   "from": "context manager",
+   "to": "compaction",
+   "relation": "provides",
+   "description": "A context manager compacts when tokens exceed 90% of max_tokens, here by truncating oldest non-system messages.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "return token_count > self.max_tokens * 0.9",
+   "chunk": "s-309152feb654#1"
+  },
+  {
+   "from": "context manager",
+   "to": "message format",
+   "relation": "supports",
+   "description": "Messages have role, content, tool_call_id and name fields.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "\"role\": \"user\" | \"assistant\" | \"system\" | \"tool\",",
+   "chunk": "s-309152feb654#1"
+  },
+  {
+   "from": "collection",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Collections package agents, context, and philosophy documents for specific use cases.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Collections package agents, context, and philosophy documents for specific use cases.",
+   "chunk": "s-e918402abb67#2"
+  },
+  {
+   "from": "metacognitive recipe",
+   "to": "amplifier",
+   "relation": "supports",
+   "description": "The roadmap expands structured workflows mixing tasks with philosophy and decision rationale.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Expanding on structured workflows that mix specific tasks with higher-level philosophy",
+   "chunk": "s-e918402abb67#2"
+  },
+  {
+   "from": "context manager",
+   "to": "amplifier",
+   "relation": "part_of",
+   "description": "Amplifier provides simple and persistent context modules.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Amplifier provides simple and persistent context modules",
+   "chunk": "s-e918402abb67#2"
+  },
+  {
+   "from": "richer memory",
+   "to": "context manager",
+   "relation": "constrains",
+   "description": "The roadmap imagines richer approaches to memory, knowledge synthesis and team context sharing beyond current context modules.",
+   "confidence": 0.5,
+   "from_type": "question",
+   "to_type": "component",
+   "evidence": "you could imagine richer approaches to memory, knowledge synthesis, session learning, and team context sharing",
+   "chunk": "s-e918402abb67#2"
+  },
+  {
+   "from": "standard artifacts",
+   "to": "sub-agent",
+   "relation": "supports",
+   "description": "The roadmap evolves conventions for sub-agent definitions and other artifacts so they plug into other Amplifier instances.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Evolving conventions for documentation, context files, philosophy documents, and sub-agent definitions.",
+   "chunk": "s-e918402abb67#2"
+  },
+  {
+   "from": "library",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "A smart tool is built from layers, including a library core.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Library core, CLI",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "cli",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "A smart tool includes a CLI wrapper layer.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "CLI\n  wrapper",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "manifest",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "The manifest describes what a smart tool is, what it is for, and what it runs on, and ships with the tool.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "how a smart tool describes itself",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "manifest",
+   "to": "registry",
+   "relation": "supports",
+   "description": "The manifest is the artifact a registry will later consume.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "This is the artifact a registry will later consume",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "descriptor",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "Packaging covers publishing, installing, launching, and the descriptor.",
+   "confidence": 0.75,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "the ecosystem and runner vocabulary, and the descriptor",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "smart tool",
+   "to": "skill",
+   "relation": "supports",
+   "description": "Invocation covers a smart tool's self-description as a skill.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "self-description as a skill",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "loud failure",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A tool failing with an empty result or bare stack trace hands back a problem its caller cannot resolve.",
+   "confidence": 0.75,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "A\n   tool that fails with an empty result or a bare stack trace has handed back a problem its\n   caller cannot resolve.",
+   "chunk": "s-d343d997bb82#2"
+  },
+  {
+   "from": "model-backed capability",
+   "to": "library",
+   "relation": "part_of",
+   "description": "Smart paths are ordinary capabilities of the library living alongside deterministic ones.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "paths are ordinary capabilities of the library",
+   "chunk": "s-929c0544b030#3"
+  },
+  {
+   "from": "model-backed capability",
+   "to": "deterministic capability",
+   "relation": "supports",
+   "description": "Smart paths take arguments, return values and live alongside the deterministic ones.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "they live alongside the deterministic ones",
+   "chunk": "s-929c0544b030#3"
+  },
+  {
+   "from": "ai capability disclosure",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Callers should know which features are AI-enabled; if ambiguous it can be explicitly stated.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Callers should know which features are AI-enabled",
+   "chunk": "s-929c0544b030#3"
+  },
+  {
+   "from": "implementation is the tool's business",
+   "to": "model-backed capability",
+   "relation": "constrains",
+   "description": "Which model, how many calls, and the code/inference mix are the tool's business.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "How a capability is implemented beyond that is the tool's\nbusiness",
+   "chunk": "s-929c0544b030#3"
+  },
+  {
+   "from": "manifest",
+   "to": "smart_tool_format",
+   "relation": "contains",
+   "description": "The manifest frontmatter includes smart_tool_format, the schema version.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "smart_tool_format: 1",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "smart_tool_format",
+   "to": "schema version",
+   "relation": "is_a",
+   "description": "smart_tool_format is the manifest schema version, not the tool's version.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "is the manifest schema version, not the tool's version",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "manifest",
+   "to": "requires",
+   "relation": "contains",
+   "description": "The manifest's requires field lists prerequisites; it is the only optional field.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "except `requires`, which a tool with no\nprerequisites leaves out",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "manifest",
+   "to": "use_cases",
+   "relation": "contains",
+   "description": "The manifest lists use_cases as strings.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "use_cases:",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "manifest",
+   "to": "platforms",
+   "relation": "contains",
+   "description": "The manifest lists supported platforms.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "platforms:",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "digital-twin-universe",
+   "to": "smart tool",
+   "relation": "is_a",
+   "description": "digital-twin-universe is the example smart tool in the manifest spec.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "name: digital-twin-universe",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "manifest completeness rule",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "A field that is present but empty is not satisfied.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "A field that is present but empty is not satisfied.",
+   "chunk": "s-adcfa3b63eb9#3"
+  },
+  {
+   "from": "smart tool",
+   "to": "deterministic capability",
+   "relation": "contains",
+   "description": "A smart tool exposes both deterministic and model-backed capabilities through one surface.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A smart tool exposes both kinds of capability through one surface.",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "model-backed capability",
+   "relation": "contains",
+   "description": "A smart tool exposes model-backed capabilities without a separate mode or binary.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "no separate binary for the model-backed parts",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "deterministic capability",
+   "to": "reproducible result",
+   "relation": "provides",
+   "description": "A deterministic path returns the same answer every time and costs nothing beyond compute.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "claim",
+   "evidence": "A deterministic path returns the same answer every time",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "model-backed capability",
+   "to": "model provider",
+   "relation": "requires",
+   "description": "A model-backed path consumes tokens and may vary between runs; only callers using it need model credentials.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A model-backed path may return a different answer on a second\nrun and consumes tokens.",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "no credentials to load",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "The tool must not require model credentials in order to load.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "the tool\nmust not require them in order to load",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "model use is implementation detail",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Consulting a model is an implementation detail, not a different calling convention.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "The fact that some paths consult a model is an\nimplementation detail of those paths, not a different calling convention.",
+   "chunk": "s-edd308b1a1f2#0"
+  },
+  {
+   "from": "library",
+   "to": "skill",
+   "relation": "provides",
+   "description": "The library exposes the skill and each piece it is built from.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "The library exposes the skill and each piece it is built from.",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "cli",
+   "to": "library",
+   "relation": "calls",
+   "description": "The CLI prints the skill and adds nothing.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "The CLI prints it and adds\nnothing.",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "agent skill",
+   "to": "smart tool",
+   "relation": "supports",
+   "description": "A tool may optionally ship an Agent Skill so hosts that know nothing about smart tools can discover it.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "A tool may also ship an Agent Skill",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "agent skill",
+   "to": "manifest",
+   "relation": "depends_on",
+   "description": "The Agent Skill carries the manifest's name and description, install commands, and the instruction to run --help.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "The skill carries the manifest's name and description",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "single source of guidance",
+   "to": "agent skill",
+   "relation": "constrains",
+   "description": "The skill defers to --help so it stays correct when the tool changes and guidance lives in one place.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "there is one place\nthe guidance is written",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "model-backed capability",
+   "to": "context payload",
+   "relation": "supports",
+   "description": "Smart paths accept an optional context payload alongside typed arguments.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "they\naccept an optional context payload",
+   "chunk": "s-edd308b1a1f2#4"
+  },
+  {
+   "from": "loud failure",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Failures are loud and name the remedy.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Failures are loud and they name the remedy.",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "cli",
+   "to": "non-zero exit on failure",
+   "relation": "requires",
+   "description": "At the CLI, a failure exits non-zero.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "principle",
+   "evidence": "At the CLI, a failure exits non-zero.",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "non-interactive completion",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Invoked non-interactively, a tool completes or fails rather than blocking on a prompt.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "A tool also never waits on input a caller cannot supply.",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "manifest",
+   "to": "missing prerequisite failure",
+   "relation": "constrains",
+   "description": "A missing-prerequisite failure must agree with the prerequisites declared in the manifest.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "principle",
+   "evidence": "The manifest already declares these, so the failure and the manifest must agree.",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "no silent fallback",
+   "to": "model-backed capability",
+   "relation": "constrains",
+   "description": "A smart path with no provider configured fails rather than falling back to a degraded deterministic answer.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "It does not fall back to a degraded deterministic answer",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "no silent fallback",
+   "to": "deterministic capability",
+   "relation": "contradicts",
+   "description": "Substituting a deterministic answer for a requested smart path is forbidden because it misleads the caller.",
+   "confidence": 0.6,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "a caller that\nasked for the smart path and got a lesser result without being told has been misled",
+   "chunk": "s-edd308b1a1f2#8"
+  },
+  {
+   "from": "partial result rule",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A partial result is a failure unless partial completion is documented as valid.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "A capability never\nsilently returns the portion that worked.",
+   "chunk": "s-edd308b1a1f2#8"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+      - name: Tests
+        run: uv run --python ${{ matrix.python }} --with pytest --with tomli python -m pytest -q
+      - name: Conformance
+        run: |
+          git clone --depth 1 https://github.com/microsoft/amplifier-smart-tools /tmp/spec
+          uv run /tmp/spec/conformance/run.py .

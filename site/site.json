@@ -1,0 +1,168 @@
+{
+  "kind": "tool",
+  "key": "knowledge",
+  "name": "Knowledge",
+  "accent": "#2f5f8a",
+  "title": "Knowledge | Amplifier Smart Tools",
+  "promise": "One graph your agents remember with, and you can explore.",
+  "description": "Point it at notes, papers, docs, code or agent sessions and get a knowledge graph any agent can query and add to: concepts and typed relations, each with the passage it came from, the agent that added it, a confidence and the dates it held. Then trace how two ideas connect, see what supports or contradicts a claim, find the gaps between topics, and replay how understanding changed.",
+  "image": "docs/images/trailer-poster.png",
+  "video": "docs/images/trailer.mp4",
+  "alt": "A short cut of every demo, all from real material: gaps between topics of Amplifier's docs, a contested principle, a traced path, a year of amplifier-foundation decisions replayed, four agents building the graph live, and the commands an agent runs.",
+  "caption": "A minute of what it does. Every example is real: Amplifier's public docs and git history.",
+  "width": 1440,
+  "height": 900,
+  "flow_title": "Read it. Ask it. Find what's missing.",
+  "flow_intro": "Start from material you already have. The graph keeps every claim with its source and its dates, so people and agents can follow a line of reasoning instead of searching for keywords.",
+  "steps": [
+    [
+      "Read it in.",
+      "knowledge ingest ./notes has a model extract concepts and typed relations, each tied to the chunk it came from. Inside an agent, --method agent hands the agent the chunks and the prompt instead, so no key is billed. --method cooccurrence builds a word network with no model at all."
+    ],
+    [
+      "Ask the graph.",
+      "path shows how two ideas connect, step by step. evidence shows what supports and contradicts a claim, with the passages. contradictions finds where sources or agents disagree. context assembles numbered, citable material for any model to answer from."
+    ],
+    [
+      "Find what's missing.",
+      "analyze names the central ideas and the bridges between topics. gaps finds well-developed topics with almost nothing between them, the place the next question usually is, and questions turns each gap into research questions."
+    ]
+  ],
+  "detail_title": "Memory that keeps its reasons.",
+  "details": [
+    [
+      "Nothing is forgotten, nothing is overwritten.",
+      "Every relation has the dates it held. supersede closes one in favour of a newer one, a changed file closes its old claims, and --as-of shows the graph as it was on any day."
+    ],
+    [
+      "Many agents, one graph.",
+      "Agents write through add and relate with their name on every relation. The change log records who did what, and serve shows it live. Over MCP, the same capabilities are tools for any host."
+    ],
+    [
+      "Take it anywhere.",
+      "One self-contained page with no outside requests. Export an Obsidian vault with wikilinks, topic notes, a gaps note and a Canvas map, or GraphML for Gephi, Cytoscape JSON and CSV."
+    ]
+  ],
+  "prompt": "Build a knowledge graph of ./notes and tell me what's missing. Use the knowledge tool: read knowledge --help, run knowledge ingest ./notes --method agent --graph notes --json, extract the relations from each chunk yourself, load them with knowledge add, then run knowledge analyze and knowledge gaps, and open knowledge visualize --open.",
+  "install": "uv tool install \"amplifier-smart-tool-visualizer @ git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer\"\nknowledge --help",
+  "prerequisites": "Python 3.10 or later, no other dependencies. Graphs are single SQLite files in your data folder; views are single HTML files that open offline.",
+  "model_note": "ingest (default method), ask, report, questions and reconcile use a model: your host's own (through --complete-cmd or MCP), Anthropic, OpenAI or a local Ollama model. Inside Claude Code, Codex or Amplifier they stop and name the deterministic route instead of billing a key. Everything else needs no model.",
+  "guide": "src/knowledge/SMART_TOOL.md",
+  "related": [
+    "decisioncraft",
+    "possibly",
+    "stories"
+  ],
+  "capability_demos": [
+    {
+      "id": "gaps",
+      "eyebrow": "Find the gaps",
+      "title": "Two halves of Amplifier that barely touch.",
+      "description": "Twenty real documents: fifteen pages of microsoft/amplifier-docs and the five chapters of the smart-tools spec, read by four agents into 313 concepts and 613 relations. The biggest gap the graph finds is real: the smart-tools world (cli, smart tool, manifest) has almost no links to the kernel world (kernel, mount plan, module).",
+      "image": "docs/images/gaps-poster.png",
+      "video": "docs/images/gaps-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The Amplifier docs graph coloured by topic; the top gap card lights up the smart-tool and kernel topics with their bridge candidates.",
+      "caption": "Screen recording. Real public docs (MIT), relations extracted by agents.",
+      "link": "assets/amplifier.html",
+      "link_text": "Open the Amplifier graph"
+    },
+    {
+      "id": "evidence",
+      "eyebrow": "Check a claim",
+      "title": "A principle, and the line in the same spec that strains it.",
+      "description": "The spec says a caller should not need to know whether a result came from code or a model. The skeptic agent found the same spec asks tools to say which capabilities use AI, and recorded it as a contradiction, with the quote and the passage. Every relation shows its agent, source and date.",
+      "image": "docs/images/evidence-poster.png",
+      "video": "docs/images/evidence-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The principle 'result provenance transparency' selected, with the contradicting relation in red and the spec passage beneath.",
+      "caption": "Screen recording. Real spec text; the tension was found by an agent.",
+      "link": "assets/amplifier.html#concept=result%20provenance%20transparency",
+      "link_text": "Open this principle"
+    },
+    {
+      "id": "path",
+      "eyebrow": "Trace a line of reasoning",
+      "title": "From a smart tool's model-backed path to the kernel's first rule.",
+      "description": "Select one concept and shift-click another. The path follows typed relations, each with its sentence from the docs: model-backed capability, smart tool, cli, session, kernel, and the kernel's principle, mechanism not policy. It crosses the gap the graph found.",
+      "image": "docs/images/path-poster.png",
+      "video": "docs/images/path-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "A highlighted path across the Amplifier graph from model-backed capability to mechanism not policy.",
+      "caption": "Screen recording. Real docs.",
+      "link": "assets/amplifier.html",
+      "link_text": "Try it on the Amplifier graph"
+    },
+    {
+      "id": "time",
+      "eyebrow": "Replay what changed",
+      "title": "Seven months of amplifier-foundation, replayed.",
+      "description": "58 dated decisions from the real commit history, each citing its commit, 20 of them later replaced. Token streaming was turned on by default, paused as temporary the same day, and turned back on the next. Press Play to watch it; replaced decisions stay in the history, dashed.",
+      "image": "docs/images/time-poster.png",
+      "video": "docs/images/time-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The time slider replays amplifier-foundation's history; token streaming's three default states appear with the dates each held.",
+      "caption": "Screen recording. Real git history of microsoft/amplifier-foundation.",
+      "link": "assets/amplifier-history.html",
+      "link_text": "Open the history graph"
+    },
+    {
+      "id": "live",
+      "eyebrow": "Watch agents think together",
+      "title": "Four agents built this graph, live.",
+      "description": "Four Claude Code agents, a cartographer, an analyst, a skeptic and an archivist, each took 25 chunks of the docs and wrote what they found with knowledge add, at the same time, while knowledge serve was recorded. Nearly five minutes of real work, sped up. They checked each other's names as they went.",
+      "image": "docs/images/live-poster.png",
+      "video": "docs/images/live-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The live view filling from empty as four agents write; a ticker shows each agent's relations as they land.",
+      "caption": "Screen recording of real agents, sped up 6.5 times."
+    },
+    {
+      "id": "agent",
+      "eyebrow": "Made for agents",
+      "title": "Plain commands, real answers, no key.",
+      "description": "Inside Claude Code, Codex or Amplifier, the agent is the model. These commands need no credentials: the biggest gap, a path between two ideas, the contradictions, and numbered context ready to cite, all from the real Amplifier docs graph.",
+      "image": "docs/images/agent-poster.png",
+      "video": "docs/images/agent-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "A terminal running knowledge gaps, path, contradictions and context, with their output.",
+      "caption": "Real output from the Amplifier docs graph, replayed as typed."
+    },
+    {
+      "id": "words",
+      "eyebrow": "No model at all",
+      "title": "This repository's docs, as a word network.",
+      "description": "ingest --method cooccurrence links words that appear near each other, the text-network way. No model, same result every time, and still topics, influence and gaps. Search for a word, then switch topics on and off.",
+      "image": "docs/images/words-poster.png",
+      "video": "docs/images/words-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "A dense word network of the tool's own documentation, coloured by topic; a search highlights graph and its neighbours.",
+      "caption": "Screen recording. Built from this repository's README and docs.",
+      "link": "assets/this-repo.html",
+      "link_text": "Open the word network"
+    }
+  ],
+  "install_options": [
+    {
+      "title": "Coding agents: Claude Code, Codex, Amplifier",
+      "text": "Install the knowledge tool from https://github.com/michaeljabbour/amplifier-smart-tool-visualizer by following its README, then run knowledge doctor"
+    },
+    {
+      "title": "Terminal",
+      "text": "uv tool install \"amplifier-smart-tool-visualizer @ git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer\""
+    },
+    {
+      "title": "Any MCP host",
+      "text": "knowledge mcp --graph research",
+      "note": "Add it as a local stdio server. Model-backed tools return a task for the assistant, so the host's model does the thinking."
+    }
+  ],
+  "install_footnote": "All examples are real: public Microsoft repositories (MIT), extracted by agents through the tool's own agent route. Extraction is a reading of the text; every relation links to its quote."
+}

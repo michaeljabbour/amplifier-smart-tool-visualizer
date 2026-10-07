@@ -1,0 +1,2128 @@
+{
+ "agent": "skeptic",
+ "nodes": [
+  {
+   "label": "mount plan",
+   "type": "artifact",
+   "summary": "The configuration handed from the application layer to the kernel, shown feeding the kernel's session in the architecture diagram."
+  },
+  {
+   "label": "kernel",
+   "type": "component",
+   "summary": "amplifier-core; the architecture diagram shows it containing the session and the coordinator."
+  },
+  {
+   "label": "session",
+   "type": "component",
+   "summary": "Kernel component that receives the mount plan and drives the coordinator."
+  },
+  {
+   "label": "coordinator",
+   "type": "component",
+   "summary": "Kernel component below the session that fans out to mounted modules."
+  },
+  {
+   "label": "event",
+   "type": "concept",
+   "summary": "Observable occurrences that make everything important observable and decouple emitters from observers."
+  },
+  {
+   "label": "hook",
+   "type": "component",
+   "summary": "Module type through which behavior is added in response to events rather than via code changes."
+  },
+  {
+   "label": "library",
+   "type": "concept",
+   "summary": "Supporting libraries provide higher-level functionality and are application-layer concerns."
+  },
+  {
+   "label": "amplifier-profiles",
+   "type": "component",
+   "summary": "Library for profile loading and inheritance."
+  },
+  {
+   "label": "amplifier-collections",
+   "type": "component",
+   "summary": "Library for collection discovery and management."
+  },
+  {
+   "label": "amplifier-config",
+   "type": "component",
+   "summary": "Library for three-scope configuration."
+  },
+  {
+   "label": "amplifier-module-resolution",
+   "type": "component",
+   "summary": "Library for module source resolution."
+  },
+  {
+   "label": "libraries are not part of the kernel",
+   "type": "principle",
+   "summary": "Supporting libraries are application-layer concerns, not kernel."
+  },
+  {
+   "label": "additive first",
+   "type": "principle",
+   "summary": "Extend contracts without breaking them; prefer optional capabilities."
+  },
+  {
+   "label": "two-implementation rule",
+   "type": "principle",
+   "summary": "Don't promote a concept into kernel until two or more independent modules converge on the need."
+  },
+  {
+   "label": "spec before code",
+   "type": "principle",
+   "summary": "Kernel changes begin with a short spec covering purpose, alternatives, invariants, tests and rollback."
+  },
+  {
+   "label": "complexity budget",
+   "type": "principle",
+   "summary": "Each kernel change must justify its complexity and should retire equivalent complexity elsewhere."
+  },
+  {
+   "label": "small and sharp interfaces",
+   "type": "principle",
+   "summary": "Prefer few, precise operations over broad, do-everything calls."
+  },
+  {
+   "label": "module",
+   "type": "concept",
+   "summary": "Swappable unit of functionality mounted into the kernel."
+  },
+  {
+   "label": "provider",
+   "type": "component",
+   "summary": "Module type that completes chat requests against an LLM."
+  },
+  {
+   "label": "observability",
+   "type": "concept",
+   "summary": "The property that everything important in the system can be observed."
+  },
+  {
+   "label": "mount function",
+   "type": "contract",
+   "summary": "Async entry point every module exposes; it receives the coordinator and its config from the mount plan and may return a cleanup function."
+  },
+  {
+   "label": "cleanup function",
+   "type": "artifact",
+   "summary": "Optional callable returned by a module's mount function to release resources."
+  },
+  {
+   "label": "capability registry",
+   "type": "method",
+   "summary": "Coordinator mechanism by which modules register and look up named capabilities such as a cache."
+  },
+  {
+   "label": "contribution channel",
+   "type": "method",
+   "summary": "Non-interfering aggregation pattern in which modules register contributors and consumers collect their contributions."
+  },
+  {
+   "label": "module independence",
+   "type": "principle",
+   "summary": "Modules have no peer awareness, do not crash each other, are swappable and testable in isolation."
+  },
+  {
+   "label": "tool",
+   "type": "component",
+   "summary": "Module type providing capabilities agents can invoke, e.g. tool-filesystem and tool-bash."
+  },
+  {
+   "label": "agent",
+   "type": "concept",
+   "summary": "A named configuration with a description, a tool subset and system instructions."
+  },
+  {
+   "label": "orchestrator",
+   "type": "component",
+   "summary": "Module that runs the execution loop, e.g. loop-streaming."
+  },
+  {
+   "label": "context manager",
+   "type": "component",
+   "summary": "Module that holds conversation context, e.g. context-persistent."
+  },
+  {
+   "label": "if it's important, emit an event",
+   "type": "principle",
+   "summary": "Event-system design principle: anything important must be emitted as an event."
+  },
+  {
+   "label": "if it's not observable, it didn't happen",
+   "type": "principle",
+   "summary": "Event-system design principle equating unobservable actions with non-events."
+  },
+  {
+   "label": "events.jsonl",
+   "type": "artifact",
+   "summary": "Per-session JSONL event log, the single source of truth for events."
+  },
+  {
+   "label": "hooks observe without blocking",
+   "type": "principle",
+   "summary": "Hooks observe events without blocking, by default."
+  },
+  {
+   "label": "session:fork",
+   "type": "concept",
+   "summary": "Canonical event emitted when a sub-session is created, carrying parent_id and child_id."
+  },
+  {
+   "label": "provider:request",
+   "type": "concept",
+   "summary": "Canonical event emitted before an LLM call."
+  },
+  {
+   "label": "tool:pre",
+   "type": "concept",
+   "summary": "Canonical event emitted before tool execution."
+  },
+  {
+   "label": "namespace:action convention",
+   "type": "principle",
+   "summary": "Custom events follow the namespace:action naming convention."
+  },
+  {
+   "label": "trace context",
+   "type": "concept",
+   "summary": "Tracing identifiers session_id, request_id and span_id included in events."
+  },
+  {
+   "label": "sub-session",
+   "type": "concept",
+   "summary": "A child session spawned by an agent, whose session_id is derived from the parent's."
+  },
+  {
+   "label": "log level",
+   "type": "concept",
+   "summary": "Logging verbosity levels from warn through raw, where raw adds complete API payloads."
+  },
+  {
+   "label": "researcher",
+   "type": "component",
+   "summary": "Bundled agent for research and information synthesis, including web search and source citation."
+  },
+  {
+   "label": "modular-builder",
+   "type": "component",
+   "summary": "Bundled agent for focused code implementation."
+  },
+  {
+   "label": "zen-architect",
+   "type": "component",
+   "summary": "Bundled agent for design, refactoring decisions and architecture review."
+  },
+  {
+   "label": "profile",
+   "type": "artifact",
+   "summary": "YAML-frontmatter configuration that can extend another profile and define agents."
+  },
+  {
+   "label": "standalone agent file",
+   "type": "artifact",
+   "summary": "An agent defined in its own markdown file under .amplifier/agents/."
+  },
+  {
+   "label": "conversation history",
+   "type": "concept",
+   "summary": "The user's prompts and AI responses recorded in a session."
+  },
+  {
+   "label": "session resumption",
+   "type": "method",
+   "summary": "Continuing a previous session via amplifier continue or amplifier session resume."
+  },
+  {
+   "label": "context limit",
+   "type": "concept",
+   "summary": "The model's maximum context, which a resumed conversation history may exceed."
+  },
+  {
+   "label": "session event type list",
+   "type": "artifact",
+   "summary": "The sessions guide's table of seven event types found in a session's events.jsonl."
+  },
+  {
+   "label": "collection",
+   "type": "artifact",
+   "summary": "A shareable package of profiles, agents and context, published via a git repository."
+  },
+  {
+   "label": "semantic versioning",
+   "type": "principle",
+   "summary": "Collections use vMAJOR.MINOR.PATCH, with major for breaking changes."
+  },
+  {
+   "label": "context file",
+   "type": "artifact",
+   "summary": "Markdown guidance in a collection's context/ directory referenced from profiles with @context/."
+  },
+  {
+   "label": "profile inheritance",
+   "type": "method",
+   "summary": "A child profile extends a parent, inheriting all settings, overriding some and adding system instructions."
+  },
+  {
+   "label": "inheritance never removes parent features",
+   "type": "claim",
+   "summary": "Claim that each level of the inheritance chain adds capabilities without removing parent features."
+  },
+  {
+   "label": "profile-specific tools",
+   "type": "method",
+   "summary": "Enabling or disabling tools per profile, e.g. a safe-profile with read-only filesystem and tool-bash omitted."
+  },
+  {
+   "label": "system instruction",
+   "type": "concept",
+   "summary": "The markdown body after a profile's frontmatter, which becomes the system instruction."
+  },
+  {
+   "label": "model provider",
+   "type": "component",
+   "summary": "An LLM vendor configured for Amplifier, such as Anthropic, OpenAI, Azure OpenAI or Ollama."
+  },
+  {
+   "label": "settings.yaml",
+   "type": "artifact",
+   "summary": "~/.amplifier/settings.yaml, an alternative configuration file for providers such as Azure."
+  },
+  {
+   "label": "tool contract",
+   "type": "contract",
+   "summary": "Protocol requiring a tool to have name, description and an async execute(input) returning ToolResult."
+  },
+  {
+   "label": "toolresult",
+   "type": "artifact",
+   "summary": "Result of a tool execution with success, output, error and metadata fields."
+  },
+  {
+   "label": "input_schema",
+   "type": "concept",
+   "summary": "JSON Schema of tool parameters, commonly implemented but not part of the formal Tool protocol."
+  },
+  {
+   "label": "hookresult",
+   "type": "artifact",
+   "summary": "Value returned by a hook handler, whose action is one of continue, deny, modify, inject_context or ask_user."
+  },
+  {
+   "label": "hook handler registration",
+   "type": "method",
+   "summary": "Hooks register handlers for events with a priority instead of mounting into a slot."
+  },
+  {
+   "label": "deny action",
+   "type": "concept",
+   "summary": "HookResult action that blocks the operation with a reason."
+  },
+  {
+   "label": "inject_context action",
+   "type": "concept",
+   "summary": "HookResult action that adds content to the conversation, e.g. linter findings."
+  },
+  {
+   "label": "ask_user action",
+   "type": "concept",
+   "summary": "HookResult action that requests user approval with options and a default."
+  },
+  {
+   "label": "agent loop",
+   "type": "method",
+   "summary": "Orchestrator loop that calls the provider, executes requested tools, appends results to context, and stops at max iterations."
+  },
+  {
+   "label": "context truncation",
+   "type": "method",
+   "summary": "Context strategy that keeps system messages and drops oldest other messages until under 70% of max tokens."
+  },
+  {
+   "label": "token estimate",
+   "type": "method",
+   "summary": "Rough token estimate of 4 characters per token."
+  },
+  {
+   "label": "persistent context",
+   "type": "component",
+   "summary": "Context implementation that saves messages to a storage path for session resumption."
+  },
+  {
+   "label": "context contract",
+   "type": "contract",
+   "summary": "Authoritative context specification kept in amplifier-core."
+  },
+  {
+   "label": "learning from sessions",
+   "type": "concept",
+   "summary": "Roadmap idea: tools to parse session data and analyze patterns so the system improves from accumulated experience."
+  },
+  {
+   "label": "smart tool",
+   "type": "concept",
+   "summary": "A library with wrappers around it, where the library holds the capability and every other surface is a thin adapter."
+  },
+  {
+   "label": "the library is the tool",
+   "type": "principle",
+   "summary": "Everything the tool can do is reachable from the library; no capability exists only in a wrapper."
+  },
+  {
+   "label": "wrapper",
+   "type": "concept",
+   "summary": "A thin adapter (CLI, MCP server, web service) exposing the library's capability in a different shape."
+  },
+  {
+   "label": "wrapper removal test",
+   "type": "method",
+   "summary": "Test of whether removing a wrapper would lose anything a different caller might want."
+  },
+  {
+   "label": "caller adapter",
+   "type": "method",
+   "summary": "An adapter callers put in front of the library to constrain the surface they depend on."
+  },
+  {
+   "label": "manifest",
+   "type": "artifact",
+   "summary": "SMART_TOOL.md: a single file shipped with the tool saying what it is, what it is for, and what it needs to run."
+  },
+  {
+   "label": "selection, not operation",
+   "type": "principle",
+   "summary": "The manifest answers whether this is the right tool and whether it runs here, not how to call it."
+  },
+  {
+   "label": "cached manifest snapshot",
+   "type": "artifact",
+   "summary": "An exact generated copy of a manifest a catalog may cache with source, revision, path and refresh time recorded."
+  },
+  {
+   "label": "catalog",
+   "type": "component",
+   "summary": "Catalogs and registries that consume manifests from the canonical upstream source."
+  },
+  {
+   "label": "manifest schema version",
+   "type": "concept",
+   "summary": "Manifest field giving the schema version, not the tool's version, so readers know whether they understand the file."
+  },
+  {
+   "label": "single version source",
+   "type": "principle",
+   "summary": "The manifest version must match the package definition version; three different answers to one question means consumers eventually pick the wrong one."
+  },
+  {
+   "label": "manifest description",
+   "type": "concept",
+   "summary": "Field saying what the tool does and when to reach for it, read by users and by agents deciding routing."
+  },
+  {
+   "label": "use_cases",
+   "type": "concept",
+   "summary": "Concrete jobs the tool is for, as selection aids rather than a capability list."
+  },
+  {
+   "label": "platforms",
+   "type": "concept",
+   "summary": "Operating systems the tool actually works on, not those it theoretically compiles for."
+  },
+  {
+   "label": "self-description",
+   "type": "method",
+   "summary": "A smart tool's ability to describe its own surface: capabilities, arguments, types and returns."
+  },
+  {
+   "label": "-h summary",
+   "type": "artifact",
+   "summary": "Terse, scannable user summary listing capabilities with one line each."
+  },
+  {
+   "label": "--help skill",
+   "type": "artifact",
+   "summary": "Agent-facing help shaped like an Agent Skill, read once the agent has decided to use the tool."
+  },
+  {
+   "label": "skill",
+   "type": "concept",
+   "summary": "Agent Skill format as a host delivers it to a model."
+  },
+  {
+   "label": "result provenance transparency",
+   "type": "principle",
+   "summary": "A caller should not need to know whether a result came from code, a model, or both to use it correctly."
+  },
+  {
+   "label": "ai-enabled capability disclosure",
+   "type": "claim",
+   "summary": "Docs and help should make clear which functionality is AI-enabled, stated explicitly if ambiguous."
+  },
+  {
+   "label": "tool name",
+   "type": "concept",
+   "summary": "Manifest name field, lowercase alphanumeric and hyphens, the tool's identity across registry, package index and CLI."
+  },
+  {
+   "label": "context payload",
+   "type": "concept",
+   "summary": "Optional extra material a caller already has, passed to a smart tool to help it do the job well."
+  },
+  {
+   "label": "payload is data, not a reference",
+   "type": "principle",
+   "summary": "At the library level callers pass actual content, not paths, keeping the library free of filesystem assumptions."
+  },
+  {
+   "label": "mechanical context assembly",
+   "type": "principle",
+   "summary": "Whatever selects and packages context should be caller-controlled code, not an agent's judgment of relevance."
+  },
+  {
+   "label": "context granularity",
+   "type": "concept",
+   "summary": "None, partial and full as the useful granularity of how much context the caller hands over."
+  },
+  {
+   "label": "tool-driven working directory access",
+   "type": "method",
+   "summary": "A tool's own intelligence may use the working directory via tools like read and bash as another means of context."
+  },
+  {
+   "label": "git installation",
+   "type": "method",
+   "summary": "Installing a smart tool from a git repository, the one method every tool must support."
+  },
+  {
+   "label": "ecosystem registry",
+   "type": "component",
+   "summary": "Optional publishing target such as pypi, npm, cargo, oci or go."
+  },
+  {
+   "label": "install script",
+   "type": "artifact",
+   "summary": "Permitted where setup is more than placing a package; installs the tool and nothing else."
+  },
+  {
+   "label": "runner",
+   "type": "concept",
+   "summary": "How a published tool is started once obtained, e.g. uvx, npx, docker; absent when a binary lands on the path."
+  },
+  {
+   "label": "descriptor",
+   "type": "artifact",
+   "summary": "smart-tool.json at the distribution root, stating where the manifest sits and how the tool is started."
+  }
+ ],
+ "edges": [
+  {
+   "from": "mount plan",
+   "to": "session",
+   "relation": "configures",
+   "description": "The overview diagram shows the mount plan flowing down into the kernel's session.",
+   "confidence": 0.6,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Mount Plan",
+   "chunk": "s-aa9fefe58937#2"
+  },
+  {
+   "from": "session",
+   "to": "kernel",
+   "relation": "part_of",
+   "description": "The diagram places the session inside the kernel box.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Kernel",
+   "chunk": "s-aa9fefe58937#2"
+  },
+  {
+   "from": "coordinator",
+   "to": "kernel",
+   "relation": "part_of",
+   "description": "The diagram places the coordinator inside the kernel, beneath the session.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Coordinator",
+   "chunk": "s-aa9fefe58937#2"
+  },
+  {
+   "from": "session",
+   "to": "coordinator",
+   "relation": "calls",
+   "description": "In the diagram an arrow runs from the session to the coordinator, which then fans out to modules; the diagram alone does not name the relation.",
+   "confidence": 0.5,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Session",
+   "chunk": "s-aa9fefe58937#2"
+  },
+  {
+   "from": "event",
+   "to": "hook",
+   "relation": "enables",
+   "description": "Events let behavior be added via hooks rather than code changes.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Extensions**: Add behavior via hooks, not code changes",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "libraries are not part of the kernel",
+   "to": "library",
+   "relation": "constrains",
+   "description": "Supporting libraries are declared application-layer concerns, not kernel.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "These libraries are **not part of the kernel**—they're application-layer concerns.",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "amplifier-profiles",
+   "to": "library",
+   "relation": "is_a",
+   "description": "amplifier-profiles is listed as a supporting library for profile loading and inheritance.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "`amplifier-profiles` | Profile loading and inheritance",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "amplifier-collections",
+   "to": "library",
+   "relation": "is_a",
+   "description": "amplifier-collections is listed as a supporting library for collection discovery and management.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "`amplifier-collections` | Collection discovery and management",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "amplifier-config",
+   "to": "library",
+   "relation": "is_a",
+   "description": "amplifier-config is listed as a supporting library providing three-scope configuration.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "`amplifier-config` | Three-scope configuration",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "amplifier-module-resolution",
+   "to": "library",
+   "relation": "is_a",
+   "description": "amplifier-module-resolution is listed as a supporting library for module source resolution.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "`amplifier-module-resolution` | Module source resolution",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "event",
+   "to": "observability",
+   "relation": "enables",
+   "description": "Events are justified by observability: everything important is observable, with a complete audit trail for debugging.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Observability**: Everything important is observable",
+   "chunk": "s-aa9fefe58937#6"
+  },
+  {
+   "from": "additive first",
+   "to": "provider",
+   "relation": "constrains",
+   "description": "New contract parameters should be optional; a required new parameter on complete() is called out as breaking existing providers.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Breaks existing providers",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "two-implementation rule",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "A concept may only be promoted into the kernel once at least two independent modules converge on the need; until then it is prototyped in modules.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Don't promote a concept into kernel until **≥2 independent modules** converge on the need.",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "two-implementation rule",
+   "to": "module",
+   "relation": "requires",
+   "description": "Needs are first prototyped inside modules before extraction to the kernel.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Module A needs X  →  Prototype X in Module A",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "spec before code",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Kernel changes must start with a short spec including alternatives, invariant impact, test strategy and rollback plan.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Kernel changes begin with a short spec",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "complexity budget",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Trade-off rule: every kernel addition must justify itself and ideally retire equivalent complexity elsewhere.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Additions should retire equivalent complexity elsewhere.",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "small and sharp interfaces",
+   "to": "coordinator",
+   "relation": "constrains",
+   "description": "The coordinator exposes focused mount/unmount operations rather than a swiss-army manage() call.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Prefer few, precise operations over broad, do-everything calls.",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "coordinator",
+   "to": "provider",
+   "relation": "mounts",
+   "description": "Providers are mounted on and unmounted from the coordinator by name.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "coordinator.mount(\"providers\", provider, name=\"anthropic\")",
+   "chunk": "s-6c7239446fe1#2"
+  },
+  {
+   "from": "module",
+   "to": "mount function",
+   "relation": "implements",
+   "description": "Each module implements a mount function that receives the coordinator as infrastructure context.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "Mount the module.",
+   "chunk": "s-ea73d36235e0#1"
+  },
+  {
+   "from": "mount plan",
+   "to": "mount function",
+   "relation": "configures",
+   "description": "The config argument passed to a module's mount function comes from the mount plan.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "contract",
+   "evidence": "config: Module configuration from Mount Plan",
+   "chunk": "s-ea73d36235e0#1"
+  },
+  {
+   "from": "mount function",
+   "to": "cleanup function",
+   "relation": "provides",
+   "description": "The mount function may return an optional cleanup function.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "artifact",
+   "evidence": "Optional cleanup function",
+   "chunk": "s-ea73d36235e0#1"
+  },
+  {
+   "from": "mount function",
+   "to": "coordinator",
+   "relation": "depends_on",
+   "description": "Inside mount, the module instance is mounted onto the coordinator under a slot and name.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "await coordinator.mount(\"providers\", module, name=\"my-provider\")",
+   "chunk": "s-ea73d36235e0#1"
+  },
+  {
+   "from": "coordinator",
+   "to": "capability registry",
+   "relation": "provides",
+   "description": "Modules can register and retrieve capabilities through the coordinator; consumers must handle a missing capability.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Modules can register and use capabilities",
+   "chunk": "s-ea73d36235e0#5"
+  },
+  {
+   "from": "coordinator",
+   "to": "contribution channel",
+   "relation": "provides",
+   "description": "The coordinator offers register_contributor / collect_contributions as a non-interfering aggregation pattern.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Non-interfering aggregation pattern",
+   "chunk": "s-ea73d36235e0#5"
+  },
+  {
+   "from": "contribution channel",
+   "to": "event",
+   "relation": "supports",
+   "description": "Modules declare their observable events via the observability.events contribution channel.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "Module declares observable events",
+   "chunk": "s-ea73d36235e0#5"
+  },
+  {
+   "from": "module independence",
+   "to": "module",
+   "relation": "constrains",
+   "description": "Modules must have no peer awareness, failures must not crash other modules, and any module can be replaced.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "**No peer awareness**: Modules don't know about other modules",
+   "chunk": "s-ea73d36235e0#5"
+  },
+  {
+   "from": "contribution channel",
+   "to": "module independence",
+   "relation": "supports",
+   "description": "Contribution channels are described as a non-interfering aggregation pattern, consistent with the rule that modules must not interfere with each other; note that capabilities still let one module consume another's registered implementation through the coordinator.",
+   "confidence": 0.6,
+   "from_type": "method",
+   "to_type": "principle",
+   "evidence": "Non-interfering aggregation pattern",
+   "chunk": "s-ea73d36235e0#5"
+  },
+  {
+   "from": "mount plan",
+   "to": "provider",
+   "relation": "configures",
+   "description": "The mount plan lists providers by module name, git source and config such as default_model and max_tokens.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"module\": \"provider-anthropic\"",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "tool",
+   "relation": "configures",
+   "description": "The mount plan lists tools with per-tool config such as allowed_paths for tool-filesystem and timeout for tool-bash.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"allowed_paths\": [\"/home/user/projects\"]",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "hook",
+   "relation": "configures",
+   "description": "The mount plan lists hooks such as hooks-logging and hooks-approval.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"module\": \"hooks-approval\"",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "agent",
+   "relation": "contains",
+   "description": "The mount plan contains an agents map, e.g. an explorer agent with its own tool list.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "\"description\": \"Codebase exploration agent\"",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "orchestrator",
+   "relation": "configures",
+   "description": "The session section of the example mount plan selects loop-streaming as orchestrator and context-persistent as context.",
+   "confidence": 0.7,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"loop-streaming\",\n        \"context\": \"context-persistent\"",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "module",
+   "relation": "loads",
+   "description": "Each module entry carries a git+https source, so the mount plan pins where module code is fetched from.",
+   "confidence": 0.75,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "\"source\": \"git+https://github.com/microsoft/amplifier-module-tool-bash@main\"",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "depends_on",
+   "description": "An agent declares the subset of tools it uses; the explorer agent references tool-search, which is not among the tools mounted in the same example plan.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "\"tools\": [\"tool-filesystem\", \"tool-search\"]",
+   "chunk": "s-e6d77329d8a8#2"
+  },
+  {
+   "from": "kernel",
+   "to": "event",
+   "relation": "emits",
+   "description": "The kernel emits canonical events that hooks can observe, modify, or act upon.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "The kernel emits canonical events that hooks can observe, modify, or act upon.",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "if it's important, emit an event",
+   "to": "event",
+   "relation": "constrains",
+   "description": "Design principle requiring anything important to be emitted as an event.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "**If it's important, emit an event**",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "if it's not observable, it didn't happen",
+   "to": "observability",
+   "relation": "constrains",
+   "description": "Design principle that treats anything not observable as not having happened.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "**If it's not observable, it didn't happen**",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "events.jsonl",
+   "to": "event",
+   "relation": "contains",
+   "description": "A single JSONL log is declared the single source of truth for events.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "**Single source of truth**: One JSONL log",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "hooks observe without blocking",
+   "to": "hook",
+   "relation": "constrains",
+   "description": "Hooks are non-blocking only by default; the same doc says hooks can also modify events, so blocking is an opt-in exception rather than a guarantee.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "**Hooks observe without blocking** (by default)",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "session",
+   "to": "session:fork",
+   "relation": "emits",
+   "description": "Creating a sub-session emits session:fork with parent and child ids.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "`session:fork` | Sub-session created | parent_id, child_id",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "provider:request",
+   "to": "event",
+   "relation": "is_a",
+   "description": "provider:request is a canonical provider event fired before each LLM call, carrying messages and model.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "`provider:request` | Before LLM call | messages, model",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "tool:pre",
+   "to": "event",
+   "relation": "is_a",
+   "description": "tool:pre is a canonical tool event fired before tool execution.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "`tool:pre` | Before tool execution | tool_name, input",
+   "chunk": "s-a2704086281a#0"
+  },
+  {
+   "from": "module",
+   "to": "event",
+   "relation": "emits",
+   "description": "Modules can emit custom events via coordinator.hooks.emit after declaring them.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Modules can emit custom events",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "namespace:action convention",
+   "to": "event",
+   "relation": "constrains",
+   "description": "Custom event names must follow the namespace:action convention.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Custom events follow the `namespace:action` convention.",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "event",
+   "to": "trace context",
+   "relation": "contains",
+   "description": "Events include session_id, request_id and span_id tracing identifiers.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Events include tracing identifiers",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "agent",
+   "to": "sub-session",
+   "relation": "enables",
+   "description": "When agents spawn sub-sessions, child session ids are derived from the parent id plus agent name.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "When agents spawn sub-sessions, IDs are related",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "events.jsonl",
+   "to": "session",
+   "relation": "part_of",
+   "description": "Event logs are stored per session under ~/.amplifier/projects/<project>/sessions/<session-id>/.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "ls ~/.amplifier/projects/<project>/sessions/<session-id>/events.jsonl",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "log level",
+   "to": "events.jsonl",
+   "relation": "configures",
+   "description": "Log levels control detail, with raw adding complete API payloads.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "`raw` | + Complete API payloads",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "log level",
+   "to": "if it's not observable, it didn't happen",
+   "relation": "constrains",
+   "description": "Trade-off: the 'everything observable' principle is in practice filtered by log level; at warn, standard events are not recorded.",
+   "confidence": 0.45,
+   "from_type": "concept",
+   "to_type": "principle",
+   "evidence": "`warn` | Errors + warnings",
+   "chunk": "s-a2704086281a#4"
+  },
+  {
+   "from": "researcher",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "researcher is a documented agent for research and information synthesis.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Purpose**: Research and information synthesis.",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "modular-builder",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "modular-builder is a documented agent for focused code implementation.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "**Purpose**: Focused code implementation.",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "zen-architect",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "zen-architect is invoked with @ and is best for design and architecture review.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "@zen-architect Design a notification system",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "profile",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Custom agents can be defined inside a profile's agents section.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Define agents in your profile or a separate agent file.",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "standalone agent file",
+   "to": "agent",
+   "relation": "provides",
+   "description": "Agents can alternatively be defined in .amplifier/agents/<name>.md.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Create `.amplifier/agents/my-agent.md`",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "depends_on",
+   "description": "A custom agent lists the tools it may use, e.g. tool-filesystem and tool-bash.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "tools:\n      - tool-filesystem\n      - tool-bash",
+   "chunk": "s-7df67a4219af#2"
+  },
+  {
+   "from": "session",
+   "to": "conversation history",
+   "relation": "contains",
+   "description": "A session represents a single conversation including history, tool results, metadata and an event log.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Conversation history (your prompts and AI responses)",
+   "chunk": "s-fa6363569877#0"
+  },
+  {
+   "from": "session",
+   "to": "profile",
+   "relation": "depends_on",
+   "description": "Session metadata records the profile used, alongside timestamp and provider.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Session metadata (timestamp, profile, provider)",
+   "chunk": "s-fa6363569877#0"
+  },
+  {
+   "from": "session",
+   "to": "events.jsonl",
+   "relation": "contains",
+   "description": "Each session includes an event log for debugging.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Event log for debugging",
+   "chunk": "s-fa6363569877#0"
+  },
+  {
+   "from": "cli",
+   "to": "session",
+   "relation": "provides",
+   "description": "Every Amplifier command creates a session; interactive mode is one session.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Every Amplifier command creates a session",
+   "chunk": "s-fa6363569877#0"
+  },
+  {
+   "from": "session resumption",
+   "to": "session",
+   "relation": "supports",
+   "description": "Sessions can be resumed with amplifier continue (most recent) or session resume <id>.",
+   "confidence": 0.9,
+   "from_type": "method",
+   "to_type": "component",
+   "evidence": "amplifier session resume abc123",
+   "chunk": "s-fa6363569877#0"
+  },
+  {
+   "from": "session event type list",
+   "to": "event",
+   "relation": "contradicts",
+   "description": "Inconsistency between docs: the sessions guide lists only seven event types, omitting canonical events such as session:fork, session:resume, prompt:complete, provider:error and tool:error that the event-system doc defines; the guide's list is a subset, not a full catalogue.",
+   "confidence": 0.55,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "| `session:end` | Session ended |",
+   "chunk": "s-fa6363569877#4"
+  },
+  {
+   "from": "context limit",
+   "to": "session resumption",
+   "relation": "constrains",
+   "description": "On resume, conversation history may exceed the model's context limit, forcing a new session, a larger model or manual summary.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "method",
+   "evidence": "The conversation history may exceed the model's context limit.",
+   "chunk": "s-fa6363569877#4"
+  },
+  {
+   "from": "session resumption",
+   "to": "tool",
+   "relation": "constrains",
+   "description": "Resumption is not a replay: tools execute against current state, and profile or files may have changed since the original session.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "component",
+   "evidence": "Tools execute against current state",
+   "chunk": "s-fa6363569877#4"
+  },
+  {
+   "from": "profile",
+   "to": "session resumption",
+   "relation": "constrains",
+   "description": "A resumed session may behave differently because the profile may have changed.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "method",
+   "evidence": "Profile may have changed",
+   "chunk": "s-fa6363569877#4"
+  },
+  {
+   "from": "collection",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Collections hold agent definitions under agents/, e.g. data-expert.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "### Agent in Collection",
+   "chunk": "s-3c4c04103e1d#2"
+  },
+  {
+   "from": "collection",
+   "to": "context file",
+   "relation": "contains",
+   "description": "Collections hold shared context files under context/.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "### Context in Collection",
+   "chunk": "s-3c4c04103e1d#2"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "contains",
+   "description": "A collection README should give an overview of its profiles and agents.",
+   "confidence": 0.75,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "Overview of profiles and agents",
+   "chunk": "s-3c4c04103e1d#2"
+  },
+  {
+   "from": "cli",
+   "to": "collection",
+   "relation": "loads",
+   "description": "Collections are installed with amplifier collection add from a git source, optionally pinned to a tag.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "amplifier collection add my-collection \\\n  --source git+https://github.com/myorg/my-collection@v1.0.0",
+   "chunk": "s-3c4c04103e1d#2"
+  },
+  {
+   "from": "semantic versioning",
+   "to": "collection",
+   "relation": "constrains",
+   "description": "Collections should use semantic versioning; major versions signal breaking changes.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "Use semantic versioning",
+   "chunk": "s-3c4c04103e1d#2"
+  },
+  {
+   "from": "profile",
+   "to": "provider",
+   "relation": "configures",
+   "description": "A profile can optionally configure providers, e.g. provider-anthropic with default_model claude-opus-4-1.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "# Optional - configure providers",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "profile",
+   "to": "hook",
+   "relation": "configures",
+   "description": "A profile can optionally configure hooks such as hooks-logging.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "# Optional - configure hooks",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "profile inheritance",
+   "to": "profile",
+   "relation": "supports",
+   "description": "Profiles can extend other profiles; the child inherits all parent settings and can override specific configurations.",
+   "confidence": 0.95,
+   "from_type": "method",
+   "to_type": "artifact",
+   "evidence": "Profiles can extend other profiles",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "inheritance never removes parent features",
+   "to": "profile inheritance",
+   "relation": "constrains",
+   "description": "The doc claims each level in foundation -> base -> dev -> your-profile only adds capabilities.",
+   "confidence": 0.9,
+   "from_type": "claim",
+   "to_type": "method",
+   "evidence": "Each level adds capabilities without removing parent features.",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "profile-specific tools",
+   "to": "inheritance never removes parent features",
+   "relation": "contradicts",
+   "description": "Self-contradiction in the profiles guide: safe-profile extends base yet intentionally omits tool-bash and makes the filesystem read-only, and children 'can override specific configurations' — so inheritance can remove or restrict parent capabilities.",
+   "confidence": 0.7,
+   "from_type": "method",
+   "to_type": "claim",
+   "evidence": "# tool-bash intentionally omitted",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "system instruction",
+   "to": "profile",
+   "relation": "part_of",
+   "description": "The markdown content after the frontmatter becomes the profile's system instruction.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "The markdown content after the frontmatter becomes the system instruction",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "profile",
+   "to": "mount plan",
+   "relation": "contradicts",
+   "description": "Example defaults disagree across docs: this profile example sets default_model claude-opus-4-1, while the mount plan example uses claude-sonnet-4-5; both are illustrative, so no single documented default.",
+   "confidence": 0.35,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "default_model: claude-opus-4-1",
+   "chunk": "s-22f6622f3dd1#2"
+  },
+  {
+   "from": "cli",
+   "to": "model provider",
+   "relation": "configures",
+   "description": "The active provider is selected with amplifier provider use <name> after exporting its API key.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier provider use openai",
+   "chunk": "s-f86f994e7caa#1"
+  },
+  {
+   "from": "settings.yaml",
+   "to": "model provider",
+   "relation": "configures",
+   "description": "Providers such as Azure can alternatively be configured in ~/.amplifier/settings.yaml.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Create `~/.amplifier/settings.yaml`",
+   "chunk": "s-f86f994e7caa#1"
+  },
+  {
+   "from": "model provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Anthropic, OpenAI, Azure OpenAI and Ollama are documented as providers; Azure requires an existing resource and deployed model.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Model deployed in your resource",
+   "chunk": "s-f86f994e7caa#1"
+  },
+  {
+   "from": "cli",
+   "to": "provider",
+   "relation": "configures",
+   "description": "A specific model can be chosen per run with --model, trading capability (opus) against speed (haiku).",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier run --model claude-opus-4-1 \"Complex analysis task\"",
+   "chunk": "s-f86f994e7caa#1"
+  },
+  {
+   "from": "tool",
+   "to": "agent",
+   "relation": "provides",
+   "description": "Tools provide capabilities that agents can invoke.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Tools provide capabilities that agents can invoke.",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "tool",
+   "to": "tool contract",
+   "relation": "implements",
+   "description": "A tool implements the runtime-checkable Tool protocol: name, description, async execute.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class Tool(Protocol):",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "tool contract",
+   "to": "toolresult",
+   "relation": "requires",
+   "description": "execute returns a ToolResult with success, output for LLM context, error and metadata.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "artifact",
+   "evidence": "output: str | None      # Output for LLM context",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "input_schema",
+   "relation": "depends_on",
+   "description": "Orchestrators use input_schema to generate tool definitions for LLMs.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Orchestrators use it to generate tool definitions for LLMs.",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "input_schema",
+   "to": "tool contract",
+   "relation": "contradicts",
+   "description": "Gap in the contract: input_schema is not part of the formal Protocol, yet orchestrators rely on it, so a protocol-conforming tool may lack what orchestrators need.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "The `input_schema` property is not part of the formal Protocol but is commonly implemented by tools as a class attribute.",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "tool",
+   "to": "coordinator",
+   "relation": "depends_on",
+   "description": "A tool's mount function mounts it on the coordinator under its own name.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await coordinator.mount(\"tools\", tool, name=tool.name)",
+   "chunk": "s-5cefe16c09b4#0"
+  },
+  {
+   "from": "hook",
+   "to": "hook handler registration",
+   "relation": "implements",
+   "description": "Hooks register handlers for events such as tool:pre with a priority rather than mounting.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Hooks register handlers rather than mounting",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "hook handler registration",
+   "to": "mount function",
+   "relation": "contradicts",
+   "description": "Hooks diverge from the general module pattern of mounting an instance onto the coordinator: they still expose mount() but register event handlers instead of calling coordinator.mount.",
+   "confidence": 0.6,
+   "from_type": "method",
+   "to_type": "contract",
+   "evidence": "coordinator.hooks.register(\"tool:pre\", handler.on_tool_pre, priority=10)",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "hook",
+   "to": "hookresult",
+   "relation": "provides",
+   "description": "Hook handlers return a HookResult whose action determines what happens next.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "return HookResult(action=\"continue\")",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "hookresult",
+   "to": "deny action",
+   "relation": "supports",
+   "description": "The deny action blocks the operation.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Block the operation",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "hookresult",
+   "to": "inject_context action",
+   "relation": "supports",
+   "description": "inject_context adds content to the conversation.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Add to conversation",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "hookresult",
+   "to": "ask_user action",
+   "relation": "supports",
+   "description": "ask_user requests approval from the user, here defaulting to deny.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "approval_default=\"deny\"",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "deny action",
+   "to": "hooks observe without blocking",
+   "relation": "contradicts",
+   "description": "The deny and ask_user actions let hooks block or pause operations, qualifying the 'hooks observe without blocking' principle, which only holds by default.",
+   "confidence": 0.55,
+   "from_type": "concept",
+   "to_type": "principle",
+   "evidence": "action=\"deny\",\n    reason=\"Operation not allowed\"",
+   "chunk": "s-6bcd4faaa0f6#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "agent loop",
+   "relation": "implements",
+   "description": "The example orchestrator loops: call provider, parse tool calls, execute tools, append results, until no tool calls or max iterations.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "return \"Max iterations reached\"",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider:request",
+   "relation": "emits",
+   "description": "The orchestrator, not the kernel, emits provider:request before calling the provider in the example.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "await hooks.emit(\"provider:request\", {",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool:pre",
+   "relation": "emits",
+   "description": "The orchestrator emits tool:pre and tool:post around each tool execution.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "await hooks.emit(\"tool:pre\", {",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "kernel",
+   "relation": "contradicts",
+   "description": "Who emits canonical events is inconsistent: the event-system doc says the kernel emits them, but the orchestrator contract example shows the orchestrator module emitting provider and tool events itself.",
+   "confidence": 0.5,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await hooks.emit(\"provider:response\", {",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "context manager",
+   "relation": "calls",
+   "description": "The orchestrator appends assistant and tool messages to the context.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await context.add_message({",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "agent loop",
+   "to": "toolresult",
+   "relation": "contradicts",
+   "description": "The example loop reads result.get(\"output\") as if the tool result were a dict, while the tool contract defines ToolResult as a class with an output attribute.",
+   "confidence": 0.5,
+   "from_type": "method",
+   "to_type": "artifact",
+   "evidence": "\"content\": result.get(\"output\", \"\")",
+   "chunk": "s-64b6b3bedb13#2"
+  },
+  {
+   "from": "context manager",
+   "to": "context truncation",
+   "relation": "implements",
+   "description": "The example context keeps all system messages and pops oldest other messages while over 70% of max_tokens.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "while self._estimate_tokens() > self.max_tokens * 0.7:",
+   "chunk": "s-309152feb654#2"
+  },
+  {
+   "from": "context truncation",
+   "to": "token estimate",
+   "relation": "depends_on",
+   "description": "Truncation depends on a rough 4-chars-per-token estimate rather than real token counts, a trade-off of accuracy for simplicity.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "method",
+   "evidence": "# Rough estimate: 4 chars per token",
+   "chunk": "s-309152feb654#2"
+  },
+  {
+   "from": "persistent context",
+   "to": "session resumption",
+   "relation": "enables",
+   "description": "Persistence of context messages is what enables session resumption.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "For session resumption, implement persistence",
+   "chunk": "s-309152feb654#2"
+  },
+  {
+   "from": "persistent context",
+   "to": "context manager",
+   "relation": "is_a",
+   "description": "PersistentContext is a context implementation that saves on every add_message.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "class PersistentContext:",
+   "chunk": "s-309152feb654#2"
+  },
+  {
+   "from": "context contract",
+   "to": "context manager",
+   "relation": "constrains",
+   "description": "The authoritative complete specification is in amplifier-core, not this doc page; the doc examples are illustrative.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "[Context Contract](https://github.com/microsoft/amplifier-core/blob/main/docs/contracts/CONTEXT_CONTRACT.md)** - Complete specification",
+   "chunk": "s-309152feb654#2"
+  },
+  {
+   "from": "learning from sessions",
+   "to": "session",
+   "relation": "depends_on",
+   "description": "The roadmap proposes tools that parse session data and reconstruct conversation logs to learn from usage.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Tools to parse session data, reconstruct conversation logs, and analyze patterns.",
+   "chunk": "s-e918402abb67#3"
+  },
+  {
+   "from": "learning from sessions",
+   "to": "amplifier",
+   "relation": "enables",
+   "description": "Roadmap aspiration (not a shipped feature): allowing the system to improve from accumulated experience.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "allowing the system to improve from accumulated experience",
+   "chunk": "s-e918402abb67#3"
+  },
+  {
+   "from": "smart tool",
+   "to": "library",
+   "relation": "contains",
+   "description": "A smart tool is a library with wrappers around it; the library holds the capability.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A smart tool is a library with wrappers around it.",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "the library is the tool",
+   "to": "wrapper",
+   "relation": "constrains",
+   "description": "One-directional, absolute rule: no capability exists only in a wrapper; missing behavior is added to the library and the wrapper calls it.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "no capability exists only in a wrapper",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "the library is the tool",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Described as the single decision that makes the rest of the smart-tool design possible.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "This is the single decision that makes the rest possible.",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "library",
+   "to": "mcp",
+   "relation": "enables",
+   "description": "A capability in a library can be called from a CLI, an MCP server, a web service, an app or any agent; one in a CLI only by those willing to shell out.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A capability that lives in a library can be called from a CLI, an MCP server, a web service, someone's own app, or any agent.",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "cli",
+   "to": "wrapper",
+   "relation": "is_a",
+   "description": "Every smart tool ships a CLI, and it is a thin wrapper.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Every smart tool ships a CLI, and it is a thin wrapper.",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "wrapper removal test",
+   "to": "wrapper",
+   "relation": "constrains",
+   "description": "Wrappers may hold medium-specific things (argument parsing, output formatting, HTTP routing), judged by whether removing the wrapper would lose anything another caller might want.",
+   "confidence": 0.9,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "The test is whether removing the wrapper would lose anything a different caller might want.",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "caller adapter",
+   "to": "library",
+   "relation": "constrains",
+   "description": "Callers wanting a narrower dependency should put their own adapter in front of the library rather than depend on everything it exposes.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "Callers who want to constrain the surface they depend on should put their own adapter in front of the library",
+   "chunk": "s-929c0544b030#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "manifest",
+   "relation": "requires",
+   "description": "Every smart tool carries a manifest shipped with the tool.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "Every smart tool carries a manifest",
+   "chunk": "s-adcfa3b63eb9#0"
+  },
+  {
+   "from": "catalog",
+   "to": "manifest",
+   "relation": "depends_on",
+   "description": "Catalogs and registries read manifests from the canonical upstream source.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Catalogs and registries read from that canonical upstream source.",
+   "chunk": "s-adcfa3b63eb9#0"
+  },
+  {
+   "from": "cached manifest snapshot",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "A cached snapshot must record provenance and is explicitly not an independent description nor evidence of the version installed on a caller's machine.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "A cached snapshot is not an independently authored description or evidence of the version installed on a caller's machine.",
+   "chunk": "s-adcfa3b63eb9#0"
+  },
+  {
+   "from": "selection, not operation",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "A field belongs in the manifest only if a caller needs it before deciding to install or invoke the tool.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "a field belongs in the manifest if a caller needs it *before* deciding to install or invoke the tool",
+   "chunk": "s-adcfa3b63eb9#0"
+  },
+  {
+   "from": "manifest",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "The manifest travels with the tool's own source and is updated in the same commit as code changes.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "so they are updated in the same commit",
+   "chunk": "s-adcfa3b63eb9#0"
+  },
+  {
+   "from": "manifest schema version",
+   "to": "manifest",
+   "relation": "part_of",
+   "description": "The schema version field is distinct from the tool version and lets a reader decide whether it understands the file.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "is the manifest schema version, not the tool's version.",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "single version source",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "The manifest's version must match the package definition; divergent versions across metadata, manifest and docs are called out as a failure mode.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "has three answers to a question that has one, and every consumer picks the wrong one eventually",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "manifest description",
+   "to": "agent",
+   "relation": "supports",
+   "description": "The description is read by agents deciding whether to route work to the tool, so it should carry the words users would actually use.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "by agents deciding whether to route work here",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "use_cases",
+   "to": "manifest",
+   "relation": "part_of",
+   "description": "use_cases are selection aids, not a capability list, phrased as things a person wants.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "These are selection aids, not a capability list",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "platforms",
+   "to": "manifest",
+   "relation": "part_of",
+   "description": "platforms lists only OSes the tool has actually been run on; untested Windows is not listed.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "A tool that has never been run on Windows does not list Windows.",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "tool name",
+   "to": "manifest",
+   "relation": "part_of",
+   "description": "The manifest name is lowercase alphanumeric and hyphens and serves as the tool's single identity across registry, package index and CLI.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "It is the tool's identity across the registry, the package index, and the CLI.",
+   "chunk": "s-adcfa3b63eb9#4"
+  },
+  {
+   "from": "result provenance transparency",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Callers should be able to use a result correctly without knowing whether code, a model, or both produced it.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "know whether a given result came from code, from a model, or from both in order to use it correctly",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "self-description",
+   "relation": "supports",
+   "description": "A smart tool can describe its own capabilities, arguments, types and returns.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "method",
+   "evidence": "A smart tool can describe its own surface",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "self-description",
+   "to": "manifest",
+   "relation": "supports",
+   "description": "Self-description covers how to drive the tool, while the manifest frontmatter covers whether to reach for it; both are reachable from the library.",
+   "confidence": 0.9,
+   "from_type": "method",
+   "to_type": "artifact",
+   "evidence": "Self-description covers how to drive the tool. The manifest's frontmatter covers whether to reach for it at all",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "ai-enabled capability disclosure",
+   "to": "result provenance transparency",
+   "relation": "contradicts",
+   "description": "Tension within the same spec: callers should not need to know whether a result came from a model, yet docs should make clear which functionality is AI-enabled; disclosure is for selection/permissions, transparency for result use.",
+   "confidence": 0.5,
+   "from_type": "claim",
+   "to_type": "principle",
+   "evidence": "it should be clear which functionality is AI-enabled",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "cli",
+   "to": "-h summary",
+   "relation": "provides",
+   "description": "-h is the terse user summary for remembering a flag name.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "`-h` is the user summary.",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "cli",
+   "to": "--help skill",
+   "relation": "provides",
+   "description": "--help is what an agent reads after deciding to use the tool.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "`--help` is the skill: what an agent reads once it has decided to use the tool.",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "--help skill",
+   "to": "skill",
+   "relation": "implements",
+   "description": "--help output has the shape of an Agent Skill as a host delivers one to a model.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "It has the shape of an [Agent Skill](https://agentskills.io/specification) as a host delivers one to a model.",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "cli",
+   "to": "library",
+   "relation": "depends_on",
+   "description": "The CLI renders what the library exposes, at two levels of detail for two readers, at both tool and capability scope.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "The CLI renders what the library exposes",
+   "chunk": "s-edd308b1a1f2#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "context payload",
+   "relation": "supports",
+   "description": "Smart tool capabilities accept an optional context payload of material the caller already has.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "accept an optional context payload",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "payload is data, not a reference",
+   "to": "library",
+   "relation": "constrains",
+   "description": "The library accepts actual content so it stays usable from processes with no shared filesystem.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "At the library level, a caller passes the actual content.",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "cli",
+   "to": "context payload",
+   "relation": "supports",
+   "description": "A CLI wrapper may accept a file path and read it into the payload, as a command-line convenience that does not change what the library accepts.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "A CLI wrapper may accept a file path and read it into the payload",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "context granularity",
+   "to": "sub-agent",
+   "relation": "supports",
+   "description": "None/partial/full granularity matches what agent delegation already offers.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "matching what agent delegation already offers",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "mechanical context assembly",
+   "to": "context payload",
+   "relation": "constrains",
+   "description": "If an agent composes the payload by judging relevance, results depend on its summarizing and identical inputs give different answers; so assembly should be caller-controlled code.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "two callers with identical inputs get different answers",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "tool-driven working directory access",
+   "to": "mechanical context assembly",
+   "relation": "contradicts",
+   "description": "Tension in the spec: right after demanding mechanical, caller-controlled assembly for reproducibility, it allows the tool's own intelligence to gather context from the working directory with read/bash, which is model-driven selection; the spec offsets this only by requiring documentation of permissions and scope.",
+   "confidence": 0.55,
+   "from_type": "method",
+   "to_type": "principle",
+   "evidence": "The tool can decide if its own intelligence takes advantage of the working directory with tools like read, bash, etc. as another means of providing context.",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "tool-driven working directory access",
+   "to": "payload is data, not a reference",
+   "relation": "contradicts",
+   "description": "Working-directory access assumes a shared filesystem, which the data-not-reference rule was meant to avoid.",
+   "confidence": 0.4,
+   "from_type": "method",
+   "to_type": "principle",
+   "evidence": "keeps it usable from processes that have no filesystem in common with the caller",
+   "chunk": "s-edd308b1a1f2#5"
+  },
+  {
+   "from": "smart tool",
+   "to": "git installation",
+   "relation": "requires",
+   "description": "Every smart tool installs from a git repository; it is the one required method and allows use before publishing.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "method",
+   "evidence": "Every smart tool installs from a git repository.",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "ecosystem registry",
+   "to": "smart tool",
+   "relation": "supports",
+   "description": "Publishing to an ecosystem registry is optional.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Publishing to an ecosystem registry is optional.",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "install script",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "An install script is only permitted for real setup work and must install the tool and nothing else.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Such a script installs the tool and nothing else.",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "runner",
+   "to": "ecosystem registry",
+   "relation": "depends_on",
+   "description": "Ecosystem says where the package comes from, runner how it is started; runner is absent when the ecosystem installs a binary onto the path.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "`runner` is absent where the ecosystem installs a binary onto the path.",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "descriptor",
+   "to": "manifest",
+   "relation": "contains",
+   "description": "The descriptor states the manifest path because it cannot be derived by inspecting the distribution.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "\"manifest\": \"src/my_smart_tool/SMART_TOOL.md\"",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "descriptor",
+   "to": "cli",
+   "relation": "configures",
+   "description": "The descriptor's cli_argv states how the tool is started.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "\"cli_argv\": [\"my-smart-tool\"]",
+   "chunk": "s-46b002856da7#0"
+  },
+  {
+   "from": "descriptor",
+   "to": "smart tool",
+   "relation": "part_of",
+   "description": "A directory holding smart-tool.json is by definition a distribution root.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "A directory holding one is a distribution root.",
+   "chunk": "s-46b002856da7#0"
+  }
+ ]
+}

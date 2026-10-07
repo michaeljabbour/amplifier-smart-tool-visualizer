@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Knowledge: amplifier-foundation, decisions over time</title>
+<style>
+:root {
+  --bg: #f7f7f5; --panel: #ffffff; --ink: #1f2328; --muted: #646b73; --line: #e3e3df; --accent: #2f6fde;
+  --support: #2e9d5b; --contra: #d1453b; --edge: #9aa3ad; --prox: #c9ced4; --chip: #f0f0ec;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #15171a; --panel: #1d2024; --ink: #e8eaed; --muted: #9aa0a6; --line: #2c3036; --accent: #6ea0ff;
+          --edge: #5f6872; --prox: #353b42; --chip: #262a2f; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+#app { display: grid; grid-template-columns: 270px 1fr 340px; grid-template-rows: 48px 1fr; height: 100vh; }
+header { grid-column: 1 / 4; display: flex; align-items: center; gap: 12px; padding: 0 14px;
+  border-bottom: 1px solid var(--line); background: var(--panel); }
+header h1 { font-size: 15px; margin: 0; font-weight: 600; white-space: nowrap; }
+header .counts { color: var(--muted); font-size: 12px; white-space: nowrap; }
+header .spacer { flex: 1; }
+input[type=search] { width: 260px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg); color: var(--ink); font: inherit; }
+button { font: inherit; font-size: 13px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--panel); color: var(--ink); cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button[aria-pressed=true] { background: var(--accent); color: #fff; border-color: var(--accent); }
+aside { overflow-y: auto; background: var(--panel); padding: 12px 14px; }
+#left { border-right: 1px solid var(--line); }
+#right { border-left: 1px solid var(--line); }
+h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 0 6px; }
+h2:first-child { margin-top: 0; }
+.row { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
+.row:hover .name { color: var(--accent); }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.num { color: var(--muted); font-size: 12px; }
+.off { opacity: .35; }
+label.check { display: flex; gap: 8px; align-items: center; padding: 2px 0; cursor: pointer; }
+.gap { border: 1px solid var(--line); border-radius: 8px; padding: 8px; margin: 6px 0; cursor: pointer; font-size: 13px; }
+.gap:hover, .gap.on { border-color: var(--accent); }
+.gap .score { color: var(--muted); font-size: 12px; }
+main { position: relative; overflow: hidden; }
+canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+canvas.dragging { cursor: grabbing; }
+#time { position: absolute; left: 16px; right: 16px; bottom: 12px; display: flex; gap: 10px; align-items: center;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; }
+#time input { flex: 1; }
+#time .when { min-width: 150px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+#ticker { position: absolute; left: 16px; top: 12px; max-width: 46%; font-size: 12px; pointer-events: none; }
+#ticker div { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 6px; padding: 4px 8px; margin-bottom: 4px; opacity: .95; }
+#hint { position: absolute; right: 16px; top: 12px; color: var(--muted); font-size: 12px; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
+.chip { display: inline-block; background: var(--chip); border-radius: 4px; padding: 1px 6px; font-size: 12px; margin-right: 4px; }
+.detail h3 { margin: 0 0 4px; font-size: 18px; }
+.detail .meta { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.rel { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.rel .r { font-weight: 600; }
+.rel .r.support { color: var(--support); } .rel .r.contra { color: var(--contra); }
+.rel .d { color: var(--muted); }
+.rel.closed { opacity: .55; } .rel.closed .r { text-decoration: line-through; }
+.link { color: var(--accent); cursor: pointer; }
+blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line); color: var(--muted); font-size: 13px; }
+.empty { color: var(--muted); }
+#keys { display: none; position: absolute; right: 16px; top: 44px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 14px; font-size: 12px; line-height: 1.8; }
+@media (max-width: 900px) { #app { grid-template-columns: 1fr; grid-template-rows: 48px 50vh auto auto; }
+  #left, #right { border: 0; border-top: 1px solid var(--line); } header { grid-column: 1; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1 id="title"></h1>
+    <span class="counts" id="counts"></span>
+    <span class="spacer"></span>
+    <input type="search" id="search" placeholder="Find a concept" aria-label="Find a concept">
+    <button id="fit" title="Show the whole graph">Fit</button>
+    <button id="labels" aria-pressed="false" title="Show every label">All labels</button>
+    <button id="keysBtn" title="Keyboard shortcuts">? Keys</button>
+  </header>
+  <aside id="left">
+    <h2>Topics</h2>
+    <div id="topics"></div>
+    <h2>Gaps between topics</h2>
+    <div id="gaps"></div>
+    <h2>Show</h2>
+    <label class="check"><input type="checkbox" id="showProx" checked> Shared-passage links</label>
+    <label class="check"><input type="checkbox" id="showClosed"> Closed relations (history)</label>
+    <label class="check"><input type="checkbox" id="showIsolated" checked> Unlinked concepts</label>
+    <h2>Relations</h2>
+    <div id="relations"></div>
+    <h2>Shape</h2>
+    <div id="diversity" class="num"></div>
+  </aside>
+  <main>
+    <canvas id="c" aria-label="Knowledge graph"></canvas>
+    <div id="ticker"></div>
+    <div id="hint">Click a concept · drag to move · scroll to zoom</div>
+    <div id="keys">/ find · F fit · L labels · Esc clear<br>← → step through time · H history</div>
+    <div id="time">
+      <button id="play" title="Replay the graph through time">Play</button>
+      <span>As of</span>
+      <input type="range" id="slider" min="0" max="0" value="0" aria-label="As of">
+      <span class="when" id="when">now</span>
+    </div>
+  </main>
+  <aside id="right"><div id="detail" class="detail"><p class="empty">Click a concept to see its relations, where it comes from, and its history.</p></div></aside>
+</div>
+<script type="application/json" id="data">{"format":"knowledge-graph/1","graph":"amplifier-history","generated_at":"2026-10-07T11:04:43Z","as_of":null,"focus":null,"truncated":false,"last_event":156,"counts":{"nodes":78,"edges":58,"proximity":0,"topics":27},"nodes":[{"id":"agent model selection","label":"agent model selection","type":"decision","summary":"","community":6,"color":"#b07aa1","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"amplifier-bundle-evaluation","label":"amplifier-bundle-evaluation","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-29T00:00:00Z","passages":[]},{"id":"amplifier-bundle-llm-wiki","label":"amplifier-bundle-llm-wiki","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-28T00:00:00Z","passages":[]},{"id":"amplifier-bundle-skills","label":"amplifier-bundle-skills","type":"component","summary":"","community":0,"color":"#4e79a7","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.003,"created_at":"2026-02-22T00:00:00Z","passages":[]},{"id":"amplifier-core dependency","label":"amplifier-core dependency","type":"decision","summary":"","community":7,"color":"#ff9da7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"amplifier-dev users","label":"amplifier-dev users","type":"concept","summary":"","community":8,"color":"#9c755f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-07T00:00:00Z","passages":[]},{"id":"amplifier-foundation","label":"amplifier-foundation","type":"component","summary":"","community":1,"color":"#f28e2b","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.0005,"created_at":"2025-12-09T00:00:00Z","passages":[]},{"id":"amplifier-module-tool-skills","label":"amplifier-module-tool-skills","type":"component","summary":"","community":27,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-04T00:00:00Z","passages":[]},{"id":"amplifier-smoke-test","label":"amplifier-smoke-test","type":"component","summary":"","community":9,"color":"#86bcb6","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-06T00:00:00Z","passages":[]},{"id":"amplifier-tester","label":"amplifier-tester","type":"component","summary":"","community":9,"color":"#86bcb6","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-06T00:00:00Z","passages":[]},{"id":"auto","label":"auto","type":"concept","summary":"","community":28,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2025-12-30T00:00:00Z","passages":[]},{"id":"bundle composition library","label":"bundle composition library","type":"concept","summary":"","community":1,"color":"#f28e2b","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-09T00:00:00Z","passages":[]},{"id":"bundle spawn field","label":"bundle spawn field","type":"concept","summary":"","community":29,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"circular bundle dependencies","label":"circular bundle dependencies","type":"policy","summary":"","community":10,"color":"#d37295","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-22T00:00:00Z","passages":[]},{"id":"class-based model routing","label":"class-based model routing","type":"concept","summary":"","community":30,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"claude-fable-","label":"claude-fable-*","type":"concept","summary":"","community":2,"color":"#59a14f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-07-07T00:00:00Z","passages":[]},{"id":"concatenate with dedup","label":"concatenate with dedup","type":"concept","summary":"","community":11,"color":"#8cd17d","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-07T00:00:00Z","passages":[]},{"id":"context sink pattern","label":"context sink pattern","type":"policy","summary":"","community":12,"color":"#499894","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-03T00:00:00Z","passages":[]},{"id":"debug flag","label":"debug flag","type":"concept","summary":"","community":31,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-25T00:00:00Z","passages":[]},{"id":"deep_merge list handling","label":"deep_merge list handling","type":"policy","summary":"","community":11,"color":"#8cd17d","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-07T00:00:00Z","passages":[]},{"id":"delegate event enrichment","label":"delegate event enrichment","type":"capability","summary":"","community":3,"color":"#e15759","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-06T00:00:00Z","passages":[]},{"id":"delegate tool","label":"delegate tool","type":"component","summary":"","community":13,"color":"#f1ce63","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-01T00:00:00Z","passages":[]},{"id":"delegate tool timeout","label":"delegate tool timeout","type":"decision","summary":"","community":14,"color":"#a0cbe8","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-08T00:00:00Z","passages":[]},{"id":"design research and generation behaviors","label":"design research and generation behaviors","type":"component","summary":"","community":4,"color":"#76b7b2","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-04T00:00:00Z","passages":[]},{"id":"design-intelligence","label":"design-intelligence","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-23T00:00:00Z","passages":[]},{"id":"digital-twin-universe","label":"digital-twin-universe","type":"component","summary":"","community":15,"color":"#ffbe7d","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-06T00:00:00Z","passages":[]},{"id":"disabled","label":"disabled","type":"concept","summary":"","community":14,"color":"#a0cbe8","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-08T00:00:00Z","passages":[]},{"id":"enabled","label":"enabled","type":"concept","summary":"","community":16,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-31T00:00:00Z","passages":[]},{"id":"excluded","label":"excluded","type":"concept","summary":"","community":4,"color":"#76b7b2","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.0005,"created_at":"2026-01-07T00:00:00Z","passages":[]},{"id":"experimental bundles","label":"experimental bundles","type":"component","summary":"","community":3,"color":"#e15759","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-01T00:00:00Z","passages":[]},{"id":"explicit provider preferences","label":"explicit provider preferences","type":"concept","summary":"","community":32,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"foundation agents","label":"foundation agents","type":"component","summary":"","community":2,"color":"#59a14f","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.0005,"created_at":"2026-06-03T00:00:00Z","passages":[]},{"id":"foundation default agents","label":"foundation default agents","type":"policy","summary":"","community":17,"color":"#f28e2b","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"foundation default behaviors","label":"foundation default behaviors","type":"policy","summary":"","community":0,"color":"#4e79a7","degree":6,"strength":24.0,"degree_norm":1.0,"betweenness":0.0099,"created_at":"2025-12-23T00:00:00Z","passages":[]},{"id":"foundation testing sandbox","label":"foundation testing sandbox","type":"capability","summary":"","community":15,"color":"#ffbe7d","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-12T00:00:00Z","passages":[]},{"id":"full","label":"full","type":"concept","summary":"","community":18,"color":"#59a14f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-30T00:00:00Z","passages":[]},{"id":"git-ops, file-ops, web-research","label":"git-ops, file-ops, web-research","type":"component","summary":"","community":17,"color":"#f28e2b","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"grpc adapter","label":"grpc adapter","type":"component","summary":"","community":1,"color":"#f28e2b","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-17T00:00:00Z","passages":[]},{"id":"hard error","label":"hard error","type":"concept","summary":"","community":33,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-22T00:00:00Z","passages":[]},{"id":"honest stopping","label":"honest stopping","type":"policy","summary":"","community":2,"color":"#59a14f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-06-03T00:00:00Z","passages":[]},{"id":"hooks-session-naming","label":"hooks-session-naming","type":"component","summary":"","community":19,"color":"#e15759","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-09T00:00:00Z","passages":[]},{"id":"included","label":"included","type":"concept","summary":"","community":34,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-06T00:00:00Z","passages":[]},{"id":"lsp-python","label":"lsp-python","type":"component","summary":"","community":35,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2025-12-28T00:00:00Z","passages":[]},{"id":"manual jsonl rewind","label":"manual jsonl rewind","type":"concept","summary":"","community":36,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2025-12-31T00:00:00Z","passages":[]},{"id":"mechanism only","label":"mechanism only","type":"policy","summary":"","community":20,"color":"#76b7b2","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-13T00:00:00Z","passages":[]},{"id":"model role lookup","label":"model role lookup","type":"capability","summary":"","community":5,"color":"#edc948","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"model_role","label":"model_role","type":"concept","summary":"","community":6,"color":"#b07aa1","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"model_role_resolver","label":"model_role_resolver","type":"component","summary":"","community":5,"color":"#edc948","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.0005,"created_at":"2026-05-13T00:00:00Z","passages":[]},{"id":"non-blocking async","label":"non-blocking async","type":"concept","summary":"","community":19,"color":"#e15759","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-04-01T00:00:00Z","passages":[]},{"id":"notification behaviors","label":"notification behaviors","type":"component","summary":"","community":4,"color":"#76b7b2","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-06T00:00:00Z","passages":[]},{"id":"present","label":"present","type":"concept","summary":"","community":37,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-03-06T00:00:00Z","passages":[]},{"id":"pypi","label":"pypi","type":"concept","summary":"","community":7,"color":"#ff9da7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"python code intelligence","label":"python code intelligence","type":"capability","summary":"","community":21,"color":"#edc948","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-28T00:00:00Z","passages":[]},{"id":"python-dev","label":"python-dev","type":"component","summary":"","community":21,"color":"#edc948","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-09T00:00:00Z","passages":[]},{"id":"raw flag","label":"raw flag","type":"concept","summary":"","community":22,"color":"#b07aa1","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-06T00:00:00Z","passages":[]},{"id":"removed","label":"removed","type":"concept","summary":"","community":38,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-02-01T00:00:00Z","passages":[]},{"id":"repair script only","label":"repair script only","type":"concept","summary":"","community":23,"color":"#ff9da7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-03-18T00:00:00Z","passages":[]},{"id":"restored","label":"restored","type":"concept","summary":"","community":3,"color":"#e15759","degree":2,"strength":8.0,"degree_norm":0.3333,"betweenness":0.0005,"created_at":"2026-02-02T00:00:00Z","passages":[]},{"id":"root bundle context","label":"root bundle context","type":"concept","summary":"","community":12,"color":"#499894","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-03T00:00:00Z","passages":[]},{"id":"routing_matrix","label":"routing_matrix","type":"component","summary":"","community":5,"color":"#edc948","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-28T00:00:00Z","passages":[]},{"id":"session event capture","label":"session event capture","type":"decision","summary":"","community":22,"color":"#b07aa1","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-25T00:00:00Z","passages":[]},{"id":"session repair method","label":"session repair method","type":"policy","summary":"","community":23,"color":"#ff9da7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-31T00:00:00Z","passages":[]},{"id":"session-analyst","label":"session-analyst","type":"component","summary":"","community":24,"color":"#9c755f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-30T00:00:00Z","passages":[]},{"id":"session-finder","label":"session-finder","type":"component","summary":"","community":24,"color":"#9c755f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-30T00:00:00Z","passages":[]},{"id":"shadow-env","label":"shadow-env","type":"component","summary":"","community":8,"color":"#9c755f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-07T00:00:00Z","passages":[]},{"id":"spawn","label":"spawn","type":"capability","summary":"","community":20,"color":"#76b7b2","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-13T00:00:00Z","passages":[]},{"id":"spawn tool inheritance config","label":"spawn tool inheritance config","type":"decision","summary":"","community":25,"color":"#86bcb6","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"spawned agents","label":"spawned agents","type":"policy","summary":"","community":26,"color":"#d37295","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"superpowers-methodology","label":"superpowers-methodology","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-22T00:00:00Z","passages":[]},{"id":"synchronous","label":"synchronous","type":"concept","summary":"","community":39,"color":"#9aa0a6","degree":0,"strength":0,"degree_norm":0.0,"betweenness":0.0,"created_at":"2026-01-09T00:00:00Z","passages":[]},{"id":"todo display mode","label":"todo display mode","type":"decision","summary":"","community":18,"color":"#59a14f","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2025-12-30T00:00:00Z","passages":[]},{"id":"token streaming","label":"token streaming","type":"capability","summary":"","community":16,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-05-31T00:00:00Z","passages":[]},{"id":"tool-delegate","label":"tool-delegate","type":"component","summary":"","community":26,"color":"#d37295","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-27T00:00:00Z","passages":[]},{"id":"tool-mcp","label":"tool-mcp","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-02-01T00:00:00Z","passages":[]},{"id":"tool-skills","label":"tool-skills","type":"component","summary":"","community":0,"color":"#4e79a7","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-04T00:00:00Z","passages":[]},{"id":"tool-task","label":"tool-task","type":"component","summary":"","community":13,"color":"#f1ce63","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"tool-task config","label":"tool-task config","type":"concept","summary":"","community":25,"color":"#86bcb6","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-01T00:00:00Z","passages":[]},{"id":"warn and skip","label":"warn and skip","type":"concept","summary":"","community":10,"color":"#d37295","degree":1,"strength":4.0,"degree_norm":0.1667,"betweenness":0.0,"created_at":"2026-01-22T00:00:00Z","passages":[]}],"edges":[{"id":"e-c6d0b0eb255c","source":"amplifier-foundation","target":"bundle composition library","relation":"introduced_as","description":"The amplifier-foundation package was first implemented as the library for loading and composing bundles.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-09T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-4c06d8177665","source":"spawn","target":"mechanism only","relation":"limited_to","description":"PreparedBundle.spawn() was simplified to pure mechanism, and agent-name resolution was moved to the app layer as policy.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-13T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-fe2482e7165c","source":"foundation default behaviors","target":"design-intelligence","relation":"includes","description":"The design-intelligence behavior was included in the foundation bundle so design agents are available by default.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-23T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-6a7316ee0bed","source":"python code intelligence","target":"lsp-python","relation":"provided_by","description":"The foundation bundle began including the lsp-python behavior for Python code intelligence via Pyright.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-28T00:00:00Z","valid_to":"2026-01-09T00:00:00Z","invalidated_by":"edge:e-9f5022509e1f","chunk":null},{"id":"e-341a6226408d","source":"todo display mode","target":"full","relation":"default_state","description":"The default todo display mode changed from 'auto' to 'full' so all items are always shown; auto-condensing became opt-in.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-30T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-67a3a89e66fe","source":"todo display mode","target":"auto","relation":"default_state","description":"The new hooks-todo-display module shipped with display mode 'auto', switching to condensed view for long lists.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-30T00:00:00Z","valid_to":"2025-12-30T00:00:00Z","invalidated_by":"edge:e-341a6226408d","chunk":null},{"id":"e-baf7db59a93c","source":"session-finder","target":"session-analyst","relation":"renamed_to","description":"The session-finder agent was renamed session-analyst because its scope grew to debugging, safe log extraction and recovery.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-30T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-1fc8101eccc0","source":"session repair method","target":"manual jsonl rewind","relation":"uses","description":"session-analyst gained rewind and repair guidance based on manually editing session files with backups.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2025-12-31T00:00:00Z","valid_to":"2026-03-18T00:00:00Z","invalidated_by":"edge:e-fbefe38aa4dd","chunk":null},{"id":"e-2c184bb14ec3","source":"spawned agents","target":"tool-task","relation":"exclude_tool","description":"Spawned agents were configured to exclude tool-task so they do the work themselves instead of delegating further.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-01T00:00:00Z","valid_to":"2026-02-27T00:00:00Z","invalidated_by":"edge:e-eafc6a474264","chunk":null},{"id":"e-35b3e7e59ce7","source":"spawn tool inheritance config","target":"bundle spawn field","relation":"lives_in","description":"A spawn field was added to the Bundle dataclass to control which tools spawned agents inherit.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-01T00:00:00Z","valid_to":"2026-01-01T00:00:00Z","invalidated_by":"edge:e-c214eaac8d81","chunk":null},{"id":"e-c214eaac8d81","source":"spawn tool inheritance config","target":"tool-task config","relation":"lives_in","description":"The spawn config moved out of Bundle into tool-task's own config, since tools own their configuration.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-fdaf4b4637e2","source":"foundation default agents","target":"git-ops, file-ops, web-research","relation":"includes","description":"git-ops, file-ops and web-research were promoted to default agents, the latter two as context sinks that keep large outputs out of the main session.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-f73700f8fb82","source":"tool-skills","target":"amplifier-module-tool-skills","relation":"sourced_from","description":"The tool-skills module was added to the foundation bundle from its standalone module repository, giving users the load_skill tool.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-04T00:00:00Z","valid_to":"2026-04-22T00:00:00Z","invalidated_by":"edge:e-cbfc6017d9b9","chunk":null},{"id":"e-db5fee99e88f","source":"notification behaviors","target":"included","relation":"default_state","description":"Desktop notification support from amplifier-bundle-notify was included in the foundation bundle.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-06T00:00:00Z","valid_to":"2026-01-07T00:00:00Z","invalidated_by":"edge:e-2d3428fe264a","chunk":null},{"id":"e-2d3428fe264a","source":"notification behaviors","target":"excluded","relation":"default_state","description":"Notification behaviors were removed from bundle defaults because they fired in every subprocess session; notifications became app-level policy.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-07T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-40551575a6d7","source":"shadow-env","target":"amplifier-dev users","relation":"available_to","description":"The shadow sandbox environment bundle was added to the amplifier-dev bundle for testing ecosystem changes.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-07T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-24e06709b859","source":"hooks-session-naming","target":"synchronous","relation":"execution_mode","description":"Session naming was made synchronous because session:end fired before prompt:complete and background naming never finished.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-09T00:00:00Z","valid_to":"2026-04-01T00:00:00Z","invalidated_by":"edge:e-9927ee79dd73","chunk":null},{"id":"e-9f5022509e1f","source":"python code intelligence","target":"python-dev","relation":"provided_by","description":"The lsp-python behavior was replaced by the full python-dev bundle in the foundation base, after dogfooding in amplifier-dev.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-09T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-4319cf69a015","source":"foundation testing sandbox","target":"shadow-env","relation":"provided_by","description":"The shadow bundle moved from amplifier-dev into the foundation bundle, positioned as a general-purpose OS isolation tool for all foundation users.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-12T00:00:00Z","valid_to":"2026-05-06T00:00:00Z","invalidated_by":"edge:e-9207625e4d09","chunk":null},{"id":"e-8310d3ffe016","source":"circular bundle dependencies","target":"hard error","relation":"handled_as","description":"Circular and diamond dependency detection was reworked, and true circular dependencies were made to raise an error.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-22T00:00:00Z","valid_to":"2026-01-22T00:00:00Z","invalidated_by":"edge:e-d49d2ddf32f3","chunk":null},{"id":"e-d49d2ddf32f3","source":"circular bundle dependencies","target":"warn and skip","relation":"handled_as","description":"Graceful degradation was restored because hard errors on circular dependencies stopped the app and hid the real errors.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-22T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-1a492a5b5c57","source":"session event capture","target":"debug flag","relation":"configured_by","description":"Session debug logging was turned on by default (debug: true in foundation, raw_debug in amplifier-dev).","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-01-25T00:00:00Z","valid_to":"2026-03-06T00:00:00Z","invalidated_by":"edge:e-70d0a21ae696","chunk":null},{"id":"e-2217a70a1932","source":"experimental bundles","target":"removed","relation":"status","description":"The experiments folder was deleted when the delegate tool was promoted, as no longer needed.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-01T00:00:00Z","valid_to":"2026-02-02T00:00:00Z","invalidated_by":"edge:e-4434778a76ba","chunk":null},{"id":"e-b57831c92352","source":"foundation default behaviors","target":"tool-mcp","relation":"includes","description":"The MCP tool module was included by default because it is silent when unconfigured.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-df06ac55a452","source":"tool-task","target":"delegate tool","relation":"replaced_by","description":"The experimental delegate tool was promoted to production in foundation v2.0.0, replacing the legacy task tool (breaking change).","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-4434778a76ba","source":"experimental bundles","target":"restored","relation":"status","description":"The experimental bundles were restored so users can compare experimental and production system prompts.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-02T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-fccbb9591dc3","source":"root bundle context","target":"context sink pattern","relation":"reduced_by","description":"Root context was cut from about 36K to about 11K tokens by moving philosophy docs into the specialist agents that need them.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-03T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-06bcee87f803","source":"delegate tool timeout","target":"disabled","relation":"default_state","description":"The delegate tool timeout was wired up with a default of None (disabled) instead of a dead 300s value.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-08T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-06fe4988634c","source":"foundation default behaviors","target":"superpowers-methodology","relation":"includes","description":"The superpowers bundle was included so all foundation users get its agents, modes and skills.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-22T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-93019f77c601","source":"foundation default behaviors","target":"amplifier-bundle-skills","relation":"includes","description":"The foundation bundle switched its skills include to amplifier-bundle-skills, which wraps tool-skills and adds curated skills.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-22T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-eafc6a474264","source":"spawned agents","target":"tool-delegate","relation":"exclude_tool","description":"exclude_tools was corrected to use the module name tool-delegate, because the wrong key let agents recurse 22 levels deep.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-27T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-1befc8fe0cf4","source":"agent model selection","target":"model_role","relation":"uses","description":"Agents gained model_role frontmatter, and foundation began including the routing-matrix bundle to resolve roles to models.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-28T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-4244a3687cdf","source":"agent model selection","target":"explicit provider preferences","relation":"uses","description":"Class-based model routing (PRs #96 to #100) was reverted the same day.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-28T00:00:00Z","valid_to":"2026-02-28T00:00:00Z","invalidated_by":"edge:e-1befc8fe0cf4","chunk":null},{"id":"e-72dc13b24ead","source":"agent model selection","target":"class-based model routing","relation":"uses","description":"Class-based model routing (fast, balanced, powerful classes) was added to provider preferences.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-28T00:00:00Z","valid_to":"2026-02-28T00:00:00Z","invalidated_by":"edge:e-4244a3687cdf","chunk":null},{"id":"e-80f33aa18a59","source":"model role lookup","target":"routing_matrix","relation":"reads_from","description":"tool-delegate resolved model_role through the routing matrix integration.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-28T00:00:00Z","valid_to":"2026-05-13T00:00:00Z","invalidated_by":"edge:e-b191d68a93d6","chunk":null},{"id":"e-e24af668d47f","source":"amplifier-core dependency","target":"pypi","relation":"sourced_from","description":"The amplifier-core dependency was switched from git to PyPI for the Rust kernel.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-02-28T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-94214dcedc14","source":"design research and generation behaviors","target":"included","relation":"default_state","description":"Design research and generation behaviors were added to foundation defaults so all users get design agents.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-04T00:00:00Z","valid_to":"2026-03-04T00:00:00Z","invalidated_by":"edge:e-b82776b33065","chunk":null},{"id":"e-b82776b33065","source":"design research and generation behaviors","target":"excluded","relation":"default_state","description":"The design delegation change was reverted the same day.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-04T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-3480680ec05f","source":"delegate event enrichment","target":"present","relation":"status","description":"Delegate events were enriched with tool_call_id, parallel_group_id and session metadata (CP-4).","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-06T00:00:00Z","valid_to":"2026-03-07T00:00:00Z","invalidated_by":"edge:e-da797af1f061","chunk":null},{"id":"e-70d0a21ae696","source":"session event capture","target":"raw flag","relation":"configured_by","description":"Bundle configs moved from debug/raw_debug to raw: true because providers now read 'raw' and the old flags emitted nothing.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-06T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-da797af1f061","source":"delegate event enrichment","target":"removed","relation":"status","description":"PR #119 rewrote overlapping parts of the delegate tool and accidentally removed the CP-4 enrichment code.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-07T00:00:00Z","valid_to":"2026-03-10T00:00:00Z","invalidated_by":"edge:e-861c907a8cd5","chunk":null},{"id":"e-e66c4a5ffa27","source":"deep_merge list handling","target":"concatenate with dedup","relation":"set_to","description":"deep_merge now concatenates lists instead of replacing them, fixing silent config loss in bundle composition.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-07T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-861c907a8cd5","source":"delegate event enrichment","target":"restored","relation":"status","description":"The CP-4 delegate event enrichment was re-landed on top of PR #119.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-10T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-30f47379b363","source":"grpc adapter","target":"amplifier-foundation","relation":"added_to","description":"A subprocess-based Python gRPC adapter was added so non-Python hosts can use Python Amplifier modules.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-17T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-fbefe38aa4dd","source":"session repair method","target":"repair script only","relation":"uses","description":"Manual JSONL repair was removed from session-analyst; the Python repair script became the only path because manual edits made sessions worse.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-03-18T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-9927ee79dd73","source":"hooks-session-naming","target":"non-blocking async","relation":"execution_mode","description":"Session naming became non-blocking with a session:end drain handler and model_role routing.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-04-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-cbfc6017d9b9","source":"tool-skills","target":"amplifier-bundle-skills","relation":"sourced_from","description":"The tool-skills source was redirected from the deprecated standalone module to amplifier-bundle-skills.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-04-22T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-3ac15e7e0afe","source":"amplifier-smoke-test","target":"amplifier-tester","relation":"replaced_by","description":"The amplifier-smoke-test agent was deleted and replaced by amplifier-tester:validator.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-06T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-9207625e4d09","source":"foundation testing sandbox","target":"digital-twin-universe","relation":"provided_by","description":"shadow-env was replaced ecosystem-wide by amplifier-tester and digital-twin-universe, and foundation swapped its include, agents, recipes and docs.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-06T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-b191d68a93d6","source":"model role lookup","target":"model_role_resolver","relation":"reads_from","description":"The routing_matrix session state was replaced by a duck-typed model_role_resolver capability so other routing strategies can plug in; backward compatibility was dropped.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-13T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-b6861b40a8ed","source":"routing_matrix","target":"model_role_resolver","relation":"renamed_to","description":"The routing_matrix capability was renamed model_role_resolver.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-13T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-cdc66979ba47","source":"foundation default behaviors","target":"amplifier-bundle-llm-wiki","relation":"includes","description":"amplifier-bundle-llm-wiki was included as a default-on behavior with near-zero cost when its modes are dormant.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-28T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-e209dc53ffa0","source":"foundation default behaviors","target":"amplifier-bundle-evaluation","relation":"includes","description":"amplifier-bundle-evaluation was included as a default-on behavior with zero ambient token cost.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-29T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-26e8d4c3ba6a","source":"token streaming","target":"enabled","relation":"default_state","description":"The token-streaming overlay was enabled by default (TTY-gated, opt-out).","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-31T00:00:00Z","valid_to":"2026-05-31T00:00:00Z","invalidated_by":"edge:e-c4ae652b6b01","chunk":null},{"id":"e-c4ae652b6b01","source":"token streaming","target":"disabled","relation":"default_state","description":"Default-on streaming was paused as temporary while delegate-session handling and interleaved assistant messages were finished.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-05-31T00:00:00Z","valid_to":"2026-06-01T00:00:00Z","invalidated_by":"edge:e-ce4a10e8c1c7","chunk":null},{"id":"e-ce4a10e8c1c7","source":"token streaming","target":"enabled","relation":"default_state","description":"Token streaming was re-enabled by default at the policy layer once sub-agent output curation and the double-render fix were done.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-06-01T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-2eeed1d2ede9","source":"honest stopping","target":"foundation agents","relation":"added_to","description":"Agents got an Honest Stopping escape hatch to refuse and report instead of fabricating, after git-ops invented PR verification.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-06-03T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null},{"id":"e-e0df0c539222","source":"foundation agents","target":"claude-fable-","relation":"prefer_model","description":"Agent provider preferences now list claude-fable-* first and prompts were trimmed, since no earlier wildcard matched fable-5.","confidence":null,"weight":1.0,"method":"agent","agent":"historian","valid_from":"2026-07-07T00:00:00Z","valid_to":null,"invalidated_by":null,"chunk":null}],"proximity":[],"topics":[{"id":0,"label":"foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","size":8,"color":"#4e79a7","summary":""},{"id":1,"label":"amplifier-foundation, bundle composition library, grpc adapter","size":3,"color":"#f28e2b","summary":""},{"id":2,"label":"foundation agents, claude-fable-, honest stopping","size":3,"color":"#59a14f","summary":""},{"id":3,"label":"restored, delegate event enrichment, experimental bundles","size":3,"color":"#e15759","summary":""},{"id":4,"label":"excluded, design research and generation behaviors, notification behaviors","size":3,"color":"#76b7b2","summary":""},{"id":5,"label":"model_role_resolver, model role lookup, routing_matrix","size":3,"color":"#edc948","summary":""},{"id":6,"label":"agent model selection, model_role","size":2,"color":"#b07aa1","summary":""},{"id":7,"label":"amplifier-core dependency, pypi","size":2,"color":"#ff9da7","summary":""},{"id":8,"label":"amplifier-dev users, shadow-env","size":2,"color":"#9c755f","summary":""},{"id":9,"label":"amplifier-smoke-test, amplifier-tester","size":2,"color":"#86bcb6","summary":""},{"id":10,"label":"circular bundle dependencies, warn and skip","size":2,"color":"#d37295","summary":""},{"id":11,"label":"concatenate with dedup, deep_merge list handling","size":2,"color":"#8cd17d","summary":""},{"id":12,"label":"context sink pattern, root bundle context","size":2,"color":"#499894","summary":""},{"id":13,"label":"delegate tool, tool-task","size":2,"color":"#f1ce63","summary":""},{"id":14,"label":"delegate tool timeout, disabled","size":2,"color":"#a0cbe8","summary":""},{"id":15,"label":"digital-twin-universe, foundation testing sandbox","size":2,"color":"#ffbe7d","summary":""},{"id":16,"label":"enabled, token streaming","size":2,"color":"#4e79a7","summary":""},{"id":17,"label":"foundation default agents, git-ops, file-ops, web-research","size":2,"color":"#f28e2b","summary":""},{"id":18,"label":"full, todo display mode","size":2,"color":"#59a14f","summary":""},{"id":19,"label":"hooks-session-naming, non-blocking async","size":2,"color":"#e15759","summary":""},{"id":20,"label":"mechanism only, spawn","size":2,"color":"#76b7b2","summary":""},{"id":21,"label":"python code intelligence, python-dev","size":2,"color":"#edc948","summary":""},{"id":22,"label":"raw flag, session event capture","size":2,"color":"#b07aa1","summary":""},{"id":23,"label":"repair script only, session repair method","size":2,"color":"#ff9da7","summary":""},{"id":24,"label":"session-analyst, session-finder","size":2,"color":"#9c755f","summary":""},{"id":25,"label":"spawn tool inheritance config, tool-task config","size":2,"color":"#86bcb6","summary":""},{"id":26,"label":"spawned agents, tool-delegate","size":2,"color":"#d37295","summary":""}],"gaps":[{"between":[0,1],"score":1.0,"observed_weight":0.0,"expected_weight":2.95,"size":[8,3],"bridge_candidates":[["foundation default behaviors","amplifier-bundle-skills","amplifier-bundle-evaluation"],["amplifier-foundation","bundle composition library","grpc adapter"]],"topics":["foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","amplifier-foundation, bundle composition library, grpc adapter"],"prompt":"Two developed topics are barely linked: [foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation] and [amplifier-foundation, bundle composition library, grpc adapter]. What would connect foundation default behaviors and amplifier-foundation?"},{"between":[0,2],"score":1.0,"observed_weight":0.0,"expected_weight":2.95,"size":[8,3],"bridge_candidates":[["foundation default behaviors","amplifier-bundle-skills","amplifier-bundle-evaluation"],["foundation agents","claude-fable-","honest stopping"]],"topics":["foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","foundation agents, claude-fable-, honest stopping"],"prompt":"Two developed topics are barely linked: [foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation] and [foundation agents, claude-fable-, honest stopping]. What would connect foundation default behaviors and foundation agents?"},{"between":[0,3],"score":1.0,"observed_weight":0.0,"expected_weight":2.95,"size":[8,3],"bridge_candidates":[["foundation default behaviors","amplifier-bundle-skills","amplifier-bundle-evaluation"],["restored","delegate event enrichment","experimental bundles"]],"topics":["foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","restored, delegate event enrichment, experimental bundles"],"prompt":"Two developed topics are barely linked: [foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation] and [restored, delegate event enrichment, experimental bundles]. What would connect foundation default behaviors and restored?"},{"between":[0,4],"score":1.0,"observed_weight":0.0,"expected_weight":2.95,"size":[8,3],"bridge_candidates":[["foundation default behaviors","amplifier-bundle-skills","amplifier-bundle-evaluation"],["excluded","design research and generation behaviors","notification behaviors"]],"topics":["foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","excluded, design research and generation behaviors, notification behaviors"],"prompt":"Two developed topics are barely linked: [foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation] and [excluded, design research and generation behaviors, notification behaviors]. What would connect foundation default behaviors and excluded?"},{"between":[0,5],"score":1.0,"observed_weight":0.0,"expected_weight":2.95,"size":[8,3],"bridge_candidates":[["foundation default behaviors","amplifier-bundle-skills","amplifier-bundle-evaluation"],["model_role_resolver","model role lookup","routing_matrix"]],"topics":["foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation","model_role_resolver, model role lookup, routing_matrix"],"prompt":"Two developed topics are barely linked: [foundation default behaviors, amplifier-bundle-skills, amplifier-bundle-evaluation] and [model_role_resolver, model role lookup, routing_matrix]. What would connect foundation default behaviors and model_role_resolver?"}],"diversity":{"state":"dispersed","modularity":0.9377,"top_topic_share":0.123,"advice":"Many loosely linked topics. Find the bridges, or narrow the focus."},"time":{"first":"2025-12-09T00:00:00Z","last":"2026-07-07T00:00:00Z","marks":["2025-12-09T00:00:00Z","2025-12-13T00:00:00Z","2025-12-23T00:00:00Z","2025-12-28T00:00:00Z","2025-12-30T00:00:00Z","2025-12-31T00:00:00Z","2026-01-01T00:00:00Z","2026-01-04T00:00:00Z","2026-01-06T00:00:00Z","2026-01-07T00:00:00Z","2026-01-09T00:00:00Z","2026-01-12T00:00:00Z","2026-01-22T00:00:00Z","2026-01-25T00:00:00Z","2026-02-01T00:00:00Z","2026-02-02T00:00:00Z","2026-02-03T00:00:00Z","2026-02-08T00:00:00Z","2026-02-22T00:00:00Z","2026-02-27T00:00:00Z","2026-02-28T00:00:00Z","2026-03-04T00:00:00Z","2026-03-06T00:00:00Z","2026-03-07T00:00:00Z","2026-03-10T00:00:00Z","2026-03-17T00:00:00Z","2026-03-18T00:00:00Z","2026-04-01T00:00:00Z","2026-04-22T00:00:00Z","2026-05-06T00:00:00Z","2026-05-13T00:00:00Z","2026-05-28T00:00:00Z","2026-05-29T00:00:00Z","2026-05-31T00:00:00Z","2026-06-01T00:00:00Z","2026-06-03T00:00:00Z","2026-07-07T00:00:00Z"]}}</script>
+<script>
+"use strict";
+const LIVE = false;
+let D = JSON.parse(document.getElementById("data").textContent);
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const SUPPORT = new Set(["supports","confirms","evidence_for","supported_by","demonstrates","shows","validates"]);
+const CONTRA = new Set(["contradicts","refutes","disputes","conflicts_with","undermines","challenges","evidence_against","contradicted_by"]);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const state = { selected: null, hover: null, search: "", hiddenTopics: new Set(), hiddenRel: new Set(),
+  allLabels: false, asOf: null, gap: null, flashes: new Map(), path: null, pathEdges: null };
+let nodes = [], byId = new Map(), links = [], prox = [];
+const cam = { x: 0, y: 0, k: 1 };
+const canvas = $("c"), ctx = canvas.getContext("2d");
+let W = 0, H = 0, alpha = 1;
+
+function build(keepPositions) {
+  const old = byId;
+  byId = new Map();
+  nodes = D.nodes.map((n) => {
+    const prev = old.get(n.id);
+    const o = Object.assign({}, n, { r: 4 + 16 * Math.sqrt(n.degree_norm || 0) });
+    if (keepPositions && prev) { o.x = prev.x; o.y = prev.y; o.vx = prev.vx; o.vy = prev.vy; o.fixed = prev.fixed; }
+    byId.set(n.id, o);
+    return o;
+  });
+  const topics = D.topics.map((t) => t.id);
+  const centers = new Map();
+  topics.forEach((t, i) => { const a = 2 * Math.PI * i / Math.max(1, topics.length); const R = 120 + 40 * Math.sqrt(nodes.length);
+    centers.set(t, [Math.cos(a) * R, Math.sin(a) * R]); });
+  for (const n of nodes) {
+    if (n.x !== undefined) continue;
+    const nb = D.edges.find((e) => (e.source === n.id && old.has(e.target)) || (e.target === n.id && old.has(e.source)));
+    const anchor = nb ? byId.get(nb.source === n.id ? nb.target : nb.source) : null;
+    const c = anchor && anchor.x !== undefined ? [anchor.x, anchor.y] : (centers.get(n.community) || [0, 0]);
+    n.x = c[0] + (Math.random() - .5) * 80; n.y = c[1] + (Math.random() - .5) * 80; n.vx = 0; n.vy = 0;
+    if (keepPositions) state.flashes.set(n.id, performance.now());
+  }
+  links = D.edges.filter((e) => byId.has(e.source) && byId.has(e.target)).map((e) => Object.assign({}, e, { s: byId.get(e.source), t: byId.get(e.target) }));
+  prox = D.proximity.filter((p) => byId.has(p.source) && byId.has(p.target)).map((p) => Object.assign({}, p, { s: byId.get(p.source), t: byId.get(p.target) }));
+  renderSidebar();
+  setupTime();
+  alpha = keepPositions ? Math.max(alpha, .3) : 1;
+}
+
+// ---- visibility ----
+function edgeLive(e) {
+  if (state.asOf) return e.valid_from <= state.asOf && (!e.valid_to || e.valid_to > state.asOf);
+  return !e.valid_to || $("showClosed").checked;
+}
+function nodeVisible(n) {
+  if (state.hiddenTopics.has(n.community)) return false;
+  if (state.asOf && n.created_at && n.created_at > state.asOf) return false;
+  if (!$("showIsolated").checked && !n.degree) return false;
+  return true;
+}
+function linkVisible(e) { return edgeLive(e) && !state.hiddenRel.has(e.relation) && nodeVisible(e.s) && nodeVisible(e.t); }
+
+// ---- layout ----
+function tick() {
+  const vis = nodes.filter(nodeVisible);
+  const cell = 90, grid = new Map();
+  for (const n of vis) { const k = Math.floor(n.x / cell) + "," + Math.floor(n.y / cell); (grid.get(k) || grid.set(k, []).get(k)).push(n); }
+  for (const n of vis) {
+    const gx = Math.floor(n.x / cell), gy = Math.floor(n.y / cell);
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+      const bucket = grid.get((gx + dx) + "," + (gy + dy)); if (!bucket) continue;
+      for (const m of bucket) { if (m === n) continue;
+        let x = n.x - m.x, y = n.y - m.y, d2 = x * x + y * y || .01; const min = n.r + m.r + 14;
+        const f = (d2 < min * min ? 3 : 1) * 900 / d2; n.vx += x * f * alpha * .05; n.vy += y * f * alpha * .05; }
+    }
+    n.vx -= n.x * .0025 * alpha; n.vy -= n.y * .0025 * alpha;
+  }
+  const spring = (a, b, len, k) => { const x = b.x - a.x, y = b.y - a.y, d = Math.sqrt(x * x + y * y) || 1;
+    const f = (d - len) / d * k * alpha; a.vx += x * f; a.vy += y * f; b.vx -= x * f; b.vy -= y * f; };
+  for (const e of links) if (linkVisible(e)) spring(e.s, e.t, 70, .04);
+  if ($("showProx").checked) for (const p of prox) if (nodeVisible(p.s) && nodeVisible(p.t)) spring(p.s, p.t, 110, .006 * Math.min(4, p.count));
+  for (const n of vis) { if (n.fixed) { n.vx = n.vy = 0; continue; } n.vx *= .6; n.vy *= .6; n.x += n.vx; n.y += n.vy; }
+  alpha *= .985;
+}
+
+// ---- drawing ----
+function toScreen(x, y) { return [(x - cam.x) * cam.k + W / 2, (y - cam.y) * cam.k + H / 2]; }
+function toWorld(x, y) { return [(x - W / 2) / cam.k + cam.x, (y - H / 2) / cam.k + cam.y]; }
+function focusSet() {
+  if (state.path) return state.path;
+  if (state.gap) return state.gap;
+  const id = state.selected || state.hover; if (!id) return null;
+  const s = new Set([id]);
+  for (const e of links) if (linkVisible(e)) { if (e.source === id) s.add(e.target); if (e.target === id) s.add(e.source); }
+  return s;
+}
+function draw() {
+  const dpr = window.devicePixelRatio || 1;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const focus = focusSet(), q = state.search;
+  const colEdge = css("--edge"), colProx = css("--prox"), colSup = css("--support"), colCon = css("--contra"), ink = css("--ink");
+  if ($("showProx").checked) {
+    ctx.strokeStyle = colProx; ctx.lineWidth = 1; ctx.globalAlpha = focus ? .15 : .5; ctx.beginPath();
+    for (const p of prox) { if (!nodeVisible(p.s) || !nodeVisible(p.t)) continue;
+      const [x1, y1] = toScreen(p.s.x, p.s.y), [x2, y2] = toScreen(p.t.x, p.t.y); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  for (const e of links) {
+    if (!linkVisible(e)) continue;
+    const onPath = state.pathEdges && state.pathEdges.has(e.source + "|" + e.target);
+    const on = state.pathEdges ? onPath : (!focus || (focus.has(e.source) && focus.has(e.target)));
+    const [x1, y1] = toScreen(e.s.x, e.s.y), [x2, y2] = toScreen(e.t.x, e.t.y);
+    ctx.strokeStyle = SUPPORT.has(e.relation) ? colSup : CONTRA.has(e.relation) ? colCon : colEdge;
+    ctx.globalAlpha = on ? .9 : .08;
+    ctx.lineWidth = Math.min(4, .8 + (e.method === "cooccurrence" ? Math.log(1 + e.weight) * .4 : 1) * (e.confidence || .8));
+    if (onPath) { ctx.lineWidth = 4; ctx.strokeStyle = css("--accent"); }
+    ctx.setLineDash(e.valid_to ? [5, 4] : []);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    if (cam.k > .7 && on && e.method !== "cooccurrence") {
+      const a = Math.atan2(y2 - y1, x2 - x1), r = e.t.r * cam.k + 2, ax = x2 - Math.cos(a) * r, ay = y2 - Math.sin(a) * r;
+      ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(ax, ay);
+      ctx.lineTo(ax - 7 * Math.cos(a - .4), ay - 7 * Math.sin(a - .4)); ctx.lineTo(ax - 7 * Math.cos(a + .4), ay - 7 * Math.sin(a + .4));
+      ctx.closePath(); ctx.fillStyle = ctx.strokeStyle; ctx.fill();
+      if (focus && cam.k > .9) { ctx.globalAlpha = .85; ctx.fillStyle = ink; ctx.font = "11px sans-serif";
+        ctx.fillText(e.relation.replace(/_/g, " "), (x1 + x2) / 2 + 4, (y1 + y2) / 2 - 4); }
+    }
+  }
+  ctx.setLineDash([]); ctx.globalAlpha = 1;
+  const now = performance.now();
+  const labelled = [];
+  for (const n of nodes) {
+    if (!nodeVisible(n)) continue;
+    const [x, y] = toScreen(n.x, n.y), r = Math.max(2, n.r * cam.k);
+    if (x < -50 || y < -50 || x > W + 50 || y > H + 50) continue;
+    const match = q && (n.label.toLowerCase().includes(q) || n.id.includes(q));
+    const dim = (focus && !focus.has(n.id)) || (q && !match);
+    ctx.globalAlpha = dim ? .15 : 1;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fillStyle = n.color; ctx.fill();
+    if (n.type && n.type !== "concept" && n.type !== "term") { ctx.lineWidth = 2; ctx.strokeStyle = ink; ctx.globalAlpha = dim ? .1 : .55; ctx.stroke(); }
+    const f = state.flashes.get(n.id);
+    if (f && now - f < 4000) { ctx.globalAlpha = 1 - (now - f) / 4000; ctx.strokeStyle = css("--accent"); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(x, y, r + 6 + (now - f) / 200, 0, 2 * Math.PI); ctx.stroke(); }
+    if (n.id === state.selected) { ctx.globalAlpha = 1; ctx.strokeStyle = css("--accent"); ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, r + 3, 0, 2 * Math.PI); ctx.stroke(); }
+    const show = state.allLabels || match || (focus && focus.has(n.id)) || r > 9 || (cam.k > 1.6 && r > 4);
+    if (show && !dim) labelled.push([n, x, y, r]);
+  }
+  ctx.globalAlpha = 1; ctx.font = "12px -apple-system, sans-serif"; ctx.textBaseline = "middle";
+  const boxes = [];
+  labelled.sort((a, b) => b[3] - a[3]);
+  for (const [n, x, y, r] of labelled) {
+    const w = ctx.measureText(n.label).width, bx = x + r + 4, by = y - 8;
+    if (!state.allLabels && boxes.some((b) => bx < b[0] + b[2] && bx + w > b[0] && by < b[1] + 16 && by + 16 > b[1]) && n.id !== state.selected) continue;
+    boxes.push([bx, by, w]);
+    ctx.fillStyle = css("--bg"); ctx.globalAlpha = .75; ctx.fillRect(bx - 2, by, w + 4, 16);
+    ctx.globalAlpha = 1; ctx.fillStyle = ink; ctx.fillText(n.label, bx, y);
+  }
+}
+function loop() { if (alpha > .02) tick(); draw(); requestAnimationFrame(loop); }
+
+// ---- sidebar ----
+function renderSidebar() {
+  $("title").textContent = "Knowledge: " + D.graph + (D.focus ? " · around “" + D.focus + "”" : "");
+  $("counts").textContent = D.counts.nodes + " concepts · " + D.edges.filter((e) => !e.valid_to).length + " relations · " + D.counts.topics + " topics" + (D.truncated ? " · showing the most connected" : "");
+  $("topics").innerHTML = D.topics.slice(0, 40).map((t) => '<div class="row' + (state.hiddenTopics.has(t.id) ? " off" : "") + '" data-topic="' + t.id + '" title="' + esc(t.summary || "Click to hide or show") + '"><span class="dot" style="background:' + t.color + '"></span><span class="name">' + esc(t.label) + '</span><span class="num">' + t.size + "</span></div>").join("") || '<p class="empty">No topics yet.</p>';
+  const rels = {}; for (const e of D.edges) if (!e.valid_to) rels[e.relation] = (rels[e.relation] || 0) + 1;
+  const relList = Object.entries(rels).sort((a, b) => b[1] - a[1]);
+  $("relations").innerHTML = relList.slice(0, state.allRels ? 200 : 12).map(([r, c]) => '<label class="check"><input type="checkbox" data-rel="' + esc(r) + '"' + (state.hiddenRel.has(r) ? "" : " checked") + "> " + esc(r.replace(/_/g, " ")) + ' <span class="num">' + c + "</span></label>").join("") || '<p class="empty">None.</p>';
+  if (relList.length > 12) $("relations").innerHTML += '<button id="moreRels" type="button">' + (state.allRels ? "Show fewer" : "Show all " + relList.length) + "</button>";
+  $("gaps").innerHTML = D.gaps.map((g, i) => '<div class="gap" data-gap="' + i + '"><div>' + esc(g.topics[0]) + " ↔ " + esc(g.topics[1]) + '</div><div class="score">gap ' + g.score + " · try " + esc(g.bridge_candidates[0][0]) + " + " + esc(g.bridge_candidates[1][0]) + "</div></div>").join("") || '<p class="empty">No large gaps.</p>';
+  const dv = D.diversity || {};
+  $("diversity").innerHTML = dv.state ? "<b>" + esc(dv.state) + "</b> (modularity " + dv.modularity + ")<br>" + esc(dv.advice) : "";
+}
+$("topics").addEventListener("click", (ev) => { const row = ev.target.closest("[data-topic]"); if (!row) return;
+  const t = +row.dataset.topic; state.hiddenTopics.has(t) ? state.hiddenTopics.delete(t) : state.hiddenTopics.add(t); renderSidebar(); alpha = Math.max(alpha, .2); });
+$("relations").addEventListener("click", (ev) => { if (ev.target.id === "moreRels") { state.allRels = !state.allRels; renderSidebar(); } });
+$("relations").addEventListener("change", (ev) => { const r = ev.target.dataset.rel; if (!r) return; ev.target.checked ? state.hiddenRel.delete(r) : state.hiddenRel.add(r); });
+$("gaps").addEventListener("click", (ev) => { const el = ev.target.closest("[data-gap]"); if (!el) return;
+  const g = D.gaps[+el.dataset.gap], key = g.between.join();
+  if (state.gapKey === key) { state.gap = null; state.gapKey = null; } else {
+    state.gapKey = key; state.gap = new Set(nodes.filter((n) => g.between.includes(n.community)).map((n) => n.id)); }
+  document.querySelectorAll(".gap").forEach((x) => x.classList.toggle("on", x === el && !!state.gap));
+  if (state.gap) $("detail").innerHTML = '<h3>A gap between two topics</h3><p>' + esc(g.prompt) + '</p><p class="num">Observed link weight ' + g.observed_weight + ", expected about " + g.expected_weight + ' if the topics were linked at random.</p><p>Bridge candidates:</p><p>' + g.bridge_candidates.map((c) => c.map((x) => '<span class="link" data-node="' + esc(x) + '">' + esc(x) + "</span>").join(", ")).join("<br>") + '</p><p class="num">Ask a model for questions that would bridge it: <code>knowledge questions</code></p>';
+});
+["showProx", "showClosed", "showIsolated"].forEach((id) => $(id).addEventListener("change", () => { alpha = Math.max(alpha, .2); }));
+
+const EMPTY_DETAIL = $("detail").innerHTML;
+function clearDetail() { state.selected = null; state.gap = null; state.gapKey = null; state.path = null; state.pathEdges = null;
+  $("detail").innerHTML = EMPTY_DETAIL; document.querySelectorAll(".gap").forEach((x) => x.classList.remove("on")); }
+
+// ---- paths ----
+function tracePath(a, b) {
+  // typed relations first; shared passages only when they are the only way through
+  return bfsPath(a, b, false) || ($("showProx").checked ? bfsPath(a, b, true) : null);
+}
+function bfsPath(a, b, withProx) {
+  const adj = new Map();
+  const add = (x, y, label) => { (adj.get(x) || adj.set(x, []).get(x)).push([y, label]); };
+  for (const e of links) if (linkVisible(e)) { add(e.source, e.target, e); add(e.target, e.source, e); }
+  if (withProx) for (const p of prox) if (nodeVisible(p.s) && nodeVisible(p.t)) { add(p.source, p.target, null); add(p.target, p.source, null); }
+  const prev = new Map([[a, null]]), q = [a];
+  while (q.length) { const v = q.shift(); if (v === b) break;
+    for (const [w, e] of (adj.get(v) || [])) if (!prev.has(w)) { prev.set(w, [v, e]); q.push(w); } }
+  if (!prev.has(b)) return null;
+  const steps = []; let cur = b;
+  while (prev.get(cur)) { const [v, e] = prev.get(cur); steps.unshift([v, cur, e]); cur = v; }
+  return steps;
+}
+function showPath(a, b) {
+  const steps = tracePath(a, b);
+  state.selected = null; state.gap = null;
+  if (!steps) { state.path = null; state.pathEdges = null;
+    $("detail").innerHTML = "<h3>No path</h3><p>" + esc(a) + " and " + esc(b) + ' are not connected in what is shown. That is a gap worth asking about: <code>knowledge gaps --between "' + esc(a) + '" "' + esc(b) + '"</code></p>'; return; }
+  state.path = new Set([a, ...steps.map((s) => s[1])]);
+  state.pathEdges = new Set(); for (const [x, y] of steps) { state.pathEdges.add(x + "|" + y); state.pathEdges.add(y + "|" + x); }
+  $("detail").innerHTML = "<h3>How they connect</h3><p class=\"num\">" + steps.length + " step" + (steps.length > 1 ? "s" : "") + " from " + esc(a) + " to " + esc(b) + "</p>" +
+    steps.map(([x, y, e]) => { const a = e ? e.source : x, b = e ? e.target : y; return '<div class="rel"><span class="link" data-node="' + esc(a) + '">' + esc(a) + "</span> " +
+      (e ? '<span class="r ' + (SUPPORT.has(e.relation) ? "support" : CONTRA.has(e.relation) ? "contra" : "") + '">' + esc(e.relation.replace(/_/g, " ")) + "</span>" : '<span class="r">appears with</span>') +
+      ' <span class="link" data-node="' + esc(b) + '">' + esc(b) + "</span>" + (e && e.description ? '<div class="d">' + esc(e.description) + "</div>" : "") + "</div>"; }).join("") +
+    '<p class="num">Click empty space to clear. The full version, with passages: <code>knowledge path "' + esc(a) + '" "' + esc(b) + '"</code></p>';
+}
+
+// ---- detail ----
+function select(id, center) {
+  state.selected = id; state.gap = null; state.gapKey = null; state.path = null; state.pathEdges = null;
+  const n = byId.get(id); if (!n) return;
+  if (center) { cam.x = n.x; cam.y = n.y; cam.k = Math.max(cam.k, 1.4); }
+  const topic = D.topics.find((t) => t.id === n.community);
+  const rel = (e, out) => { const other = out ? e.target : e.source; const cls = SUPPORT.has(e.relation) ? "support" : CONTRA.has(e.relation) ? "contra" : "";
+    return '<div class="rel' + (e.valid_to ? " closed" : "") + '">' + (out ? "" : '<span class="link" data-node="' + esc(other) + '">' + esc(other) + "</span> ") + '<span class="r ' + cls + '">' + esc(e.relation.replace(/_/g, " ")) + "</span>" + (out ? ' <span class="link" data-node="' + esc(other) + '">' + esc(other) + "</span>" : "") +
+      (e.description ? '<div class="d">' + esc(e.description) + "</div>" : "") +
+      '<div class="num">' + [e.confidence != null ? "confidence " + (+e.confidence).toFixed(2) : "", e.agent ? "by " + esc(e.agent) : "", e.valid_from ? "from " + e.valid_from.slice(0, 10) : "", e.valid_to ? "closed " + e.valid_to.slice(0, 10) : ""].filter(Boolean).join(" · ") + "</div></div>"; };
+  const shown = (e) => (state.asOf ? edgeLive(e) : (!e.valid_to || $("showClosed").checked));
+  const typed = (e) => e.method !== "cooccurrence";
+  const outs = D.edges.filter((e) => e.source === id && typed(e) && shown(e));
+  const ins = D.edges.filter((e) => e.target === id && typed(e) && shown(e));
+  const near = new Map();
+  for (const e of D.edges) if (!typed(e) && shown(e) && (e.source === id || e.target === id)) { const o = e.source === id ? e.target : e.source; near.set(o, (near.get(o) || 0) + e.weight); }
+  for (const p of D.proximity) if (p.source === id || p.target === id) { const o = p.source === id ? p.target : p.source; near.set(o, (near.get(o) || 0) + p.count); }
+  const nearList = [...near.entries()].sort((a, b) => b[1] - a[1]).slice(0, 24);
+  const closedCount = D.edges.filter((e) => (e.source === id || e.target === id) && e.valid_to).length;
+  $("detail").innerHTML = "<h3>" + esc(n.label) + "</h3>" +
+    '<div class="meta"><span class="chip">' + esc(n.type) + "</span>" + (topic ? '<span class="chip" style="border-left:3px solid ' + topic.color + '">' + esc(topic.label) + "</span>" : "") +
+    "<br>" + n.degree + " links · influence " + (+n.betweenness || 0).toFixed(3) + (closedCount ? " · " + closedCount + " closed in history" : "") + "</div>" +
+    (n.summary ? "<p>" + esc(n.summary) + "</p>" : "") +
+    (outs.length ? "<h2>Says</h2>" + outs.slice(0, 60).map((e) => rel(e, true)).join("") : "") +
+    (ins.length ? "<h2>Said about it</h2>" + ins.slice(0, 60).map((e) => rel(e, false)).join("") : "") +
+    (nearList.length ? '<h2>Appears near</h2><p>' + nearList.map(([o]) => '<span class="link" data-node="' + esc(o) + '">' + esc(o) + "</span>").join(", ") + "</p>" : "") +
+    (n.passages && n.passages.length ? "<h2>Where it comes from</h2>" + n.passages.map((p) => "<blockquote>" + esc(p.excerpt) + "<br>— " + esc(p.source) + "</blockquote>").join("") : "") +
+    '<p class="num">Shift-click another concept to trace how they connect.</p><h2>Ask the tool</h2><p class="num"><code>knowledge evidence "' + esc(n.id) + '"</code><br><code>knowledge timeline "' + esc(n.id) + '"</code></p>';
+}
+$("right").addEventListener("click", (ev) => { const el = ev.target.closest("[data-node]"); if (el) select(el.dataset.node, true); });
+
+// ---- time ----
+function setupTime() {
+  const marks = (D.time && D.time.marks) || [];
+  const s = $("slider"); s.max = marks.length; if (+s.value > marks.length || !state.asOf) s.value = marks.length;
+  $("time").style.display = marks.length > 1 ? "flex" : "none";
+}
+$("slider").addEventListener("input", () => { const marks = D.time.marks, i = +$("slider").value;
+  state.asOf = i >= marks.length ? null : marks[i]; $("when").textContent = state.asOf ? state.asOf.replace("T", " ").replace("Z", " UTC") : "now"; alpha = Math.max(alpha, .15);
+  if (state.selected) select(state.selected); });
+
+let playing = null;
+$("play").onclick = () => {
+  if (playing) { clearInterval(playing); playing = null; $("play").textContent = "Play"; return; }
+  const s = $("slider"); if (+s.value >= +s.max) s.value = 0;
+  $("play").textContent = "Pause";
+  playing = setInterval(() => { if (+s.value >= +s.max) { clearInterval(playing); playing = null; $("play").textContent = "Play"; return; }
+    s.value = +s.value + 1; s.dispatchEvent(new Event("input")); }, Math.max(60, 9000 / Math.max(1, +s.max)));
+};
+
+// ---- interaction ----
+function resize() { const r = canvas.parentElement.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  W = r.width; H = r.height; canvas.width = W * dpr; canvas.height = H * dpr; }
+function fit() { const vis = nodes.filter(nodeVisible); if (!vis.length) return;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const n of vis) { x0 = Math.min(x0, n.x); y0 = Math.min(y0, n.y); x1 = Math.max(x1, n.x); y1 = Math.max(y1, n.y); }
+  cam.x = (x0 + x1) / 2; cam.y = (y0 + y1) / 2; cam.k = Math.min(2.6, .9 * Math.min(W / (x1 - x0 + 120), (H - 90) / (y1 - y0 + 120))); }
+function hit(mx, my) { const [x, y] = toWorld(mx, my); let best = null, bd = Infinity;
+  for (const n of nodes) { if (!nodeVisible(n)) continue; const d = Math.hypot(n.x - x, n.y - y); if (d < n.r + 6 / cam.k && d < bd) { best = n; bd = d; } } return best; }
+let drag = null, pan = null, moved = false;
+canvas.addEventListener("mousedown", (ev) => { const n = hit(ev.offsetX, ev.offsetY); moved = false;
+  if (n) { drag = n; n.fixed = true; } else pan = [ev.offsetX, ev.offsetY, cam.x, cam.y]; canvas.classList.add("dragging"); });
+window.addEventListener("mousemove", (ev) => { const r = canvas.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+  if (drag) { const [x, y] = toWorld(mx, my); drag.x = x; drag.y = y; moved = true; alpha = Math.max(alpha, .1); }
+  else if (pan) { cam.x = pan[2] - (mx - pan[0]) / cam.k; cam.y = pan[3] - (my - pan[1]) / cam.k; moved = true; }
+  else if (ev.target === canvas) { const n = hit(mx, my); state.hover = n ? n.id : null; canvas.title = n ? n.label : ""; } });
+window.addEventListener("mouseup", (ev) => { canvas.classList.remove("dragging");
+  if (!moved && ev.target === canvas) { const n = hit(ev.offsetX, ev.offsetY);
+    if (n && ev.shiftKey && state.selected && state.selected !== n.id) showPath(state.selected, n.id);
+    else if (n) select(n.id); else { clearDetail(); } }
+  if (drag && !moved) drag.fixed = false; drag = null; pan = null; });
+canvas.addEventListener("dblclick", (ev) => { const n = hit(ev.offsetX, ev.offsetY); if (n) n.fixed = false; });
+canvas.addEventListener("wheel", (ev) => { ev.preventDefault(); const [wx, wy] = toWorld(ev.offsetX, ev.offsetY);
+  cam.k = Math.min(8, Math.max(.05, cam.k * Math.exp(-ev.deltaY * .0015)));
+  const [nx, ny] = toWorld(ev.offsetX, ev.offsetY); cam.x += wx - nx; cam.y += wy - ny; }, { passive: false });
+$("search").addEventListener("input", (ev) => { state.search = ev.target.value.trim().toLowerCase(); });
+$("search").addEventListener("keydown", (ev) => { if (ev.key !== "Enter" || !state.search) return;
+  const m = nodes.filter((n) => nodeVisible(n) && n.label.toLowerCase().includes(state.search)).sort((a, b) => b.r - a.r)[0]; if (m) select(m.id, true); });
+$("fit").onclick = fit;
+$("labels").onclick = () => { state.allLabels = !state.allLabels; $("labels").setAttribute("aria-pressed", state.allLabels); };
+$("keysBtn").onclick = () => { const k = $("keys"); k.style.display = k.style.display === "block" ? "none" : "block"; };
+window.addEventListener("keydown", (ev) => { if (ev.target.tagName === "INPUT" && ev.key !== "Escape") return;
+  if (ev.key === "/") { ev.preventDefault(); $("search").focus(); }
+  else if (ev.key === "f" || ev.key === "F") fit();
+  else if (ev.key === "l" || ev.key === "L") $("labels").click();
+  else if (ev.key === "h" || ev.key === "H") { $("showClosed").checked = !$("showClosed").checked; }
+  else if (ev.key === "Escape") { clearDetail(); state.search = ""; $("search").value = ""; $("search").blur(); }
+  else if (ev.key === "ArrowLeft" || ev.key === "ArrowRight") { const s = $("slider"); s.value = +s.value + (ev.key === "ArrowLeft" ? -1 : 1); s.dispatchEvent(new Event("input")); } });
+window.addEventListener("resize", resize);
+
+// ---- live: follow the change log while agents write ----
+function describe(ev) {
+  const who = ev.agent ? ev.agent + ": " : "";
+  if (ev.kind === "edge_added") return who + ev.source + " —" + ev.relation.replace(/_/g, " ") + "→ " + ev.target;
+  if (ev.kind === "edge_superseded") return who + "closed " + ev.source + " " + ev.relation + " " + ev.target;
+  if (ev.kind === "node_added") return "new concept: " + ev.label;
+  if (ev.kind === "conflict_recorded") return "conflict: " + ev.verdict;
+  if (ev.kind === "source_added") return who + "read " + (ev.title || ev.uri);
+  return ev.kind.replace(/_/g, " ");
+}
+function ticker(lines) { const t = $("ticker"); for (const l of lines) { const d = document.createElement("div"); d.textContent = l; t.prepend(d); setTimeout(() => d.remove(), 9000); }
+  while (t.children.length > 6) t.lastChild.remove(); }
+async function poll() {
+  try {
+    const r = await fetch("api/events?since=" + D.last_event); const body = await r.json();
+    if (body.events && body.events.length) {
+      ticker(body.events.filter((e) => e.kind !== "node_updated").slice(-6).map(describe));
+      const g = await (await fetch("api/graph" + location.search)).json(); D = g; build(true);
+      if (state.selected && byId.has(state.selected)) select(state.selected);
+    }
+    $("hint").textContent = "Live · following changes";
+  } catch (e) { $("hint").textContent = "Live view lost the connection; retrying"; }
+  setTimeout(poll, 1500);
+}
+
+resize(); build(false);
+for (let i = 0; i < 220; i++) tick();
+fit(); loop();
+if (LIVE) poll();
+window.knowledgeView = { select: (id) => select(id, true), path: showPath, fit, state,
+  screen: (id) => { const n = byId.get(id); if (!n) return null; const [x, y] = toScreen(n.x, n.y), r = canvas.getBoundingClientRect(); return [x + r.left, y + r.top]; } };
+if (location.hash.startsWith("#concept=")) { const id = decodeURIComponent(location.hash.slice(9)); if (byId.has(id)) select(id, true); }
+</script>
+</body>
+</html>

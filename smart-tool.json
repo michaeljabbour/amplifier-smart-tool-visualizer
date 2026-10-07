@@ -1,0 +1,5 @@
+{
+  "manifest": "src/knowledge/SMART_TOOL.md",
+  "cli_argv": ["python3", "bin/knowledge.py"],
+  "deterministic_smoke": ["manifest"]
+}

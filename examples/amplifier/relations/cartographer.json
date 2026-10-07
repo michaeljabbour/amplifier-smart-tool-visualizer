@@ -1,0 +1,2240 @@
+{
+ "agent": "cartographer",
+ "nodes": [
+  {
+   "label": "amplifier",
+   "type": "concept"
+  },
+  {
+   "label": "linux kernel model",
+   "type": "concept"
+  },
+  {
+   "label": "mechanism not policy",
+   "type": "principle"
+  },
+  {
+   "label": "kernel",
+   "type": "component"
+  },
+  {
+   "label": "module",
+   "type": "component"
+  },
+  {
+   "label": "loadable driver",
+   "type": "concept"
+  },
+  {
+   "label": "hook",
+   "type": "component"
+  },
+  {
+   "label": "event",
+   "type": "concept"
+  },
+  {
+   "label": "orchestrator",
+   "type": "component"
+  },
+  {
+   "label": "scheduler",
+   "type": "concept"
+  },
+  {
+   "label": "context manager",
+   "type": "component"
+  },
+  {
+   "label": "conversation memory",
+   "type": "concept"
+  },
+  {
+   "label": "approval system",
+   "type": "component"
+  },
+  {
+   "label": "deny-by-default",
+   "type": "principle"
+  },
+  {
+   "label": "cli",
+   "type": "component"
+  },
+  {
+   "label": "application layer",
+   "type": "component"
+  },
+  {
+   "label": "mount plan",
+   "type": "artifact"
+  },
+  {
+   "label": "profile",
+   "type": "concept"
+  },
+  {
+   "label": "session",
+   "type": "component"
+  },
+  {
+   "label": "prompt:submit",
+   "type": "concept"
+  },
+  {
+   "label": "provider",
+   "type": "component"
+  },
+  {
+   "label": "provider:request",
+   "type": "concept"
+  },
+  {
+   "label": "tool",
+   "type": "component"
+  },
+  {
+   "label": "policy litmus test",
+   "type": "claim"
+  },
+  {
+   "label": "kernel stays small",
+   "type": "principle"
+  },
+  {
+   "label": "backward compatibility is sacred",
+   "type": "principle"
+  },
+  {
+   "label": "extensibility through composition",
+   "type": "principle"
+  },
+  {
+   "label": "non-interference",
+   "type": "principle"
+  },
+  {
+   "label": "coordinator",
+   "type": "component"
+  },
+  {
+   "label": "tool:error",
+   "type": "concept"
+  },
+  {
+   "label": "feature flag",
+   "type": "concept"
+  },
+  {
+   "label": "minimal capability",
+   "type": "principle"
+  },
+  {
+   "label": "unshakeable center",
+   "type": "principle"
+  },
+  {
+   "label": "explosive edges",
+   "type": "principle"
+  },
+  {
+   "label": "forever upgradeable",
+   "type": "principle"
+  },
+  {
+   "label": "provider contract",
+   "type": "contract"
+  },
+  {
+   "label": "complete",
+   "type": "method"
+  },
+  {
+   "label": "parse_tool_calls",
+   "type": "method"
+  },
+  {
+   "label": "tool contract",
+   "type": "contract"
+  },
+  {
+   "label": "input schema",
+   "type": "artifact"
+  },
+  {
+   "label": "orchestrator contract",
+   "type": "contract"
+  },
+  {
+   "label": "context contract",
+   "type": "contract"
+  },
+  {
+   "label": "compact",
+   "type": "method"
+  },
+  {
+   "label": "contract",
+   "type": "contract"
+  },
+  {
+   "label": "agent",
+   "type": "concept"
+  },
+  {
+   "label": "configuration overlay",
+   "type": "concept"
+  },
+  {
+   "label": "task tool",
+   "type": "component"
+  },
+  {
+   "label": "sub-session",
+   "type": "concept"
+  },
+  {
+   "label": "hook registry",
+   "type": "component"
+  },
+  {
+   "label": "tool:post",
+   "type": "concept"
+  },
+  {
+   "label": "hook result",
+   "type": "artifact"
+  },
+  {
+   "label": "deny",
+   "type": "concept"
+  },
+  {
+   "label": "inject_context",
+   "type": "concept"
+  },
+  {
+   "label": "ask_user",
+   "type": "concept"
+  },
+  {
+   "label": "session id",
+   "type": "artifact"
+  },
+  {
+   "label": "explorer",
+   "type": "concept"
+  },
+  {
+   "label": "bug-hunter",
+   "type": "concept"
+  },
+  {
+   "label": "zen-architect",
+   "type": "concept"
+  },
+  {
+   "label": "agent context isolation",
+   "type": "claim"
+  },
+  {
+   "label": "multi-turn agent session",
+   "type": "claim"
+  },
+  {
+   "label": "collection",
+   "type": "concept"
+  },
+  {
+   "label": "appropriate tools",
+   "type": "principle"
+  },
+  {
+   "label": "session resumption",
+   "type": "method"
+  },
+  {
+   "label": "session state",
+   "type": "artifact"
+  },
+  {
+   "label": "session cleanup",
+   "type": "method"
+  },
+  {
+   "label": "configuration sharing",
+   "type": "concept"
+  },
+  {
+   "label": "foundation collection",
+   "type": "concept"
+  },
+  {
+   "label": "developer-expertise",
+   "type": "concept"
+  },
+  {
+   "label": "foundation profile",
+   "type": "concept"
+  },
+  {
+   "label": "dev profile",
+   "type": "concept"
+  },
+  {
+   "label": "base profile",
+   "type": "concept"
+  },
+  {
+   "label": "profile inheritance",
+   "type": "principle"
+  },
+  {
+   "label": "start minimal",
+   "type": "principle"
+  },
+  {
+   "label": "project profile directory",
+   "type": "artifact"
+  },
+  {
+   "label": "anthropic provider",
+   "type": "component"
+  },
+  {
+   "label": "ANTHROPIC_API_KEY",
+   "type": "artifact"
+  },
+  {
+   "label": "ollama provider",
+   "type": "component"
+  },
+  {
+   "label": "settings file",
+   "type": "artifact"
+  },
+  {
+   "label": "tool result",
+   "type": "artifact"
+  },
+  {
+   "label": "basic orchestrator",
+   "type": "component"
+  },
+  {
+   "label": "streaming orchestrator",
+   "type": "component"
+  },
+  {
+   "label": "events orchestrator",
+   "type": "component"
+  },
+  {
+   "label": "tool:pre",
+   "type": "concept"
+  },
+  {
+   "label": "compaction",
+   "type": "method"
+  },
+  {
+   "label": "summarize",
+   "type": "concept"
+  },
+  {
+   "label": "persistence",
+   "type": "concept"
+  },
+  {
+   "label": "leverage emergent value",
+   "type": "principle"
+  },
+  {
+   "label": "smart tool is standalone",
+   "type": "principle"
+  },
+  {
+   "label": "smart tool",
+   "type": "concept"
+  },
+  {
+   "label": "library",
+   "type": "concept"
+  },
+  {
+   "label": "model-backed capability",
+   "type": "concept"
+  },
+  {
+   "label": "deterministic capability",
+   "type": "concept"
+  },
+  {
+   "label": "model provider",
+   "type": "component"
+  },
+  {
+   "label": "failures name the remedy",
+   "type": "principle"
+  },
+  {
+   "label": "mcp",
+   "type": "concept"
+  },
+  {
+   "label": "surfaces are adapters",
+   "type": "principle"
+  },
+  {
+   "label": "web ui never the only way",
+   "type": "principle"
+  },
+  {
+   "label": "no provider at load time",
+   "type": "principle"
+  },
+  {
+   "label": "one manifest per distribution",
+   "type": "principle"
+  },
+  {
+   "label": "manifest",
+   "type": "artifact"
+  },
+  {
+   "label": "distribution",
+   "type": "concept"
+  },
+  {
+   "label": "manifest via library",
+   "type": "principle"
+  },
+  {
+   "label": "descriptor",
+   "type": "concept"
+  },
+  {
+   "label": "manifest body",
+   "type": "artifact"
+  },
+  {
+   "label": "skill",
+   "type": "concept"
+  },
+  {
+   "label": "agent skills",
+   "type": "concept"
+  },
+  {
+   "label": "capability skill",
+   "type": "concept"
+  },
+  {
+   "label": "progressive disclosure",
+   "type": "principle"
+  },
+  {
+   "label": "compose through the library",
+   "type": "principle"
+  },
+  {
+   "label": "state outside the tool directory",
+   "type": "principle"
+  }
+ ],
+ "edges": [
+  {
+   "from": "amplifier",
+   "to": "linux kernel model",
+   "relation": "inspired_by",
+   "description": "Amplifier's modular architecture is inspired by the Linux kernel model.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Amplifier is built on a modular architecture inspired by the Linux kernel model.",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "mechanism not policy",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "In the Linux analogy, amplifier-core (Ring 0 kernel) provides mechanisms only, never policy.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "`amplifier-core` | Mechanisms only, never policy",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "module",
+   "to": "loadable driver",
+   "relation": "analog_of",
+   "description": "Modules are Amplifier's analog of Linux loadable drivers and compete at the edges.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Loadable drivers | Modules | Compete at edges",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "hook",
+   "to": "event",
+   "relation": "enables",
+   "description": "The event bus and hooks are the analog of Linux signals/netlink, used to observe and control.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Event bus / hooks | Observe and control",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "scheduler",
+   "relation": "analog_of",
+   "description": "Orchestrator modules are the analog of the Linux scheduler, letting execution strategies be swapped.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Scheduler | Orchestrator modules | Swap execution strategies",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "context manager",
+   "to": "conversation memory",
+   "relation": "provides",
+   "description": "The context manager is the VM/memory analog and provides conversation memory.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Context manager | Conversation memory",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "approval system",
+   "to": "deny-by-default",
+   "relation": "is_a",
+   "description": "The approval system mirrors Linux capabilities and is deny-by-default.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "principle",
+   "evidence": "Approval system | Deny-by-default",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "cli",
+   "to": "application layer",
+   "relation": "is_a",
+   "description": "amplifier-app-cli is given as an example of the application layer.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "The application layer (e.g., `amplifier-app-cli`) handles:",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "application layer",
+   "to": "mount plan",
+   "relation": "creates",
+   "description": "The application layer is responsible for Mount Plan creation.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Mount Plan creation",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "profile",
+   "to": "mount plan",
+   "relation": "compiles_to",
+   "description": "The application compiles a profile into a mount plan.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "mount_plan = compile_profile_to_mount_plan(profile)",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "session",
+   "to": "mount plan",
+   "relation": "requires",
+   "description": "An AmplifierSession is constructed from a mount plan.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "session = AmplifierSession(mount_plan)",
+   "chunk": "s-aa9fefe58937#0"
+  },
+  {
+   "from": "session",
+   "to": "prompt:submit",
+   "relation": "emits",
+   "description": "When a session receives a prompt it emits prompt:submit.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "emit(\"prompt:submit\", {prompt})",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "prompt:submit",
+   "to": "event",
+   "relation": "is_a",
+   "description": "prompt:submit is an event emitted in the session execution flow.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "emit(\"prompt:submit\", {prompt})",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "session",
+   "to": "orchestrator",
+   "relation": "calls",
+   "description": "After receiving a prompt, the session hands control to the orchestrator.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Orchestrator takes control",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "orchestrator",
+   "to": "context manager",
+   "relation": "depends_on",
+   "description": "The orchestrator adds the user prompt to the context.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "context.add_message({role: \"user\", content: prompt})",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider",
+   "relation": "calls",
+   "description": "The execution flow calls the provider's complete method with the messages.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "response = provider.complete(messages)",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "provider:request",
+   "to": "event",
+   "relation": "is_a",
+   "description": "provider:request is emitted before calling the provider.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "emit(\"provider:request\", {...})",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool",
+   "relation": "calls",
+   "description": "The flow processes tool calls returned in the provider response.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Process tool calls (if any)",
+   "chunk": "s-aa9fefe58937#4"
+  },
+  {
+   "from": "mechanism not policy",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "amplifier-core follows a Linux-inspired philosophy of providing mechanisms, not policy.",
+   "confidence": 1.0,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "provide mechanisms, not policy.",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "policy litmus test",
+   "to": "mechanism not policy",
+   "relation": "part_of",
+   "description": "Anything two teams could want differently is policy and stays out of the kernel.",
+   "confidence": 0.95,
+   "from_type": "claim",
+   "to_type": "principle",
+   "evidence": "If two teams could want different behavior, it's policy \u2192 keep it out of kernel.",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "kernel",
+   "to": "module",
+   "relation": "loads",
+   "description": "Loading modules is kernel mechanism; choosing which modules is policy.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Load modules | Choose which modules",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "kernel",
+   "to": "event",
+   "relation": "emits",
+   "description": "Emitting events is kernel mechanism; deciding what to log is not.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Emit events | Decide what to log",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "kernel",
+   "to": "hook",
+   "relation": "provides",
+   "description": "The kernel provides hooks but does not select providers.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Provide hooks | Select providers",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "kernel",
+   "to": "session",
+   "relation": "manages",
+   "description": "Managing sessions is kernel mechanism; scheduling execution is policy.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Manage sessions | Schedule execution",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "kernel stays small",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "The kernel is intentionally minimal (~2,600 lines), changes rarely, and is meant to be small, stable, and boring.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "The kernel is intentionally minimal (~2,600 lines) and changes rarely.",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "backward compatibility is sacred",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Kernel interfaces must stay backward compatible so modules do not break; evolution is additive only.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Backward compatibility in kernel interfaces is sacred.",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "extensibility through composition",
+   "to": "module",
+   "relation": "depends_on",
+   "description": "New behavior comes from plugging in different modules rather than toggling flags.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "New behavior comes from plugging in different modules, not from toggleing flags.",
+   "chunk": "s-6c7239446fe1#0"
+  },
+  {
+   "from": "non-interference",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Module failures are isolated so the kernel stays up.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Module failures are isolated. The kernel stays up.",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "coordinator",
+   "to": "tool:error",
+   "relation": "emits",
+   "description": "When a tool raises, the error is emitted as tool:error through the coordinator's hooks instead of crashing the kernel.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "await coordinator.hooks.emit(\"tool:error\", {\"error\": str(e)})",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "tool:error",
+   "to": "event",
+   "relation": "is_a",
+   "description": "tool:error is an event used to report tool failures.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "coordinator.hooks.emit(\"tool:error\"",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "extensibility through composition",
+   "to": "feature flag",
+   "relation": "replaces",
+   "description": "Adding a flag per use case is a red flag; flags accumulate, so modules should be used instead.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Flags accumulate; use modules",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "minimal capability",
+   "to": "module",
+   "relation": "constrains",
+   "description": "Passing the whole context for flexibility is an anti-pattern that violates minimal capability.",
+   "confidence": 0.75,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Violates minimal capability",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "unshakeable center",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "The north star is a kernel so small and stable that one person can maintain it.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "A kernel so small and stable it can be maintained by one person",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "explosive edges",
+   "to": "module",
+   "relation": "enables",
+   "description": "The north star includes a flourishing ecosystem of competing modules at the edges.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "A flourishing ecosystem of competing modules",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "forever upgradeable",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Improvements ship weekly at the edges while kernel updates stay rare and boring.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Ship improvements weekly at edges, kernel updates are rare and boring",
+   "chunk": "s-6c7239446fe1#4"
+  },
+  {
+   "from": "provider",
+   "to": "provider contract",
+   "relation": "implements",
+   "description": "Providers implement the Provider protocol.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class Provider(Protocol):",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "provider contract",
+   "to": "complete",
+   "relation": "contains",
+   "description": "The provider contract includes an async complete method taking a ChatRequest and returning a ChatResponse.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "method",
+   "evidence": "request: ChatRequest,",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "provider contract",
+   "to": "parse_tool_calls",
+   "relation": "contains",
+   "description": "The provider contract includes parse_tool_calls returning a list of ToolCall.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "method",
+   "evidence": "def parse_tool_calls(",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "tool",
+   "to": "tool contract",
+   "relation": "implements",
+   "description": "Tools implement the Tool protocol with name, description, input_schema and execute.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class Tool(Protocol):",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "tool contract",
+   "to": "input schema",
+   "relation": "requires",
+   "description": "The tool contract requires an input_schema property.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "artifact",
+   "evidence": "def input_schema(self) -> dict: ...",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "orchestrator",
+   "to": "orchestrator contract",
+   "relation": "implements",
+   "description": "Orchestrators implement the Orchestrator protocol's execute method.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class Orchestrator(Protocol):",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "orchestrator contract",
+   "to": "context manager",
+   "relation": "depends_on",
+   "description": "The orchestrator's execute receives a ContextManager.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "context: ContextManager,",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "orchestrator contract",
+   "to": "hook",
+   "relation": "depends_on",
+   "description": "The orchestrator's execute receives a HookRegistry.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "hooks: HookRegistry,",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "context manager",
+   "to": "context contract",
+   "relation": "implements",
+   "description": "Context managers implement the ContextManager protocol.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "class ContextManager(Protocol):",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "context contract",
+   "to": "compact",
+   "relation": "contains",
+   "description": "The context contract includes should_compact and compact methods.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "method",
+   "evidence": "async def compact(self) -> None: ...",
+   "chunk": "s-ea73d36235e0#3"
+  },
+  {
+   "from": "mount plan",
+   "to": "kernel",
+   "relation": "configures",
+   "description": "A mount plan is the configuration contract telling the kernel which modules to load and how to configure them.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "A Mount Plan is the configuration contract that tells the kernel which modules to load and how to configure them.",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "contract",
+   "relation": "is_a",
+   "description": "The mount plan is described as the configuration contract between apps and kernel.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "contract",
+   "evidence": "The configuration contract between apps and kernel",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "application layer",
+   "to": "mount plan",
+   "relation": "requires",
+   "description": "Mount plans are the only way applications communicate configuration to the kernel.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Mount Plans are the **only way** applications communicate configuration to the kernel.",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "orchestrator",
+   "relation": "requires",
+   "description": "A mount plan must name the orchestrator to use.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Which orchestrator and context manager to use (required)",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "context manager",
+   "relation": "requires",
+   "description": "A mount plan must name the context manager to use.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Which orchestrator and context manager to use (required)",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "provider",
+   "relation": "configures",
+   "description": "Providers, tools and hooks are optional entries in a mount plan.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Which providers, tools, and hooks to load (optional)",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "tool",
+   "relation": "configures",
+   "description": "Tools are an optional entry in a mount plan.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Which providers, tools, and hooks to load (optional)",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "mount plan",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Mount plans carry agent definitions for sub-session delegation.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Agent definitions for sub-session delegation",
+   "chunk": "s-e6d77329d8a8#0"
+  },
+  {
+   "from": "agent",
+   "to": "configuration overlay",
+   "relation": "is_a",
+   "description": "Agents are configuration overlays used for sub-session delegation.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Agents are **configuration overlays** for sub-session delegation:",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "agent",
+   "to": "orchestrator",
+   "relation": "configures",
+   "description": "An agent definition can override session settings such as the orchestrator.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Override session settings",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "agent",
+   "to": "provider",
+   "relation": "configures",
+   "description": "An agent definition can override or limit providers.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Override/limit providers",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "configures",
+   "description": "An agent definition can override or limit tools.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Override/limit tools",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "task tool",
+   "to": "sub-session",
+   "relation": "spawns",
+   "description": "Agents are not loaded at session start; they are used when the task tool spawns a sub-session.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "They're used when the task tool spawns a sub-session.",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "task tool",
+   "to": "tool",
+   "relation": "is_a",
+   "description": "The task tool is the tool that spawns sub-sessions.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "the task tool spawns a sub-session",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "profile",
+   "to": "mount plan",
+   "relation": "compiles_to",
+   "description": "Creating a mount plan from a profile is described as the typical path.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "### From Profiles (Typical)",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "kernel",
+   "to": "mount plan",
+   "relation": "validates",
+   "description": "The kernel validates mount plans before loading.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "The kernel validates Mount Plans before loading:",
+   "chunk": "s-e6d77329d8a8#4"
+  },
+  {
+   "from": "hook",
+   "to": "event",
+   "relation": "observes",
+   "description": "Hooks register handlers for events.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Hooks register handlers for events:",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "coordinator",
+   "to": "hook registry",
+   "relation": "provides",
+   "description": "Handlers are registered through coordinator.hooks.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "coordinator.hooks.register(\"tool:post\", my_handler)",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "tool:post",
+   "to": "event",
+   "relation": "is_a",
+   "description": "tool:post is an event a hook can handle when a tool completes.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "if event == \"tool:post\":",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "hook",
+   "to": "hook result",
+   "relation": "returns",
+   "description": "Hook handlers return a HookResult carrying an action.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Handlers return `HookResult` with an action:",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "hook result",
+   "to": "deny",
+   "relation": "supports",
+   "description": "A deny action blocks the operation.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "| `deny` | Block the operation |",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "hook result",
+   "to": "inject_context",
+   "relation": "supports",
+   "description": "An inject_context action adds to the conversation.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "| `inject_context` | Add to conversation |",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "hook result",
+   "to": "ask_user",
+   "relation": "supports",
+   "description": "An ask_user action requests approval.",
+   "confidence": 0.95,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "| `ask_user` | Request approval |",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "event",
+   "to": "session id",
+   "relation": "contains",
+   "description": "Every logged event record carries a session identifier.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "| `session_id` | string | Session identifier |",
+   "chunk": "s-a2704086281a#2"
+  },
+  {
+   "from": "agent",
+   "to": "sub-session",
+   "relation": "configures",
+   "description": "Agents are specialized configurations invoked as sub-sessions for focused tasks.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Agents are specialized configurations that can be invoked as sub-sessions for focused tasks.",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "explorer",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "explorer is a built-in agent for breadth-first codebase exploration.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Breadth-first codebase exploration",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "bug-hunter",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "bug-hunter is a built-in agent for systematic debugging.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Systematic debugging",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "zen-architect",
+   "to": "agent",
+   "relation": "is_a",
+   "description": "zen-architect is a built-in agent for system design with simplicity.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "System design with simplicity",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "cli",
+   "to": "agent",
+   "relation": "calls",
+   "description": "In interactive mode, an agent is invoked with the @ prefix.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Use the `@` prefix to invoke an agent:",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "agent",
+   "to": "session",
+   "relation": "inherits_from",
+   "description": "An invoked agent inherits base settings from the current session.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "The agent inherits base settings from your current session",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "sub-session",
+   "to": "session",
+   "relation": "returns_to",
+   "description": "Results of the agent's sub-session return to the main session.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Results return to your main session",
+   "chunk": "s-7df67a4219af#0"
+  },
+  {
+   "from": "agent",
+   "to": "provider",
+   "relation": "inherits_from",
+   "description": "Agents inherit the parent's provider and can override it.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "| Provider | Inherited (can override) |",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "replaces",
+   "description": "An agent's tools replace the parent's tools when specified.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "| Tools | Replaced if specified |",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "agent",
+   "to": "hook",
+   "relation": "inherits_from",
+   "description": "Agents inherit the parent's hooks and can add more.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "| Hooks | Inherited (can add) |",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "agent context isolation",
+   "to": "agent",
+   "relation": "constrains",
+   "description": "An agent starts with fresh, isolated context rather than the parent's.",
+   "confidence": 0.9,
+   "from_type": "claim",
+   "to_type": "concept",
+   "evidence": "| Context | Fresh (isolated) |",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "multi-turn agent session",
+   "to": "agent context isolation",
+   "relation": "contradicts",
+   "description": "The same page says agents can keep context across invocations, which qualifies the fresh/isolated context rule (isolation from the parent, persistence across the agent's own turns).",
+   "confidence": 0.5,
+   "from_type": "claim",
+   "to_type": "claim",
+   "evidence": "Agents can maintain context across multiple invocations:",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "profile",
+   "to": "agent",
+   "relation": "contains",
+   "description": "The current profile's agents section is first on the agent search path.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "1. Current profile's `agents` section",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "collection",
+   "to": "agent",
+   "relation": "contains",
+   "description": "Installed collections are on the agent search path.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "4. Installed collections",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "appropriate tools",
+   "to": "agent",
+   "relation": "constrains",
+   "description": "Best practice is to include only the tools an agent needs.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Only include tools the agent needs",
+   "chunk": "s-7df67a4219af#4"
+  },
+  {
+   "from": "session",
+   "to": "session resumption",
+   "relation": "supports",
+   "description": "An ended session persists its final state and is available for resumption.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Available for resumption",
+   "chunk": "s-fa6363569877#2"
+  },
+  {
+   "from": "session resumption",
+   "to": "context manager",
+   "relation": "restores",
+   "description": "Resuming a session loads history and restores context.",
+   "confidence": 0.75,
+   "from_type": "method",
+   "to_type": "component",
+   "evidence": "Context restored",
+   "chunk": "s-fa6363569877#2"
+  },
+  {
+   "from": "session",
+   "to": "session state",
+   "relation": "persists",
+   "description": "When a session ends its final state is persisted.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Final state persisted",
+   "chunk": "s-fa6363569877#2"
+  },
+  {
+   "from": "cli",
+   "to": "session cleanup",
+   "relation": "provides",
+   "description": "The CLI deletes sessions older than 30 days by default via session cleanup.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Delete sessions older than 30 days (default)",
+   "chunk": "s-fa6363569877#2"
+  },
+  {
+   "from": "session resumption",
+   "to": "conversation memory",
+   "relation": "preserves",
+   "description": "Conversation history is preserved when a session is resumed.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "Conversation history",
+   "chunk": "s-fa6363569877#2"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "contains",
+   "description": "Collections are shareable bundles of profiles, agents, context files, and modules.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Collections are shareable bundles of profiles, agents, context files, and modules.",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "collection",
+   "to": "module",
+   "relation": "contains",
+   "description": "Collections can include custom modules.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Collections are shareable bundles of profiles, agents, context files, and modules.",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "collection",
+   "to": "configuration sharing",
+   "relation": "enables",
+   "description": "Collections package and distribute Amplifier configurations.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "They provide a way to package and distribute Amplifier configurations.",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "foundation collection",
+   "to": "collection",
+   "relation": "is_a",
+   "description": "foundation is a built-in collection holding core philosophy and shared patterns.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Core philosophy and shared patterns",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "developer-expertise",
+   "to": "collection",
+   "relation": "is_a",
+   "description": "developer-expertise is a built-in collection of development-focused profiles and agents.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Development-focused profiles and agents",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "cli",
+   "to": "collection",
+   "relation": "loads",
+   "description": "The CLI installs collections from GitHub or local paths with collection add.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "amplifier collection add my-collection --source git+https://github.com/org/my-collection",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "profile",
+   "to": "foundation collection",
+   "relation": "extends",
+   "description": "A profile can extend a resource from a collection.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "extends: collection:foundation/base",
+   "chunk": "s-3c4c04103e1d#0"
+  },
+  {
+   "from": "profile",
+   "to": "module",
+   "relation": "configures",
+   "description": "Profiles are pre-configured capability sets that define which modules are available during a session.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Profiles are pre-configured capability sets that define which modules (providers, tools, hooks) are available during a session.",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "profile",
+   "to": "session",
+   "relation": "configures",
+   "description": "A profile determines what is available during a session.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "are available during a session.",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "foundation profile",
+   "to": "profile",
+   "relation": "is_a",
+   "description": "foundation is the minimal built-in profile with just LLM access.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Minimal - just LLM access",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "dev profile",
+   "to": "profile",
+   "relation": "is_a",
+   "description": "dev is the built-in full development suite profile.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Full development suite",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "base profile",
+   "to": "foundation profile",
+   "relation": "extends",
+   "description": "base includes everything in foundation and adds tools.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Everything in `foundation`",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "base profile",
+   "to": "tool",
+   "relation": "provides",
+   "description": "base adds filesystem and bash tools.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "**Tools**: filesystem, bash",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "cli",
+   "to": "profile",
+   "relation": "loads",
+   "description": "The CLI can run a single command under a named profile.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "amplifier run --profile dev \"Analyze this code\"",
+   "chunk": "s-22f6622f3dd1#0"
+  },
+  {
+   "from": "profile inheritance",
+   "to": "profile",
+   "relation": "constrains",
+   "description": "Best practice is to extend parent profiles rather than duplicate them.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "**Use inheritance**: Don't duplicate - extend parent profiles",
+   "chunk": "s-22f6622f3dd1#4"
+  },
+  {
+   "from": "start minimal",
+   "to": "profile",
+   "relation": "constrains",
+   "description": "Profiles should extend foundation or base and add only what is needed.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Extend `foundation` or `base`, add only what you need",
+   "chunk": "s-22f6622f3dd1#4"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "enables",
+   "description": "Collections are the way profiles are shared.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "[Collections](collections.md) - Sharing profiles",
+   "chunk": "s-22f6622f3dd1#4"
+  },
+  {
+   "from": "project profile directory",
+   "to": "profile",
+   "relation": "contains",
+   "description": "Team profiles belong in .amplifier/profiles/.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Put team profiles in `.amplifier/profiles/`",
+   "chunk": "s-22f6622f3dd1#4"
+  },
+  {
+   "from": "anthropic provider",
+   "to": "ANTHROPIC_API_KEY",
+   "relation": "requires",
+   "description": "The Anthropic provider is configured via the ANTHROPIC_API_KEY environment variable.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "| Anthropic | `ANTHROPIC_API_KEY` |",
+   "chunk": "s-f86f994e7caa#3"
+  },
+  {
+   "from": "ollama provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Ollama needs no environment variable because it runs locally.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "| Ollama | None required (local) |",
+   "chunk": "s-f86f994e7caa#3"
+  },
+  {
+   "from": "anthropic provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Anthropic is one of the configurable providers.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "| Anthropic | `ANTHROPIC_API_KEY` |",
+   "chunk": "s-f86f994e7caa#3"
+  },
+  {
+   "from": "settings file",
+   "to": "provider",
+   "relation": "configures",
+   "description": "~/.amplifier/settings.yaml configures the default provider and per-provider settings.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "Create `~/.amplifier/settings.yaml`:",
+   "chunk": "s-f86f994e7caa#3"
+  },
+  {
+   "from": "cli",
+   "to": "provider",
+   "relation": "configures",
+   "description": "Multiple providers can be configured and the CLI switches between them.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "You can configure multiple providers and switch between them:",
+   "chunk": "s-f86f994e7caa#3"
+  },
+  {
+   "from": "tool",
+   "to": "tool result",
+   "relation": "returns",
+   "description": "A tool's execute returns a result with success and either output or error.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "return {\"success\": False, \"error\": \"Path not allowed\"}",
+   "chunk": "s-5cefe16c09b4#2"
+  },
+  {
+   "from": "tool contract",
+   "to": "kernel",
+   "relation": "part_of",
+   "description": "The authoritative tool contract specification lives in the amplifier-core repository.",
+   "confidence": 0.7,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "https://github.com/microsoft/amplifier-core/blob/main/docs/contracts/TOOL_CONTRACT.md",
+   "chunk": "s-5cefe16c09b4#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "agent",
+   "relation": "controls",
+   "description": "Orchestrators control how agents execute: the loop structure, tool handling, and response generation.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Orchestrators control how agents execute: the loop structure, tool handling, and response generation.",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "basic orchestrator",
+   "to": "orchestrator",
+   "relation": "is_a",
+   "description": "The basic orchestrator is a simple request/response loop.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Basic: Simple request/response loop",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "streaming orchestrator",
+   "to": "orchestrator",
+   "relation": "is_a",
+   "description": "The streaming orchestrator streams tokens in real time.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Streaming: Real-time token streaming",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "events orchestrator",
+   "to": "orchestrator",
+   "relation": "is_a",
+   "description": "The events orchestrator uses an event-driven architecture.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Events: Event-driven architecture",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "coordinator",
+   "to": "orchestrator",
+   "relation": "mounts",
+   "description": "An orchestrator module's mount function mounts it on the coordinator.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await coordinator.mount(\"orchestrator\", orchestrator)",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool:pre",
+   "relation": "emits",
+   "description": "The typical loop emits tool:pre before executing each tool.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Emit tool:pre",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "tool:post",
+   "relation": "emits",
+   "description": "The typical loop emits tool:post after executing each tool.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Emit tool:post",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "orchestrator",
+   "to": "provider:request",
+   "relation": "emits",
+   "description": "The typical loop emits provider:request before calling the provider.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Emit provider:request",
+   "chunk": "s-64b6b3bedb13#0"
+  },
+  {
+   "from": "context manager",
+   "to": "conversation memory",
+   "relation": "provides",
+   "description": "Context managers handle conversation memory and state.",
+   "confidence": 0.95,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Context managers handle conversation memory and state.",
+   "chunk": "s-309152feb654#0"
+  },
+  {
+   "from": "context manager",
+   "to": "compaction",
+   "relation": "supports",
+   "description": "Context managers implement compaction strategies.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "Implement compaction strategies",
+   "chunk": "s-309152feb654#0"
+  },
+  {
+   "from": "compaction",
+   "to": "summarize",
+   "relation": "supports",
+   "description": "Compaction strategy can be truncate or summarize.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "How to compact (\"truncate\", \"summarize\")",
+   "chunk": "s-309152feb654#0"
+  },
+  {
+   "from": "context manager",
+   "to": "persistence",
+   "relation": "supports",
+   "description": "Context managers support persistence.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Support persistence",
+   "chunk": "s-309152feb654#0"
+  },
+  {
+   "from": "coordinator",
+   "to": "context manager",
+   "relation": "mounts",
+   "description": "A context module's mount function mounts it on the coordinator under 'context'.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "await coordinator.mount(\"context\", context)",
+   "chunk": "s-309152feb654#0"
+  },
+  {
+   "from": "amplifier",
+   "to": "linux kernel model",
+   "relation": "inspired_by",
+   "description": "The roadmap frames Amplifier as a Linux-kernel-like project with a small protected core and an experimental userland.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Think of Amplifier like a Linux-kernel project",
+   "chunk": "s-e918402abb67#1"
+  },
+  {
+   "from": "kernel stays small",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "The core is small and protected, something contributors should not need to touch.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "a small, protected core (which you shouldn't need to touch)",
+   "chunk": "s-e918402abb67#1"
+  },
+  {
+   "from": "amplifier",
+   "to": "orchestrator",
+   "relation": "provides",
+   "description": "Amplifier provides several orchestrators (basic, events, streaming) that control execution flow.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Amplifier provides several orchestrators (basic, events, streaming) that control execution flow.",
+   "chunk": "s-e918402abb67#1"
+  },
+  {
+   "from": "leverage emergent value",
+   "to": "amplifier",
+   "relation": "constrains",
+   "description": "The roadmap prefers leveraging emergent capabilities over building desired ones that don't yet exist.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Focus is on leveraging emergent capabilities over seeking to provide desired capabilities that don't yet exist.",
+   "chunk": "s-e918402abb67#1"
+  },
+  {
+   "from": "smart tool is standalone",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A smart tool is standalone and is a library before anything else.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "A smart tool is standalone.",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "library",
+   "relation": "is_a",
+   "description": "A smart tool is a library before it is anything else.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "It is a library before it is anything else",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "library",
+   "to": "cli",
+   "relation": "enables",
+   "description": "Being a library lets the same capability appear in a CLI, a bespoke UI, an app, or any agent.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "same capability appear in a CLI, in a bespoke UI, embedded in someone's app, or driven by",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "model-backed capability",
+   "relation": "requires",
+   "description": "A smart tool must do something genuinely powered by a model.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A smart tool has to do something genuinely powered by",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "tool",
+   "relation": "differs_from",
+   "description": "If every path is deterministic code it is a tool, not a smart tool.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "If every path through it is deterministic code, it is a tool, and that is fine",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "deterministic capability",
+   "to": "model provider",
+   "relation": "independent_of",
+   "description": "Straight code paths still run with no AI provider configured.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "The straight code paths still run with no AI provider",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "agent",
+   "to": "smart tool",
+   "relation": "calls",
+   "description": "The caller of a smart tool is usually an agent.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "The caller is usually an agent.",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "failures name the remedy",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A failure names what went wrong and how to correct it so an agent caller can act.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "A failure names what went wrong and how to correct",
+   "chunk": "s-d343d997bb82#1"
+  },
+  {
+   "from": "mcp",
+   "to": "smart tool",
+   "relation": "supports",
+   "description": "An MCP surface makes a tool reachable from MCP-only hosts but is not required.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "it makes the tool reachable from hosts that speak MCP and nothing",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "surfaces are adapters",
+   "to": "library",
+   "relation": "depends_on",
+   "description": "Each new surface is an adapter over the same library and adds no capability of its own.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Each new surface is a new adapter over the same library, and it adds no capability of its own.",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "web ui never the only way",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A web service or UI must never be the only way to drive a tool and must not start unless asked.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "It must never be the only way,",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "deterministic capability",
+   "to": "model provider",
+   "relation": "independent_of",
+   "description": "Deterministic code paths run with no model provider configured.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "the straight code paths run with no model provider configured.",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "no provider at load time",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "A tool must not refuse to load without model credentials; demanding a provider at load makes the AI capability mandatory.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "the tool must not refuse to load without them.",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "model-backed capability",
+   "to": "library",
+   "relation": "part_of",
+   "description": "Model-backed paths are ordinary capabilities of the library alongside deterministic ones.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "The model-backed paths are ordinary capabilities of the library.",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "deterministic capability",
+   "to": "library",
+   "relation": "part_of",
+   "description": "Deterministic capabilities live in the library alongside the model-backed ones.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "they live alongside the deterministic ones.",
+   "chunk": "s-929c0544b030#2"
+  },
+  {
+   "from": "one manifest per distribution",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Each distribution has exactly one manifest; a second SMART_TOOL.md is invalid.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "Exactly one manifest per distribution.",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "distribution",
+   "to": "smart tool",
+   "relation": "contains",
+   "description": "A repository may ship several smart tools, each rooted at its own distribution.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A repository may ship several smart tools, each rooted at its own distribution:",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "library",
+   "to": "manifest",
+   "relation": "provides",
+   "description": "The library exposes the manifest as structured data read from the copy built into the tool.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "structured data read from the copy built into the tool",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "manifest via library",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Callers reach the manifest through the library rather than locating a file, since install paths are not portable.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "Callers reach the manifest through the library rather than by locating a",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "descriptor",
+   "to": "manifest",
+   "relation": "contains",
+   "description": "A manifest under a nested descriptor belongs to that tool.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "A manifest under a nested descriptor belongs",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "surfaces are adapters",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Wrappers expose the manifest accessor in their own form and add nothing of their own.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "accessor in whatever form suits them, and add nothing of their own.",
+   "chunk": "s-adcfa3b63eb9#2"
+  },
+  {
+   "from": "manifest body",
+   "to": "manifest",
+   "relation": "part_of",
+   "description": "The manifest body is prose for a reader, not an interface parsed by callers.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "The body is prose for a reader, not an interface.",
+   "chunk": "s-adcfa3b63eb9#6"
+  },
+  {
+   "from": "manifest body",
+   "to": "skill",
+   "relation": "configures",
+   "description": "The manifest body feeds the rendered skill described in the invocation spec.",
+   "confidence": 0.7,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "says what the rendered skill looks like and what belongs in it.",
+   "chunk": "s-adcfa3b63eb9#6"
+  },
+  {
+   "from": "skill",
+   "to": "manifest body",
+   "relation": "contains",
+   "description": "A tool's skill body is the manifest body under a heading with the tool's name.",
+   "confidence": 0.95,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "**The body** is the manifest body under a heading carrying the tool's name.",
+   "chunk": "s-edd308b1a1f2#3"
+  },
+  {
+   "from": "agent skills",
+   "to": "skill",
+   "relation": "constrains",
+   "description": "The Agent Skills ceiling of 500 lines applies to the skill body.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "The Agent Skills ceiling of 500 lines applies.",
+   "chunk": "s-edd308b1a1f2#3"
+  },
+  {
+   "from": "capability skill",
+   "to": "skill",
+   "relation": "part_of",
+   "description": "Every capability requires its own capability skill scoped to that capability.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "required for every capability",
+   "chunk": "s-edd308b1a1f2#3"
+  },
+  {
+   "from": "progressive disclosure",
+   "to": "skill",
+   "relation": "constrains",
+   "description": "Skill tiers follow Agent Skills' progressive disclosure: description, tool skill, capability skill.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "tiers follow Agent Skills' progressive disclosure",
+   "chunk": "s-edd308b1a1f2#3"
+  },
+  {
+   "from": "manifest",
+   "to": "progressive disclosure",
+   "relation": "enables",
+   "description": "The manifest description is the first tier, deciding whether to look at the tool.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "principle",
+   "evidence": "the manifest description decides whether",
+   "chunk": "s-edd308b1a1f2#3"
+  },
+  {
+   "from": "compose through the library",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Capabilities compose by scripting against the libraries, where results are typed values, not text to parse.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "results are typed return values rather than text to",
+   "chunk": "s-edd308b1a1f2#7"
+  },
+  {
+   "from": "compose through the library",
+   "to": "library",
+   "relation": "depends_on",
+   "description": "A caller chaining capabilities should reach for the library instead of piping CLI output.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "a caller chaining capabilities reaches for the library",
+   "chunk": "s-edd308b1a1f2#7"
+  },
+  {
+   "from": "state outside the tool directory",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "State, caches, logs and temporary files belong outside the tool's own directory.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "State, caches, logs, and temporary files belong outside the tool's own directory.",
+   "chunk": "s-edd308b1a1f2#7"
+  },
+  {
+   "from": "failures name the remedy",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "Failures are loud and name the remedy.",
+   "confidence": 0.95,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Failures are loud and they name the remedy.",
+   "chunk": "s-edd308b1a1f2#7"
+  }
+ ]
+}

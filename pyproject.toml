@@ -1,0 +1,39 @@
+[project]
+name = "amplifier-smart-tool-visualizer"
+version = "0.1.0"
+description = "A knowledge graph any agent can query and add to, and people can explore: concepts and typed relations with sources, confidence and time."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/michaeljabbour/amplifier-smart-tool-visualizer"
+
+[project.optional-dependencies]
+pdf = ["pypdf>=4"]
+
+[project.scripts]
+knowledge = "knowledge.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/knowledge"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 132
+target-version = "py310"
+
+[tool.hatch.build.targets.sdist]
+# media, the site and recorded examples live in the repository, not in the source package
+exclude = ["docs/images", "site", ".github", ".work", "_site", "examples/amplifier/sources"]

@@ -1,0 +1,2196 @@
+{
+ "agent": "archivist",
+ "nodes": [
+  {
+   "label": "provider",
+   "type": "component"
+  },
+  {
+   "label": "module",
+   "type": "concept"
+  },
+  {
+   "label": "tool",
+   "type": "component"
+  },
+  {
+   "label": "orchestrator",
+   "type": "component"
+  },
+  {
+   "label": "context manager",
+   "type": "component"
+  },
+  {
+   "label": "hook",
+   "type": "component"
+  },
+  {
+   "label": "logging hook",
+   "type": "component"
+  },
+  {
+   "label": "approval hook",
+   "type": "component"
+  },
+  {
+   "label": "redaction hook",
+   "type": "component"
+  },
+  {
+   "label": "streaming hook",
+   "type": "component"
+  },
+  {
+   "label": "loader",
+   "type": "component"
+  },
+  {
+   "label": "kernel",
+   "type": "component",
+   "summary": "The kernel offers no ambient authority and stays up when modules fail."
+  },
+  {
+   "label": "mount plan",
+   "type": "contract"
+  },
+  {
+   "label": "configuration contract",
+   "type": "contract"
+  },
+  {
+   "label": "event",
+   "type": "concept"
+  },
+  {
+   "label": "observability",
+   "type": "concept"
+  },
+  {
+   "label": "linux kernel",
+   "type": "concept"
+  },
+  {
+   "label": "application",
+   "type": "concept"
+  },
+  {
+   "label": "module developer guide",
+   "type": "artifact"
+  },
+  {
+   "label": "stable schemas",
+   "type": "principle",
+   "summary": "Version any data shapes crossing kernel boundaries."
+  },
+  {
+   "label": "explicit errors",
+   "type": "principle",
+   "summary": "Fail closed with actionable diagnostics. No silent fallbacks."
+  },
+  {
+   "label": "deny by default",
+   "type": "principle",
+   "summary": "Kernel offers no ambient authority. Modules must request capabilities explicitly."
+  },
+  {
+   "label": "coordinator",
+   "type": "component"
+  },
+  {
+   "label": "sandbox boundaries",
+   "type": "principle",
+   "summary": "All calls across boundaries are validated, attributed, and observable."
+  },
+  {
+   "label": "tool:pre",
+   "type": "concept"
+  },
+  {
+   "label": "non-interference",
+   "type": "principle",
+   "summary": "Module failures are isolated. The kernel stays up."
+  },
+  {
+   "label": "module loading order",
+   "type": "claim",
+   "summary": "A mount plan loads the orchestrator, then the context manager, providers, tools, and hooks."
+  },
+  {
+   "label": "session",
+   "type": "concept"
+  },
+  {
+   "label": "provider contract",
+   "type": "contract"
+  },
+  {
+   "label": "tool contract",
+   "type": "contract"
+  },
+  {
+   "label": "hook contract",
+   "type": "contract"
+  },
+  {
+   "label": "orchestrator contract",
+   "type": "contract"
+  },
+  {
+   "label": "context contract",
+   "type": "contract"
+  },
+  {
+   "label": "injection budget",
+   "type": "contract",
+   "summary": "Token limit for hook injections per turn, defaulting to 10,000."
+  },
+  {
+   "label": "injection size limit",
+   "type": "contract"
+  },
+  {
+   "label": "module source",
+   "type": "concept"
+  },
+  {
+   "label": "git repository",
+   "type": "concept"
+  },
+  {
+   "label": "agent",
+   "type": "concept"
+  },
+  {
+   "label": "tool:post",
+   "type": "concept"
+  },
+  {
+   "label": "tool:error",
+   "type": "concept"
+  },
+  {
+   "label": "context:pre_compact",
+   "type": "concept"
+  },
+  {
+   "label": "context:include",
+   "type": "concept"
+  },
+  {
+   "label": "approval:required",
+   "type": "concept"
+  },
+  {
+   "label": "approval:denied",
+   "type": "concept"
+  },
+  {
+   "label": "orchestrator:complete",
+   "type": "concept"
+  },
+  {
+   "label": "event schema",
+   "type": "contract",
+   "summary": "Events are logged as JSONL with a fixed schema named amplifier.log."
+  },
+  {
+   "label": "sub-session",
+   "type": "concept"
+  },
+  {
+   "label": "canonical event names",
+   "type": "principle",
+   "summary": "Event names follow the component:action pattern."
+  },
+  {
+   "label": "hookresult",
+   "type": "contract"
+  },
+  {
+   "label": "deny",
+   "type": "concept"
+  },
+  {
+   "label": "inject_context",
+   "type": "concept"
+  },
+  {
+   "label": "emit events for important operations",
+   "type": "principle"
+  },
+  {
+   "label": "standalone agent file",
+   "type": "artifact"
+  },
+  {
+   "label": "system instruction",
+   "type": "concept"
+  },
+  {
+   "label": "cli",
+   "type": "component"
+  },
+  {
+   "label": "session resume",
+   "type": "method"
+  },
+  {
+   "label": "session storage",
+   "type": "artifact",
+   "summary": "Sessions are stored per project under ~/.amplifier/projects/<project-slug>/sessions/<session-id>/."
+  },
+  {
+   "label": "transcript.jsonl",
+   "type": "artifact"
+  },
+  {
+   "label": "events.jsonl",
+   "type": "artifact"
+  },
+  {
+   "label": "project slug",
+   "type": "concept"
+  },
+  {
+   "label": "profile",
+   "type": "concept"
+  },
+  {
+   "label": "resumed session runs against current state",
+   "type": "claim"
+  },
+  {
+   "label": "collection dependency",
+   "type": "contract"
+  },
+  {
+   "label": "collection",
+   "type": "concept"
+  },
+  {
+   "label": "collection dependency auto-install",
+   "type": "claim"
+  },
+  {
+   "label": "semantic versioning",
+   "type": "principle"
+  },
+  {
+   "label": "single purpose",
+   "type": "principle"
+  },
+  {
+   "label": "base profile",
+   "type": "artifact"
+  },
+  {
+   "label": "context file",
+   "type": "artifact"
+  },
+  {
+   "label": "ollama provider",
+   "type": "component"
+  },
+  {
+   "label": "vllm",
+   "type": "component"
+  },
+  {
+   "label": "vllm server",
+   "type": "component"
+  },
+  {
+   "label": "self-hosted inference",
+   "type": "concept"
+  },
+  {
+   "label": "openai",
+   "type": "component"
+  },
+  {
+   "label": "input schema",
+   "type": "contract"
+  },
+  {
+   "label": "execute",
+   "type": "method"
+  },
+  {
+   "label": "tool result",
+   "type": "contract"
+  },
+  {
+   "label": "metadata",
+   "type": "concept"
+  },
+  {
+   "label": "safety hook",
+   "type": "component"
+  },
+  {
+   "label": "max iterations",
+   "type": "concept"
+  },
+  {
+   "label": "amplifier",
+   "type": "concept"
+  },
+  {
+   "label": "experimental platform",
+   "type": "claim",
+   "summary": "Amplifier is an experimental platform focused on discovering what's possible when AI partnership amplifies human capability."
+  },
+  {
+   "label": "disposable work",
+   "type": "principle",
+   "summary": "All work is treated as candidate to be thrown away and replaced within weeks."
+  },
+  {
+   "label": "building amplifier with amplifier",
+   "type": "principle",
+   "summary": "Using Amplifier to improve and extend Amplifier."
+  },
+  {
+   "label": "compounding progress",
+   "type": "claim"
+  },
+  {
+   "label": "roadmap",
+   "type": "artifact"
+  },
+  {
+   "label": "guideline",
+   "type": "claim"
+  },
+  {
+   "label": "domain knowledge",
+   "type": "concept"
+  },
+  {
+   "label": "smart tool",
+   "type": "concept",
+   "summary": "A smart tool is a self-contained tool that ships with its own AI capability built in."
+  },
+  {
+   "label": "deterministic capability",
+   "type": "concept"
+  },
+  {
+   "label": "model-backed capability",
+   "type": "concept"
+  },
+  {
+   "label": "library",
+   "type": "concept"
+  },
+  {
+   "label": "portable domain expertise",
+   "type": "concept"
+  },
+  {
+   "label": "caller states intent",
+   "type": "principle"
+  },
+  {
+   "label": "not a wire format",
+   "type": "decision"
+  },
+  {
+   "label": "skill",
+   "type": "concept"
+  },
+  {
+   "label": "thin cli",
+   "type": "principle",
+   "summary": "Every smart tool ships a CLI, and it is a thin wrapper."
+  },
+  {
+   "label": "domain logic in cli is a defect",
+   "type": "principle",
+   "summary": "Domain logic in the CLI is a defect: it is capability the library cannot reach."
+  },
+  {
+   "label": "mcp",
+   "type": "concept"
+  },
+  {
+   "label": "optional surfaces",
+   "type": "principle"
+  },
+  {
+   "label": "one canonical manifest",
+   "type": "principle",
+   "summary": "There is one canonical manifest per distribution."
+  },
+  {
+   "label": "manifest",
+   "type": "artifact"
+  },
+  {
+   "label": "descriptor",
+   "type": "artifact",
+   "summary": "smart-tool.json at the distribution root names the manifest, the CLI argv prefix, and a deterministic smoke capability."
+  },
+  {
+   "label": "distribution root",
+   "type": "concept"
+  },
+  {
+   "label": "requires",
+   "type": "contract"
+  },
+  {
+   "label": "install reference",
+   "type": "concept"
+  },
+  {
+   "label": "inert manifest",
+   "type": "principle",
+   "summary": "Every field in the manifest is inert; nothing in it is a command."
+  },
+  {
+   "label": "prerequisite detection",
+   "type": "method"
+  },
+  {
+   "label": "packaging system",
+   "type": "component"
+  },
+  {
+   "label": "agent skill",
+   "type": "contract"
+  },
+  {
+   "label": "the library is the tool",
+   "type": "principle",
+   "summary": "The library holds every capability of a smart tool."
+  },
+  {
+   "label": "manifest capability",
+   "type": "method"
+  },
+  {
+   "label": "summarize capability",
+   "type": "method"
+  },
+  {
+   "label": "capability",
+   "type": "concept"
+  },
+  {
+   "label": "skill directory",
+   "type": "concept"
+  },
+  {
+   "label": "output format",
+   "type": "contract"
+  },
+  {
+   "label": "structured output",
+   "type": "concept"
+  },
+  {
+   "label": "stdout for results",
+   "type": "principle",
+   "summary": "Stdout carries the requested result; stderr carries diagnostics."
+  },
+  {
+   "label": "artifact location",
+   "type": "concept"
+  },
+  {
+   "label": "tool identity",
+   "type": "concept"
+  },
+  {
+   "label": "distribution",
+   "type": "concept"
+  }
+ ],
+ "edges": [
+  {
+   "from": "provider",
+   "to": "module",
+   "relation": "part_of",
+   "description": "The architecture diagram lists Providers inside the Modules layer.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Providers",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "tool",
+   "to": "module",
+   "relation": "part_of",
+   "description": "The architecture diagram lists Tools inside the Modules layer.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Tools",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "orchestrator",
+   "to": "module",
+   "relation": "part_of",
+   "description": "The architecture diagram lists the Orchestrator inside the Modules layer.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Orchestratr",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "context manager",
+   "to": "module",
+   "relation": "part_of",
+   "description": "The architecture diagram lists Context inside the Modules layer.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Context",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "hook",
+   "to": "module",
+   "relation": "part_of",
+   "description": "Hooks appear as a group inside the Modules layer of the architecture diagram.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Hooks",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "logging hook",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "Logging is shown as one of the hook modules.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Logging",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "approval hook",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "Approval is shown as one of the hook modules.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Approval",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "redaction hook",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "Redaction is shown as one of the hook modules.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Redaction",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "streaming hook",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "Streaming is shown as one of the hook modules.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Streaming",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "loader",
+   "to": "kernel",
+   "relation": "part_of",
+   "description": "The diagram shows a Loader alongside Hooks and Events in the layer above Modules, which appears to be the kernel.",
+   "confidence": 0.5,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Loader",
+   "chunk": "s-aa9fefe58937#3"
+  },
+  {
+   "from": "mount plan",
+   "to": "configuration contract",
+   "relation": "is_a",
+   "description": "Mount plans are described as the configuration contract.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "contract",
+   "evidence": "[Mount Plans](mount_plans.md) - Configuration contract",
+   "chunk": "s-aa9fefe58937#7"
+  },
+  {
+   "from": "event",
+   "to": "observability",
+   "relation": "enables",
+   "description": "The event system is described as the observability mechanism.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "[Event System](events.md) - Observability",
+   "chunk": "s-aa9fefe58937#7"
+  },
+  {
+   "from": "kernel",
+   "to": "linux kernel",
+   "relation": "inspired_by",
+   "description": "Amplifier's kernel design principles draw on Linux kernel inspiration.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Kernel design principles and Linux kernel inspiration",
+   "chunk": "s-aa9fefe58937#7"
+  },
+  {
+   "from": "application",
+   "to": "kernel",
+   "relation": "depends_on",
+   "description": "Applications are built on amplifier-core, the kernel.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "for building apps on amplifier-core",
+   "chunk": "s-aa9fefe58937#7"
+  },
+  {
+   "from": "module developer guide",
+   "to": "module",
+   "relation": "supports",
+   "description": "The Module Developer Guide covers creating custom providers, tools, and hooks.",
+   "confidence": 0.7,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "for creating custom providers, tools, hooks",
+   "chunk": "s-aa9fefe58937#7"
+  },
+  {
+   "from": "stable schemas",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Data shapes crossing kernel boundaries must be versioned.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Version any data shapes crossing kernel boundaries.",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "explicit errors",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "The kernel fails closed with actionable diagnostics rather than silent fallbacks.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Fail closed with actionable diagnostics. No silent fallbacks.",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "deny by default",
+   "to": "module",
+   "relation": "constrains",
+   "description": "Under deny by default, modules get no ambient authority and must request capabilities explicitly.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Kernel offers no ambient authority. Modules must request capabilities explicitly.",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "module",
+   "to": "coordinator",
+   "relation": "calls",
+   "description": "Modules register and fetch capabilities explicitly through the coordinator.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "coordinator.register_capability(\"file_system\", implementation)",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "sandbox boundaries",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Every call across a boundary is validated, attributed, and observable.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "All calls across boundaries are validated, attributed, and observable.",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "coordinator",
+   "to": "tool:pre",
+   "relation": "emits",
+   "description": "Every tool call is made observable by emitting tool:pre through the coordinator's hooks.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "await coordinator.hooks.emit(\"tool:pre\", {",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "non-interference",
+   "to": "kernel",
+   "relation": "constrains",
+   "description": "Module failures are isolated so the kernel stays up.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Module failures are isolated. The kernel stays up.",
+   "chunk": "s-6c7239446fe1#3"
+  },
+  {
+   "from": "mount plan",
+   "to": "orchestrator",
+   "relation": "configures",
+   "description": "The orchestrator is loaded from the mount plan's session.orchestrator entry.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "mount_plan[\"session\"][\"orchestrator\"]",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "context manager",
+   "relation": "configures",
+   "description": "The context manager is loaded from the mount plan's session.context entry.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "mount_plan[\"session\"][\"context\"]",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "provider",
+   "relation": "configures",
+   "description": "Providers are loaded from the mount plan's providers list.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "mount_plan[\"providers\"]",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "tool",
+   "relation": "configures",
+   "description": "Tools are loaded from the mount plan's tools list.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "mount_plan[\"tools\"]",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "mount plan",
+   "to": "hook",
+   "relation": "configures",
+   "description": "Hooks are loaded from the mount plan's hooks list.",
+   "confidence": 0.9,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "mount_plan[\"hooks\"]",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "module loading order",
+   "to": "mount plan",
+   "relation": "constrains",
+   "description": "Loading runs in a fixed order: orchestrator, context manager, providers, tools, hooks.",
+   "confidence": 0.85,
+   "from_type": "claim",
+   "to_type": "contract",
+   "evidence": "1. Load Orchestrator (required)",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "session",
+   "to": "orchestrator",
+   "relation": "requires",
+   "description": "The orchestrator is a required module in the loading sequence.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "1. Load Orchestrator (required)",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "session",
+   "to": "context manager",
+   "relation": "requires",
+   "description": "The context manager is a required module in the loading sequence.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "2. Load Context Manager (required)",
+   "chunk": "s-ea73d36235e0#2"
+  },
+  {
+   "from": "provider contract",
+   "to": "provider",
+   "relation": "constrains",
+   "description": "The Provider Contract specifies how providers are built.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Provider Contract",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "tool contract",
+   "to": "tool",
+   "relation": "constrains",
+   "description": "The Tool Contract specifies how tools are built.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Tool Contract",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "hook contract",
+   "to": "hook",
+   "relation": "constrains",
+   "description": "The Hook Contract specifies how hooks are built.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Hook Contract",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "orchestrator contract",
+   "to": "orchestrator",
+   "relation": "constrains",
+   "description": "The Orchestrator Contract specifies how orchestrators are built.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Orchestrator Contract",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "context contract",
+   "to": "context manager",
+   "relation": "constrains",
+   "description": "The Context Contract specifies how context managers are built.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Context Contract",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "provider contract",
+   "to": "kernel",
+   "relation": "part_of",
+   "description": "The module contracts are kept in the amplifier-core repository.",
+   "confidence": 0.6,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "github.com/microsoft/amplifier-core/blob/main/docs/contracts/PROVIDER_CONTRACT.md",
+   "chunk": "s-ea73d36235e0#6"
+  },
+  {
+   "from": "session",
+   "to": "orchestrator",
+   "relation": "requires",
+   "description": "orchestrator is a required session field naming the orchestrator module.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Module ID for orchestrator",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "session",
+   "to": "context manager",
+   "relation": "requires",
+   "description": "context is a required session field naming the context manager module.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Module ID for context manager",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "injection budget",
+   "to": "hook",
+   "relation": "constrains",
+   "description": "injection_budget_per_turn caps the tokens hooks can inject each turn.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Token limit for hook injections per turn",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "injection size limit",
+   "to": "hook",
+   "relation": "constrains",
+   "description": "injection_size_limit caps the bytes in each hook injection.",
+   "confidence": 0.75,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Byte limit per injection",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "module source",
+   "to": "mount plan",
+   "relation": "part_of",
+   "description": "A module entry in the mount plan can carry a source, required when the module isn't installed as a package.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "Source is required if module isn't installed as a package.",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "module source",
+   "to": "git repository",
+   "relation": "supports",
+   "description": "A module source can be a git repository, optionally pinned by tag or subdirectory.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "# Git repository",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "mount plan",
+   "to": "agent",
+   "relation": "configures",
+   "description": "The mount plan carries agent definitions with their own description, tools, and system instruction.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "\"description\": \"Codebase exploration agent\",",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "depends_on",
+   "description": "An agent definition lists the tool modules it uses.",
+   "confidence": 0.65,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "\"tools\": [\"tool-filesystem\", \"tool-search\"],",
+   "chunk": "s-e6d77329d8a8#3"
+  },
+  {
+   "from": "tool",
+   "to": "tool:post",
+   "relation": "emits",
+   "description": "tool:post fires after a tool executes, with tool_name and result.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "After tool execution",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "tool",
+   "to": "tool:error",
+   "relation": "emits",
+   "description": "tool:error fires when tool execution fails.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Tool execution failed",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "context manager",
+   "to": "context:pre_compact",
+   "relation": "emits",
+   "description": "Context events include context:pre_compact before compaction.",
+   "confidence": 0.6,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Before compaction",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "context manager",
+   "to": "context:include",
+   "relation": "emits",
+   "description": "context:include fires when context is injected.",
+   "confidence": 0.55,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Context injected",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "approval:required",
+   "to": "event",
+   "relation": "is_a",
+   "description": "approval:required is the event raised when approval is requested.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Approval requested",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "approval:denied",
+   "to": "event",
+   "relation": "is_a",
+   "description": "approval:denied records that the user denied an operation, with a reason.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "User denied",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "orchestrator",
+   "to": "orchestrator:complete",
+   "relation": "emits",
+   "description": "orchestrator:complete marks the main loop finishing, with iterations and tokens.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Main loop finished",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "event schema",
+   "to": "event",
+   "relation": "constrains",
+   "description": "Events are logged as JSONL using a fixed schema with ts, session_id, event, module, and data fields.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "Events are logged as JSONL with this schema:",
+   "chunk": "s-a2704086281a#1"
+  },
+  {
+   "from": "agent",
+   "to": "sub-session",
+   "relation": "spawns",
+   "description": "Agents spawn sub-sessions whose IDs relate to the parent's.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "agents spawn sub-sessions, IDs are related:",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "sub-session",
+   "to": "session",
+   "relation": "part_of",
+   "description": "A child session id is built from its parent session id.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Child: session_id=abc123-def456_explorer",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "canonical event names",
+   "to": "event",
+   "relation": "constrains",
+   "description": "Event names should follow the component:action pattern.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Follow the `component:action` pattern",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "hookresult",
+   "to": "deny",
+   "relation": "supports",
+   "description": "Callers should check hook results for deny and inject_context.",
+   "confidence": 0.75,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "Check for `deny` and `inject_context`",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "hookresult",
+   "to": "inject_context",
+   "relation": "supports",
+   "description": "Hook results can inject context, which callers must handle.",
+   "confidence": 0.75,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "Check for `deny` and `inject_context`",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "emit events for important operations",
+   "to": "event",
+   "relation": "constrains",
+   "description": "Best practice is to emit events for important operations.",
+   "confidence": 0.7,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Emit events for important operations",
+   "chunk": "s-a2704086281a#5"
+  },
+  {
+   "from": "standalone agent file",
+   "to": "agent",
+   "relation": "configures",
+   "description": "A standalone agent is defined in a markdown file under .amplifier/agents/.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Create `.amplifier/agents/my-agent.md`:",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "agent",
+   "to": "tool",
+   "relation": "configures",
+   "description": "An agent may optionally specify its own tools.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Optional - specific tools for this agent",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "agent",
+   "to": "provider",
+   "relation": "configures",
+   "description": "An agent may optionally specify its own provider and model.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Optional - specific provider/model",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "agent",
+   "to": "hook",
+   "relation": "configures",
+   "description": "An agent may optionally override hooks.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "# Optional - override hooks",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "standalone agent file",
+   "to": "system instruction",
+   "relation": "provides",
+   "description": "The markdown body of an agent file becomes additional system instructions.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "# Markdown content becomes additional system instructions",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "agent",
+   "to": "session",
+   "relation": "inherits_from",
+   "description": "Agents inherit configuration from the parent session.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Agents inherit from the parent session:",
+   "chunk": "s-7df67a4219af#3"
+  },
+  {
+   "from": "cli",
+   "to": "session resume",
+   "relation": "supports",
+   "description": "The amplifier CLI can resume a session by ID.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "method",
+   "evidence": "amplifier session resume abc123",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "session",
+   "to": "session storage",
+   "relation": "part_of",
+   "description": "Each session is stored in its own directory under the project's sessions folder.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "~/.amplifier/projects/<project-slug>/sessions/<session-id>/",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "transcript.jsonl",
+   "to": "session storage",
+   "relation": "part_of",
+   "description": "The session directory holds transcript.jsonl with the conversation history.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "transcript.jsonl",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "events.jsonl",
+   "to": "session storage",
+   "relation": "part_of",
+   "description": "The session directory holds events.jsonl, the complete event log.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "events.jsonl",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "events.jsonl",
+   "to": "event",
+   "relation": "contains",
+   "description": "events.jsonl is the complete event log for the session.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "# Complete event log",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "project slug",
+   "to": "session storage",
+   "relation": "constrains",
+   "description": "The project slug comes from the working directory, which makes sessions project-specific.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "This means sessions are project-specific.",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "profile",
+   "to": "session",
+   "relation": "configures",
+   "description": "When a session is created, its profile and provider are configured.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Profile and provider configured",
+   "chunk": "s-fa6363569877#1"
+  },
+  {
+   "from": "resumed session runs against current state",
+   "to": "session resume",
+   "relation": "constrains",
+   "description": "A resumed session runs tools against the current state; the profile and files may have changed.",
+   "confidence": 0.75,
+   "from_type": "claim",
+   "to_type": "method",
+   "evidence": "Tools execute against current state",
+   "chunk": "s-fa6363569877#5"
+  },
+  {
+   "from": "profile",
+   "to": "session",
+   "relation": "configures",
+   "description": "Profiles are described as session configuration.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "[Profiles](profiles.md) - Session configuration",
+   "chunk": "s-fa6363569877#5"
+  },
+  {
+   "from": "collection dependency",
+   "to": "collection",
+   "relation": "part_of",
+   "description": "A collection can declare dependencies on other collections.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "Collections can depend on other collections:",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "collection dependency auto-install",
+   "to": "collection",
+   "relation": "constrains",
+   "description": "Referenced collections are installed automatically.",
+   "confidence": 0.8,
+   "from_type": "claim",
+   "to_type": "concept",
+   "evidence": "Referenced collections will be installed automatically.",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "semantic versioning",
+   "to": "collection",
+   "relation": "constrains",
+   "description": "Collections should use semantic versioning.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Use semantic versioning",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "single purpose",
+   "to": "collection",
+   "relation": "constrains",
+   "description": "Each collection should have one clear focus.",
+   "confidence": 0.75,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Each collection should have a clear focus",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "contains",
+   "description": "A collection holds profiles in its profiles/ directory.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "cat ~/.amplifier/collections/my-collection/profiles/my-profile.md",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "cli",
+   "to": "collection",
+   "relation": "supports",
+   "description": "The amplifier CLI lists, shows, and refreshes collections.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "amplifier collection list",
+   "chunk": "s-3c4c04103e1d#3"
+  },
+  {
+   "from": "profile",
+   "to": "base profile",
+   "relation": "extends",
+   "description": "A profile can extend another profile such as base and inherit from it.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "extends: base",
+   "chunk": "s-22f6622f3dd1#3"
+  },
+  {
+   "from": "profile",
+   "to": "context file",
+   "relation": "loads",
+   "description": "Profiles reference context files with @mentions.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "Reference context files using @mentions:",
+   "chunk": "s-22f6622f3dd1#3"
+  },
+  {
+   "from": "collection",
+   "to": "profile",
+   "relation": "contains",
+   "description": "Profiles can be packaged in a collection for broader sharing.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Package profiles in a collection for broader sharing:",
+   "chunk": "s-22f6622f3dd1#3"
+  },
+  {
+   "from": "collection",
+   "to": "agent",
+   "relation": "contains",
+   "description": "A collection's layout includes an agents/ directory next to profiles/ and context/.",
+   "confidence": 0.6,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "agents/",
+   "chunk": "s-22f6622f3dd1#3"
+  },
+  {
+   "from": "cli",
+   "to": "profile",
+   "relation": "supports",
+   "description": "The amplifier CLI can show the fully resolved profile, including its inheritance chain.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "amplifier profile show my-profile --resolved",
+   "chunk": "s-22f6622f3dd1#3"
+  },
+  {
+   "from": "ollama provider",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "Ollama is selected as an Amplifier provider.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier provider use ollama",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "vllm",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "vLLM is selected as an Amplifier provider.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier provider use vllm",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "vllm",
+   "to": "vllm server",
+   "relation": "requires",
+   "description": "The vLLM provider needs a running vLLM server, v0.10.1 or later.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "Running vLLM server (v0.10.1+)",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "vllm",
+   "to": "self-hosted inference",
+   "relation": "supports",
+   "description": "vLLM is meant for high-throughput self-hosted inference on your own GPU servers.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "For high-throughput self-hosted inference with your own GPU servers.",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "cli",
+   "to": "provider",
+   "relation": "configures",
+   "description": "The amplifier CLI changes the default provider.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier provider use anthropic",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "openai",
+   "to": "provider",
+   "relation": "is_a",
+   "description": "OpenAI can be chosen as the provider for one run.",
+   "confidence": 0.65,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "amplifier run --provider openai",
+   "chunk": "s-f86f994e7caa#2"
+  },
+  {
+   "from": "tool",
+   "to": "input schema",
+   "relation": "requires",
+   "description": "Tools declare their parameters with a JSON Schema.",
+   "confidence": 0.85,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "Tools declare their parameters using JSON Schema:",
+   "chunk": "s-5cefe16c09b4#1"
+  },
+  {
+   "from": "tool",
+   "to": "tool:pre",
+   "relation": "emits",
+   "description": "Tools are wrapped with tool:pre, tool:post, and tool:error events.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Tools are wrapped with events:",
+   "chunk": "s-5cefe16c09b4#1"
+  },
+  {
+   "from": "tool",
+   "to": "tool:error",
+   "relation": "emits",
+   "description": "tool:error fires when a tool fails.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "On failure",
+   "chunk": "s-5cefe16c09b4#1"
+  },
+  {
+   "from": "execute",
+   "to": "tool",
+   "relation": "part_of",
+   "description": "A tool implements an async execute method that takes the input.",
+   "confidence": 0.75,
+   "from_type": "method",
+   "to_type": "component",
+   "evidence": "async def execute(self, input):",
+   "chunk": "s-5cefe16c09b4#1"
+  },
+  {
+   "from": "tool result",
+   "to": "metadata",
+   "relation": "contains",
+   "description": "A tool result can carry additional metadata alongside its error message.",
+   "confidence": 0.6,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "# Additional metadata",
+   "chunk": "s-5cefe16c09b4#1"
+  },
+  {
+   "from": "safety hook",
+   "to": "hook",
+   "relation": "is_a",
+   "description": "SafetyHook is an example hook that blocks dangerous commands.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "component",
+   "evidence": "SafetyHook:",
+   "chunk": "s-6bcd4faaa0f6#2"
+  },
+  {
+   "from": "safety hook",
+   "to": "tool:pre",
+   "relation": "loads",
+   "description": "The safety hook handles the tool:pre event.",
+   "confidence": 0.65,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "async def on_tool_pre(self, event, data):",
+   "chunk": "s-6bcd4faaa0f6#2"
+  },
+  {
+   "from": "hook",
+   "to": "hookresult",
+   "relation": "provides",
+   "description": "Hooks return a HookResult that tells the caller what to do.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "contract",
+   "evidence": "return HookResult(action=\"continue\")",
+   "chunk": "s-6bcd4faaa0f6#2"
+  },
+  {
+   "from": "hookresult",
+   "to": "deny",
+   "relation": "supports",
+   "description": "A HookResult with action deny blocks the operation and gives a reason.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "action=\"deny\",",
+   "chunk": "s-6bcd4faaa0f6#2"
+  },
+  {
+   "from": "hook contract",
+   "to": "hook",
+   "relation": "constrains",
+   "description": "The Hook Contract in amplifier-core is the complete specification for hooks.",
+   "confidence": 0.75,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Complete specification",
+   "chunk": "s-6bcd4faaa0f6#2"
+  },
+  {
+   "from": "orchestrator",
+   "to": "max iterations",
+   "relation": "constrained_by",
+   "description": "The example orchestrator loop stops when it hits a maximum iteration count.",
+   "confidence": 0.6,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "return \"Max iterations reached\"",
+   "chunk": "s-64b6b3bedb13#3"
+  },
+  {
+   "from": "orchestrator contract",
+   "to": "orchestrator",
+   "relation": "constrains",
+   "description": "The Orchestrator Contract in amplifier-core is the complete specification for orchestrators.",
+   "confidence": 0.75,
+   "from_type": "contract",
+   "to_type": "component",
+   "evidence": "Complete specification",
+   "chunk": "s-64b6b3bedb13#3"
+  },
+  {
+   "from": "amplifier",
+   "to": "experimental platform",
+   "relation": "is_a",
+   "description": "Amplifier is described as an experimental platform.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "claim",
+   "evidence": "Amplifier is an **experimental platform**",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "disposable work",
+   "to": "amplifier",
+   "relation": "governs",
+   "description": "All Amplifier work is treated as replaceable within weeks.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "All work is treated as candidate to be thrown away and replaced within weeks",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "building amplifier with amplifier",
+   "to": "amplifier",
+   "relation": "governs",
+   "description": "A focus area is using Amplifier to improve and extend Amplifier itself.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "Using Amplifier to improve and extend Amplifier.",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "compounding progress",
+   "to": "amplifier",
+   "relation": "governs",
+   "description": "Each added capability makes the system better at building the next one.",
+   "confidence": 0.75,
+   "from_type": "claim",
+   "to_type": "concept",
+   "evidence": "each capability we add makes the system more capable of building the next",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "roadmap",
+   "to": "guideline",
+   "relation": "is_a",
+   "description": "The roadmap is guidance, not a commitment.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "claim",
+   "evidence": "This roadmap is more \"guidelines\" than commitments.",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "amplifier",
+   "to": "domain knowledge",
+   "relation": "provides",
+   "description": "Amplifier aims to give AI assistants domain knowledge and context from the user's work.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Domain knowledge and context from your work",
+   "chunk": "s-e918402abb67#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "tool",
+   "relation": "is_a",
+   "description": "A smart tool is a self-contained tool with its own AI capability built in.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "A smart tool is a self-contained tool that ships with its own AI capability built in.",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "deterministic capability",
+   "relation": "provides",
+   "description": "A smart tool's straight code paths run with no model provider configured.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "its straight code paths run with no model provider",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "model-backed capability",
+   "relation": "provides",
+   "description": "A smart tool also offers higher-level commands that call AI capabilities internally.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "it exposes higher-level commands that invoke AI capabilities",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "library",
+   "relation": "is_a",
+   "description": "A smart tool behaves like an ordinary library or CLI.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "It behaves like an ordinary library or CLI",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "portable domain expertise",
+   "relation": "enables",
+   "description": "A smart tool packages one domain's expertise so it can be used from any harness.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A smart tool packages one domain's expertise so it can be consumed anywhere",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "caller states intent",
+   "to": "smart tool",
+   "relation": "governs",
+   "description": "The caller states an intent and gets back a result, usually a structured artifact.",
+   "confidence": 0.8,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "The caller states an intent and gets a result",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "not a wire format",
+   "to": "smart tool",
+   "relation": "constrains",
+   "description": "The spec describes a shape for building smart tools, not a wire format for cross-vendor interoperation.",
+   "confidence": 0.85,
+   "from_type": "decision",
+   "to_type": "concept",
+   "evidence": "This describes a shape for building smart tools, not a wire format for interoperating with",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "skill",
+   "relation": "replaces",
+   "description": "The spec presents smart tools as an alternative to expertise that only works inside one harness with its skills loaded.",
+   "confidence": 0.5,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "inside the harness it was built for, with the right skills and context loaded",
+   "chunk": "s-d343d997bb82#0"
+  },
+  {
+   "from": "smart tool",
+   "to": "cli",
+   "relation": "requires",
+   "description": "Every smart tool ships a CLI by default.",
+   "confidence": 0.9,
+   "from_type": "concept",
+   "to_type": "component",
+   "evidence": "Every smart tool ships a CLI, and it is a thin wrapper.",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "thin cli",
+   "to": "cli",
+   "relation": "constrains",
+   "description": "The smart tool CLI is a thin wrapper.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Every smart tool ships a CLI, and it is a thin wrapper.",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "cli",
+   "to": "library",
+   "relation": "calls",
+   "description": "The CLI only parses arguments and handles I/O, then calls the library.",
+   "confidence": 0.9,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "Thin means the CLI hooks up argument parsing and I/O conventions and then calls the",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "domain logic in cli is a defect",
+   "to": "cli",
+   "relation": "constrains",
+   "description": "Domain logic placed in the CLI is a defect because the library cannot reach it.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Domain logic in the CLI is a defect: it is capability the library cannot reach.",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "library",
+   "to": "skill",
+   "relation": "provides",
+   "description": "Every skill comes from the library, and the CLI only prints it.",
+   "confidence": 0.85,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "every skill comes from the library",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "cli",
+   "to": "skill",
+   "relation": "provides",
+   "description": "The CLI's --help output is a skill.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "What `--help` prints is a skill",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "smart tool",
+   "to": "mcp",
+   "relation": "supports",
+   "description": "A smart tool may expose an optional MCP server.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "A smart tool may expose an MCP server.",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "optional surfaces",
+   "to": "mcp",
+   "relation": "constrains",
+   "description": "MCP is optional; the tool works fully without it.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "It is not required, and nothing in this specification assumes it exists.",
+   "chunk": "s-929c0544b030#1"
+  },
+  {
+   "from": "one canonical manifest",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Each distribution has exactly one canonical manifest.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "There is one canonical manifest per distribution.",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "library",
+   "to": "manifest",
+   "relation": "depends_on",
+   "description": "The library and every adapter read the same manifest to say what the tool is and whether it can run.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "artifact",
+   "evidence": "The library, the CLI, and every other adapter",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "cli",
+   "to": "manifest",
+   "relation": "depends_on",
+   "description": "The CLI reads the same manifest bytes as the library, so they cannot disagree.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "The library, the CLI, and every other adapter",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "manifest",
+   "to": "library",
+   "relation": "part_of",
+   "description": "The manifest sits with the source code that every surface is built from.",
+   "confidence": 0.65,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "It sits with the code because",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "descriptor",
+   "to": "manifest",
+   "relation": "references",
+   "description": "The descriptor at the distribution root says where the manifest is.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "distribution root names it",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "descriptor",
+   "to": "distribution root",
+   "relation": "part_of",
+   "description": "The distribution root holds the package definition and the smart-tool.json descriptor.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "The distribution root is the directory that produces the installable unit",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "manifest",
+   "to": "skill",
+   "relation": "contains",
+   "description": "The manifest body is free-form guidance for whoever is about to use the tool.",
+   "confidence": 0.7,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "free-form guidance for whoever is about to use the tool",
+   "chunk": "s-adcfa3b63eb9#1"
+  },
+  {
+   "from": "manifest",
+   "to": "requires",
+   "relation": "contains",
+   "description": "The requires field lists what must exist in the environment before the tool can run.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "contract",
+   "evidence": "**`requires`** declares what must exist in the environment before the tool can run.",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "requires",
+   "to": "install reference",
+   "relation": "constrains",
+   "description": "Each install entry points to documentation and is never a command.",
+   "confidence": 0.8,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "reference to documentation, a relative path or a URL, never a command.",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "inert manifest",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Every manifest field is inert, so reading a manifest never runs anything.",
+   "confidence": 0.9,
+   "from_type": "principle",
+   "to_type": "artifact",
+   "evidence": "Every field in the manifest is inert.",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "smart tool",
+   "to": "prerequisite detection",
+   "relation": "provides",
+   "description": "The tool itself checks whether its prerequisites are present.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "method",
+   "evidence": "Detecting whether a prerequisite is present is the tool's own job.",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "manifest",
+   "to": "skill",
+   "relation": "contains",
+   "description": "Everything in the manifest below the frontmatter is the skill.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Everything below the frontmatter is the skill",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "cli",
+   "to": "skill",
+   "relation": "provides",
+   "description": "The CLI's --help renders the manifest body, so the source file and the CLI show the same guidance.",
+   "confidence": 0.8,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "It is what `--help` renders",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "packaging system",
+   "to": "manifest",
+   "relation": "constrains",
+   "description": "Language runtimes and package dependencies are left to the packaging system, not the manifest.",
+   "confidence": 0.7,
+   "from_type": "component",
+   "to_type": "artifact",
+   "evidence": "Language runtimes and package dependencies are not listed here.",
+   "chunk": "s-adcfa3b63eb9#5"
+  },
+  {
+   "from": "skill",
+   "to": "agent skill",
+   "relation": "is_a",
+   "description": "The rendered skill has the shape of an Agent Skill as a host delivers one to a model.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "contract",
+   "evidence": "shape of an [Agent Skill](https://agentskills.io/specification)",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "the library is the tool",
+   "to": "library",
+   "relation": "governs",
+   "description": "The library holds every capability of the smart tool.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "concept",
+   "evidence": "The library is the tool.",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "manifest capability",
+   "to": "deterministic capability",
+   "relation": "is_a",
+   "description": "The manifest capability is deterministic and prints the tool's manifest as JSON.",
+   "confidence": 0.85,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "`manifest` [deterministic] -- Print the tool's manifest as JSON.",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "summarize capability",
+   "to": "model-backed capability",
+   "relation": "is_a",
+   "description": "In the example, summarize is a model-backed capability.",
+   "confidence": 0.8,
+   "from_type": "method",
+   "to_type": "concept",
+   "evidence": "`summarize` [model-backed] -- Condense a document.",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "capability",
+   "to": "skill",
+   "relation": "provides",
+   "description": "Each capability has its own skill, shown through --help.",
+   "confidence": 0.8,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "Each has its own skill: `doc-summarizer <capability> --help`.",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "library",
+   "to": "skill directory",
+   "relation": "provides",
+   "description": "The library resolves the skill directory, the installed package root, at runtime.",
+   "confidence": 0.75,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "is the installed package root, resolved by the library at runtime",
+   "chunk": "s-edd308b1a1f2#2"
+  },
+  {
+   "from": "output format",
+   "to": "capability",
+   "relation": "part_of",
+   "description": "Each capability documents its own output format; the spec does not prescribe one.",
+   "confidence": 0.85,
+   "from_type": "contract",
+   "to_type": "concept",
+   "evidence": "The output format is part of each capability's documented interface",
+   "chunk": "s-edd308b1a1f2#6"
+  },
+  {
+   "from": "cli",
+   "to": "structured output",
+   "relation": "supports",
+   "description": "A CLI can default to readable text and offer structured output through a flag such as --json.",
+   "confidence": 0.75,
+   "from_type": "component",
+   "to_type": "concept",
+   "evidence": "A CLI can default to readable text and offer structured output through a flag such as",
+   "chunk": "s-edd308b1a1f2#6"
+  },
+  {
+   "from": "stdout for results",
+   "to": "cli",
+   "relation": "constrains",
+   "description": "Stdout carries results and stderr carries diagnostics, so results can be piped or saved.",
+   "confidence": 0.85,
+   "from_type": "principle",
+   "to_type": "component",
+   "evidence": "Stdout carries the requested result, whether text or structured data.",
+   "chunk": "s-edd308b1a1f2#6"
+  },
+  {
+   "from": "capability",
+   "to": "artifact location",
+   "relation": "provides",
+   "description": "A capability that writes an artifact to a file reports where it is.",
+   "confidence": 0.7,
+   "from_type": "concept",
+   "to_type": "concept",
+   "evidence": "the result clearly identifies its location.",
+   "chunk": "s-edd308b1a1f2#6"
+  },
+  {
+   "from": "descriptor",
+   "to": "manifest",
+   "relation": "references",
+   "description": "The descriptor's required manifest field gives the path to SMART_TOOL.md.",
+   "confidence": 0.9,
+   "from_type": "artifact",
+   "to_type": "artifact",
+   "evidence": "required. Path to SMART_TOOL.md, relative to this file.",
+   "chunk": "s-46b002856da7#1"
+  },
+  {
+   "from": "descriptor",
+   "to": "cli",
+   "relation": "references",
+   "description": "The descriptor's cli_argv is the argv prefix that starts the tool's CLI.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "component",
+   "evidence": "The argv prefix that starts the tool's CLI.",
+   "chunk": "s-46b002856da7#1"
+  },
+  {
+   "from": "descriptor",
+   "to": "deterministic capability",
+   "relation": "references",
+   "description": "deterministic_smoke names a capability that runs with no provider configured.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "a capability that runs with no provider configured.",
+   "chunk": "s-46b002856da7#1"
+  },
+  {
+   "from": "manifest",
+   "to": "tool identity",
+   "relation": "contains",
+   "description": "The tool's name, version, and prerequisites live in the manifest, not the descriptor, so the two cannot disagree.",
+   "confidence": 0.8,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "Its name, version, and prerequisites live in",
+   "chunk": "s-46b002856da7#1"
+  },
+  {
+   "from": "descriptor",
+   "to": "distribution",
+   "relation": "constrains",
+   "description": "A descriptor marks the boundary of a distribution, excluding any nested descriptor's tree.",
+   "confidence": 0.85,
+   "from_type": "artifact",
+   "to_type": "concept",
+   "evidence": "A descriptor bounds a distribution.",
+   "chunk": "s-46b002856da7#1"
+  }
+ ]
+}
