@@ -100,8 +100,8 @@ amplifier bundle add 'git+https://github.com/michaeljabbour/amplifier-smart-tool
 
 It loads the `knowledge` skill from `skills/`, which tells the agent to install the CLI and use the
 deterministic routes. Optional: `behaviors/knowledge-mcp.yaml` serves the same capabilities as MCP
-tools through Amplifier's MCP module (it needs `knowledge` on PATH; the file shows a `uvx`
-alternative).
+tools through Amplifier's MCP module, named `mcp_knowledge_knowledge_<capability>` (it needs
+`knowledge` on PATH; the file shows a `uvx` alternative).
 
 ## As a library
 

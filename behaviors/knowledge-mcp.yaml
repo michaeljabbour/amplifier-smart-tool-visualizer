@@ -1,5 +1,5 @@
 # Optional. Mounts `knowledge mcp` (stdio) through Amplifier's MCP tool module, so the capabilities
-# appear as tools named knowledge_<capability>. Needs the CLI on PATH first:
+# appear as tools named mcp_knowledge_knowledge_<capability> (tool-mcp prefixes mcp_<server>_). Needs the CLI on PATH first:
 #   uv tool install "amplifier-smart-tool-visualizer @ git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer@main"
 # Without an install, use command: uvx with
 #   args: ["--from", "git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer@main", "knowledge", "mcp"]
@@ -12,7 +12,7 @@ bundle:
 
 tools:
   - module: tool-mcp
-    source: git+https://github.com/robotdad/amplifier-module-tool-mcp@main
+    source: git+https://github.com/microsoft/amplifier-module-tool-mcp@main
     config:
       servers:
         knowledge:
