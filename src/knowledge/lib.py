@@ -1068,6 +1068,7 @@ def graph_data(graph=None, *, as_of: str | None = None, concept: str | None = No
                                     for m in g.mentions_of(n, limit=passages)]
             nodes.append(item)
         edges = []
+        titles = {s["id"]: s["title"] for s in g.sources()}
         for e in g.edges(include_closed=True):
             if e["source"] in keep and e["target"] in keep:
                 if as_of and e["valid_from"] > as_of:
@@ -1076,7 +1077,8 @@ def graph_data(graph=None, *, as_of: str | None = None, concept: str | None = No
                               "description": e["description"], "confidence": e["confidence"], "weight": e["weight"],
                               "method": e["method"], "agent": e["agent"], "valid_from": e["valid_from"],
                               "valid_to": e["valid_to"], "invalidated_by": e["invalidated_by"],
-                              "chunk": e["chunk_id"]})
+                              "chunk": e["chunk_id"], "evidence": (e["evidence"] or "")[:300],
+                              "from_source": titles.get(e["source_id"])})
         prox = [{"source": a, "target": b, "count": c} for (a, b), c in view.proximity.items()
                 if a in keep and b in keep]
         gp = an.structural_gaps(view, groups, cent, top=5)
@@ -1093,31 +1095,36 @@ def graph_data(graph=None, *, as_of: str | None = None, concept: str | None = No
 
 
 def choose_view(graph=None, question: str | None = None, *, lens: str | None = None, concept: str | None = None,
-                to: str | None = None, as_of: str | None = None) -> dict:
+                to: str | None = None, as_of: str | None = None, view: str | None = None) -> dict:
     """Pick the view that answers a question: a lens (overview, concept, path, evidence, contradictions,
     history, gaps) and the concepts it is about. Raises `needs_clarification` with a question to ask the
     person, and the command for each answer, when the question does not say enough to choose."""
     from .lenses import choose_view as _choose
 
     with _open(graph, create=False) as g:
-        return _choose(g, question, lens=lens, concept=concept, to=to, as_of=as_of)
+        return _choose(g, question, lens=lens, concept=concept, to=to, as_of=as_of, view=view)
 
 
 def visualize(graph=None, out: str | None = None, *, as_of: str | None = None, concept: str | None = None,
               depth: int = 2, max_nodes: int = 1500, title: str | None = None, proximity: bool = True,
-              question: str | None = None, lens: str | None = None, to: str | None = None) -> dict:
+              question: str | None = None, lens: str | None = None, to: str | None = None,
+              view: str | None = None) -> dict:
     """Write one self-contained interactive HTML file (no outside requests) and return where it is.
     With `question` (or `lens`), the view opens on the lens that answers it, and says why."""
     from .render import render_html
 
     plan = None
+    if view is not None and question is None and lens is None:
+        from .lenses import lens_for_view
+
+        lens = lens_for_view(view, concept)
     if question is not None or lens is not None:
-        plan = choose_view(graph, question, lens=lens, concept=concept, to=to, as_of=as_of)
+        plan = choose_view(graph, question, lens=lens, concept=concept, to=to, as_of=as_of, view=view)
         data = graph_data(graph, max_nodes=max_nodes, proximity=proximity)
         shown = {n["id"] for n in data["nodes"]}
         if any(c and c not in shown for c in (plan["concept"], plan["to"])):  # trimmed away: draw its neighbourhood
             data = graph_data(graph, concept=plan["concept"], depth=depth, max_nodes=max_nodes, proximity=proximity)
-        data["open"] = {k: plan[k] for k in ("lens", "concept", "to", "as_of", "closed", "question", "why",
+        data["open"] = {k: plan[k] for k in ("lens", "view", "concept", "to", "as_of", "closed", "question", "why",
                                              "alternatives", "description")}
     else:
         data = graph_data(graph, as_of=as_of, concept=concept, depth=depth, max_nodes=max_nodes, proximity=proximity)
@@ -1129,7 +1136,7 @@ def visualize(graph=None, out: str | None = None, *, as_of: str | None = None, c
     result = {"path": os.path.abspath(target), "bytes": len(html.encode()), "nodes": data["counts"]["nodes"],
               "edges": data["counts"]["edges"], "topics": data["counts"]["topics"], "truncated": data["truncated"]}
     if plan:
-        result.update({k: plan[k] for k in ("lens", "concept", "to", "as_of", "why", "alternatives")})
+        result.update({k: plan[k] for k in ("lens", "view", "concept", "to", "as_of", "why", "alternatives")})
     return result
 
 

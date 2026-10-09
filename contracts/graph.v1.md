@@ -26,7 +26,7 @@ ones keep their meaning.
      "relation": "increases", "description": "When people choose what to delegate...",
      "confidence": 0.55, "weight": 1.0, "method": "agent", "agent": "researcher",
      "valid_from": "2026-03-10T00:00:00Z", "valid_to": null, "invalidated_by": null,
-     "chunk": null}
+     "chunk": null, "evidence": "Participants who delegated...", "from_source": "delegation-study.md"}
   ],
   "proximity": [{"source": "delegation", "target": "human oversight", "count": 2}],
   "topics": [{"id": 3, "label": "agency, perceived, delegation", "size": 19, "color": "#e15759",
@@ -56,6 +56,8 @@ ones keep their meaning.
 ## Edges
 
 - Directed: `source` `relation` `target`. `relation` is a lowercase label with underscores.
+- `evidence` is the quote the relation was written from (first 300 characters, empty if none was given);
+  `from_source` is the title of the material it was read from (null for relations written by hand).
 - `method` is how it was made: `llm` (extracted by a model), `agent` (written through add or
   relate), `cooccurrence` (word window; `weight` is the window score).
 - `valid_from` / `valid_to` bound when the relation held. `valid_to` set means closed;

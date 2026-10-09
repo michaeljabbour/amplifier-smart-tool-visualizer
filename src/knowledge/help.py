@@ -12,7 +12,7 @@ from importlib.metadata import metadata as _metadata
 from importlib.resources import files
 
 NAME = "knowledge"
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 DISTRIBUTION = "amplifier-smart-tool-visualizer"
 
 _PROVIDER_ARGS = ("--provider / --model / --complete-cmd",
@@ -267,9 +267,10 @@ CAPABILITIES: dict[str, dict] = {
     },
     "visualize": {
         "kind": "deterministic",
-        "summary": "Write one self-contained interactive HTML view (topics, evidence, time slider, gaps).",
+        "summary": "Write one self-contained interactive page: map, timeline, argument, steps, matrix and rhythm views.",
         "when": "To explore by eye or share a snapshot. Pass the person's question with --for and the view opens on the "
-        "lens that answers it (a path, evidence, contradictions, history, gaps, one concept or the overview) and says why; "
+        "form that answers it and says why: a timeline for what changed, an argument for whether a claim holds, steps for how "
+        "two ideas connect, a matrix for what is missing, a rhythm for when things were written, or the map; "
         "if the question does not say enough, it stops with needs_clarification and a question to ask them instead of "
         "guessing. No outside requests; opens from disk. Size shows influence, "
         "colour shows topic, green and red lines are supports and contradicts, dashed lines are closed relations, "
@@ -277,6 +278,8 @@ CAPABILITIES: dict[str, dict] = {
         "args": [("--for", "The person's question, in their words: picks the view that answers it."),
                  ("--lens", "Choose the view yourself: overview, concept, path, evidence, contradictions, history, gaps."),
                  ("--to", "The second concept, for --lens path or gaps."),
+                 ("--view", "The form to open on: map, timeline, argument, steps, matrix, rhythm (default: the one that "
+                  "fits the question; every view file has all six as tabs)."),
                  ("--out", "File to write (default ./knowledge-GRAPH.html)."), ("--concept", "Only this concept's "
                  "neighbourhood (with --for or --lens: the concept the view is about)."),
                  ("--depth", "Neighbourhood depth with --concept (default 2)."), ("--max-nodes", "Keep the most "
@@ -285,7 +288,7 @@ CAPABILITIES: dict[str, dict] = {
         "example": "knowledge visualize --for \"how does delegation relate to perceived agency?\" --open\n"
                    "knowledge visualize --lens history --concept \"shipped default\" --as-of 2026-09-26 --open\n"
                    "knowledge visualize --concept \"agency\" --depth 2 --out agency.html",
-        "result": "{path, bytes, nodes, edges, topics, truncated}; with --for or --lens also {lens, concept, to, as_of, why, "
+        "result": "{path, bytes, nodes, edges, topics, truncated}; with --for or --lens also {lens, view, concept, to, as_of, why, "
                   "alternatives: [{label, command}]}.",
         "fails": "The question is unclear (exit 1, needs_clarification: result.question is what to ask the person, "
                  "result.choices gives the command for each answer; ask them, do not pick); unknown lens (exit 2); "

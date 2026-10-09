@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.0 (2026-10-09)
+
+- The view answers in the form that fits the question, not only the network. One self-contained
+  page now has six tabs: **Map** (the network), **Timeline** (what held when; replaced relations
+  hatched, with an arrow to what replaced them), **Argument** (a claim with quote cards for and
+  against, or the most contested claims), **Steps** (the chain between two concepts, with
+  alternative routes), **Matrix** (topics against topics, links observed against expected, gaps
+  outlined) and **Rhythm** (topics against time). `visualize --for` opens the one that answers the
+  question; `--view NAME` (and `#view=NAME` in the address) picks one directly.
+- The note at the top of the view is a strip above it, never over it; it names the view shown.
+- A dated question keeps its date: "as of 2024-12-01" is marked at 2024-12-01.
+- Graph documents carry each relation's quote (`evidence`, first 300 characters) and source title
+  (`from_source`), so the views can show the words a relation came from.
+- New recordings: each example opens in its own form, one graph shown six ways, and the matrix.
+
 ## 0.2.0 (2026-10-08)
 
 - `visualize --for "QUESTION"` opens the view that answers the person's question: how two concepts

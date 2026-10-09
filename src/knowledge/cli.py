@@ -204,6 +204,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--for", dest="question")
     p.add_argument("--lens")
     p.add_argument("--to")
+    p.add_argument("--view")
 
     p = _cap(sub, "serve")
     p.add_argument("--port", type=int, default=0)
@@ -331,10 +332,10 @@ def run(args) -> tuple[object, list[dict], list[str]]:
     if c == "visualize":
         r = lib.visualize(g, args.out, as_of=args.as_of, concept=args.concept, depth=args.depth,
                           max_nodes=args.max_nodes, title=args.title, proximity=not args.no_proximity,
-                          question=args.question, lens=args.lens, to=args.to)
+                          question=args.question, lens=args.lens, to=args.to, view=args.view)
         progress(f"Wrote {r['path']} ({r['nodes']} concepts, {r['edges']} relations).")
         if r.get("lens"):
-            progress(f"Opens on the {r['lens']} view: {r['why']}")
+            progress(f"Opens on the {r['view']} view ({r['lens']}): {r['why']}")
         if args.open:
             _open_browser(r["path"])
         return r, [{"path": r["path"], "kind": "view"}], []

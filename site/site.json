@@ -5,14 +5,14 @@
   "accent": "#2f5f8a",
   "title": "Knowledge | Amplifier Smart Tools",
   "promise": "Ask your documents a question. See the answer as a map.",
-  "description": "Point it at papers, specs, policies, notes or code and it builds a knowledge graph: concepts and typed relations, each with the passage it came from, a confidence and the dates it held. Ask in plain words and the view opens on the answer: how two ideas connect, what backs or contradicts a claim, what changed and what replaced it, or what is missing. When a question is unclear, it asks you instead of guessing.",
+  "description": "Point it at papers, specs, policies, notes or code and it builds a knowledge graph: concepts and typed relations, each with the passage it came from, a confidence and the dates it held. Ask in plain words and it answers in the form that fits the question: a timeline of what changed and what replaced it, an argument with the quotes for and against a claim, the steps between two ideas, a matrix of what is missing, a rhythm of when each topic was written about, or the map. When a question is unclear, it asks you instead of guessing.",
   "image": "docs/images/trailer-poster.png",
   "video": "docs/images/trailer.mp4",
-  "alt": "A short cut of the demos, all from real public material: Python's typing PEPs replayed through time, a contested claim about emergent abilities with the papers that contradict it, US federal AI policy stepped back to what applied in 2024, the tool asking back when a question is vague, four agents building a graph live, and the commands an agent runs.",
+  "alt": "A short cut of the demos, all from real public material: Python's typing PEPs as a timeline of a replaced plan, a contested claim about emergent abilities as an argument with its quotes, US federal AI policy as a timeline of what applied on 2024-12-01, one graph shown six ways, the tool asking back when a question is vague, four agents building a graph live, and the commands an agent runs.",
   "caption": "A minute of what it does, on real public material: Python PEPs, arXiv abstracts and US federal policy.",
   "width": 1440,
   "height": 900,
-  "flow_title": "Read it. Ask it. See the answer.",
+  "flow_title": "Read it. Ask it. See the answer in the right form.",
   "flow_intro": "Start from material you already have. The graph keeps every claim with its source and its dates, so you can follow a line of reasoning, check a claim, or see what applied on a given day, instead of searching for keywords.",
   "steps": [
     [
@@ -21,7 +21,7 @@
     ],
     [
       "Ask in plain words.",
-      "knowledge visualize --for \"what replaced M-24-10?\" opens the view that answers it: a path between two ideas, the evidence for a claim, where sources disagree, what changed over time, or the gaps. If the question is unclear, it asks you which you meant, with the command for each answer."
+      "knowledge visualize --for \"what replaced M-24-10?\" opens the form that answers it: a timeline for what changed, an argument for whether a claim holds, steps for how two ideas connect, a matrix for what is missing, a rhythm for when things were written, or the map. Every view file has all six as tabs. If the question is unclear, it asks which you meant, with the command for each answer."
     ],
     [
       "Check it, and find what's missing.",
@@ -57,13 +57,13 @@
     {
       "id": "developers",
       "eyebrow": "For developers",
-      "title": "Python never made string annotations the default. Here is what replaced the plan.",
-      "description": "Ten real Python Enhancement Proposals on type hints, including four versions of PEP 563. Ask \"What replaced PEP 563's plan to make stringized annotations the default?\" and the view opens on that history. The plan moved from Python 4.0 (2017) to 3.10 (2020), was put on hold for PEP 649 (2021), and the PEP now says it \"never became the default behaviour\". PEP 649 and PEP 749's deferred evaluation took its place. from __future__ import annotations keeps working in 3.14, and is deprecated no sooner than the first release after 3.13 reaches its end of life.",
+      "title": "A timeline of a plan that never shipped, and what replaced it.",
+      "description": "Ten real Python Enhancement Proposals on type hints, including four versions of PEP 563. Ask \"What replaced PEP 563's plan to make stringized annotations the default?\" and it answers with a timeline. The plan moved from Python 4.0 (2017) to 3.10 (2020) and was put on hold for PEP 649 (2021); the PEP now says it \"never became the default behaviour\". Replaced plans are hatched, with an arrow to what replaced them: deferred evaluation in PEP 649 and PEP 749. Click any bar for its quote.",
       "image": "docs/images/developers-poster.png",
       "video": "docs/images/developers-demo.mp4",
       "width": 1440,
       "height": 900,
-      "alt": "The Python typing graph opens on stringized annotations with a note naming the question; Play replays 2014 to 2025 and the replaced plan turns dashed.",
+      "alt": "A timeline of Python annotation plans: hatched bars for plans that were replaced, arrows to deferred evaluation, a selected relation with its quote.",
       "caption": "Screen recording. Public-domain PEP text from python/peps, relations extracted by an agent.",
       "link": "assets/python-typing.html",
       "link_text": "Open: what replaced PEP 563's plan?"
@@ -71,13 +71,13 @@
     {
       "id": "scientists",
       "eyebrow": "For researchers",
-      "title": "A claim, and the papers that contradict it.",
-      "description": "Eight arXiv abstracts on scaling laws and emergent abilities (arXiv metadata is CC0). Ask \"What contradicts the claim that emergent abilities appear suddenly and unpredictably?\" and the view opens on that claim. Wei et al. (2022) say such abilities \"cannot be predicted simply by extrapolating\" smaller models. Schaeffer et al. (2023) give evidence that they \"evaporate with different metrics or with better statistics\". Each red link carries its quote. The same graph shows how compute-optimal training advice changed from Kaplan (2020) to Chinchilla (2022), and a 2024 replication that disputes Chinchilla's fit.",
+      "title": "An argument: the claim, the quotes against it, the quotes for it.",
+      "description": "Eight arXiv abstracts on scaling laws and emergent abilities (arXiv metadata is CC0). Ask \"What contradicts the claim that emergent abilities appear suddenly and unpredictably?\" and it answers with an argument. Wei et al. (2022) say such abilities \"cannot be predicted simply by extrapolating\" smaller models; Schaeffer et al. (2023) give evidence that they \"evaporate with different metrics or with better statistics\". Every card carries its quote and source. The same file shows the compute-optimal debate from Kaplan to Chinchilla as a timeline.",
       "image": "docs/images/scientists-poster.png",
       "video": "docs/images/scientists-demo.mp4",
       "width": 1440,
       "height": 900,
-      "alt": "The scaling-laws graph opens on the claim that emergent abilities are unpredictable, with contradicting relations in red and their quotes in the side panel.",
+      "alt": "An argument view: the emergence claim on top, four quote cards against it and two for it, one quote expanded.",
       "caption": "Screen recording. Abstracts from arXiv (CC0), relations extracted by an agent.",
       "link": "assets/scaling-laws.html",
       "link_text": "Open: what contradicts the emergence claim?"
@@ -85,16 +85,30 @@
     {
       "id": "work",
       "eyebrow": "For policy, legal and operations work",
-      "title": "What applies now, what applied then, and what replaced it.",
-      "description": "Seven US federal documents on agency use of AI, from Executive Order 14110 (2023) to OMB memos M-25-21 and M-25-22 (2025), all public domain. Ask \"What replaced M-24-10?\" and the view opens on the memo with its history: M-25-21 \"rescinds and replaces\" it. Drag the time slider to see what agencies had to do before that, such as M-24-10's December 1, 2024 deadline for minimum practices. Revoked and rescinded rules stay in the history, dashed, with the sentence that ended them.",
+      "title": "What agencies had to do on a given day, and what applies now.",
+      "description": "Seven US federal documents on agency use of AI, from Executive Order 14110 (2023) to OMB memos M-25-21 and M-25-22 (2025), all public domain. Ask \"What did agencies have to do as of 2024-12-01?\" and it answers with a timeline marked at that date: requirements in force then, such as M-24-10's December 1, 2024 deadline for minimum practices, and the ones that replaced them after M-25-21 \"rescinds and replaces\" it. Filled bars still hold; hatched bars ended, with the sentence that ended them.",
       "image": "docs/images/work-poster.png",
       "video": "docs/images/work-demo.mp4",
       "width": 1440,
       "height": 900,
-      "alt": "The federal AI policy graph opens on M-24-10; the time slider steps back to 2024 and forward to now as rescinded requirements appear and close.",
+      "alt": "A timeline of US federal AI policy marked 'as of 2024-12-01': hatched bars for rescinded requirements, filled bars for what still holds, a selected requirement in the side panel.",
       "caption": "Screen recording. US government works (public domain), relations extracted by an agent.",
       "link": "assets/federal-ai-policy.html",
-      "link_text": "Open: what replaced M-24-10?"
+      "link_text": "Open: what applied on 2024-12-01?"
+    },
+    {
+      "id": "forms",
+      "eyebrow": "Six forms, one graph",
+      "title": "The question picks the form. The tabs show the rest.",
+      "description": "Data, knowledge and wisdom need different pictures. Map: the network of concepts and relations. Timeline: what held when, and what replaced it. Argument: a claim with the quotes for and against. Steps: the chain between two ideas, each with its sentence. Matrix: topics against topics, links observed against expected, gaps outlined. Rhythm: topics against time. One self-contained file, no outside requests.",
+      "image": "docs/images/forms-poster.png",
+      "video": "docs/images/forms-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The Python typing graph cycling through its six tabs: map, timeline, argument, steps, matrix and rhythm.",
+      "caption": "Screen recording. Public-domain PEP text.",
+      "link": "assets/python-typing.html#view=steps",
+      "link_text": "Open the steps view"
     },
     {
       "id": "asks",
@@ -111,16 +125,16 @@
     {
       "id": "gaps",
       "eyebrow": "Find the gaps",
-      "title": "Two halves of Amplifier that barely touch.",
-      "description": "Twenty real documents: fifteen pages of microsoft/amplifier-docs and the five chapters of the smart-tools spec, read by four agents into 313 concepts and 613 relations. The biggest gap the graph finds is real: the smart-tools world (cli, smart tool, manifest) has almost no links to the kernel world (kernel, mount plan, module).",
-      "image": "docs/images/gaps-poster.png",
-      "video": "docs/images/gaps-demo.mp4",
+      "title": "What's missing, as a matrix.",
+      "description": "Twenty real documents from Microsoft's Amplifier docs and the smart-tools spec, read by four agents into 313 concepts and 613 relations. The matrix sets every topic against every other: links observed against links expected for their size. Outlined cells are gaps. The biggest is real: the smart-tools world (cli, smart tool, manifest) barely touches the kernel world (kernel, mount plan, module). Click a gap for its bridge candidates.",
+      "image": "docs/images/matrix-poster.png",
+      "video": "docs/images/matrix-demo.mp4",
       "width": 1440,
       "height": 900,
-      "alt": "The Amplifier docs graph coloured by topic; the top gap card lights up the smart-tool and kernel topics with their bridge candidates.",
+      "alt": "A topic matrix of the Amplifier docs: warm cells for fewer links than expected, outlined gap cells, one selected with its bridge candidates.",
       "caption": "Screen recording. Microsoft's public Amplifier docs (MIT), relations extracted by agents.",
-      "link": "assets/amplifier.html",
-      "link_text": "Open the Amplifier graph"
+      "link": "assets/amplifier.html#view=matrix",
+      "link_text": "Open the matrix"
     },
     {
       "id": "live",
