@@ -31,5 +31,9 @@ with the deterministic route.
 
 Do not add `--provider` unless the person asks to spend a key.
 
+To show the graph, pass the person's question: `visualize --for "THEIR QUESTION" --open`. It opens
+the view that answers it. If it stops with `needs_clarification`, ask them `result.question` and
+run the command from `result.choices` that matches their answer. Never pick for them.
+
 Graphs are kept in a per-user data folder (`knowledge stats` shows where). Set `KNOWLEDGE_HOME`
 to keep one project's graphs apart, and name graphs with `--graph NAME`.

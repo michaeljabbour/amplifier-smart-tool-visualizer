@@ -11,7 +11,7 @@ Model-backed: ingest (method "llm"), ask, report, questions, reconcile. Everythi
 
 from .errors import ToolError
 from .help import VERSION as __version__
-from .lib import (add, analyze, ask, communities, context, contradictions, doctor, events, evidence, export,
+from .lib import (add, analyze, ask, choose_view, communities, context, contradictions, doctor, events, evidence, export,
                   gaps, graph_data, graphs, host_task, ingest, manifest, path, questions, reconcile, relate, report, search,
                   show, stats, supersede, timeline, visualize)
 from .store import Graph, open_graph
@@ -39,7 +39,7 @@ def short_help() -> str:
     return _short_help()
 
 
-__all__ = ["ToolError", "__version__", "add", "analyze", "ask", "communities", "context", "contradictions",
+__all__ = ["ToolError", "__version__", "add", "analyze", "ask", "choose_view", "communities", "context", "contradictions",
            "doctor", "events", "evidence", "export", "gaps", "graph_data", "graphs", "host_task", "ingest", "manifest", "path",
            "questions", "reconcile", "relate", "report", "search", "show", "stats", "supersede", "timeline",
            "visualize", "Graph", "open_graph", "load_documents", "split_text", "skill", "capability_skill", "short_help"]

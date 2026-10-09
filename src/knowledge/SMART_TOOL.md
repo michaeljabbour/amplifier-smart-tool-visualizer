@@ -1,7 +1,7 @@
 ---
 smart_tool_format: 1
 name: knowledge
-version: 0.1.0
+version: 0.2.0
 description: >-
   Turns notes, papers, docs, code and agent sessions into a knowledge graph that any agent can
   query and add to, and people can explore: concepts and typed relations with sources, confidence and
@@ -138,6 +138,17 @@ knowledge relate "claim 27" contradicts "claim 11" --agent reviewer --graph rese
 knowledge gaps --graph research --json                                        # where to look next
 ```
 
+**Show the view that answers the person's question, and ask when it is unclear.** Pass their
+question, in their words, to `visualize --for`. The view opens on the lens that answers it (how
+two concepts connect, what backs a claim, where the material disagrees, what changed, the gaps,
+one concept, or the overview) and says why. If the question does not say enough, the command stops
+with `needs_clarification`: `result.question` is the question to put to the person and
+`result.choices` the command for each answer. Ask them; do not pick for them.
+
+```
+knowledge visualize --for "how does delegation relate to perceived agency?" --graph research --open
+```
+
 Over MCP (`knowledge mcp`), the same capabilities are tools named `knowledge_<capability>`;
 model-backed tools return a task for you instead of calling a model.
 
@@ -160,7 +171,7 @@ model-backed tools return a task for you instead of calling a model.
 knowledge ingest ./papers ./notes --graph research --agent librarian
 knowledge report --graph research                 # name the topics
 knowledge analyze --graph research                # central ideas, bridges, gaps
-knowledge visualize --graph research --open
+knowledge visualize --for "what are the main topics?" --graph research --open
 ```
 
 **No model at all.** `knowledge ingest ./notes --method cooccurrence`, then `analyze`, `gaps`,

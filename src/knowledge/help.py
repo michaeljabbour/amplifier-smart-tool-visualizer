@@ -12,7 +12,7 @@ from importlib.metadata import metadata as _metadata
 from importlib.resources import files
 
 NAME = "knowledge"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 DISTRIBUTION = "amplifier-smart-tool-visualizer"
 
 _PROVIDER_ARGS = ("--provider / --model / --complete-cmd",
@@ -268,16 +268,28 @@ CAPABILITIES: dict[str, dict] = {
     "visualize": {
         "kind": "deterministic",
         "summary": "Write one self-contained interactive HTML view (topics, evidence, time slider, gaps).",
-        "when": "To explore by eye or share a snapshot. No outside requests; opens from disk. Size shows influence, "
+        "when": "To explore by eye or share a snapshot. Pass the person's question with --for and the view opens on the "
+        "lens that answers it (a path, evidence, contradictions, history, gaps, one concept or the overview) and says why; "
+        "if the question does not say enough, it stops with needs_clarification and a question to ask them instead of "
+        "guessing. No outside requests; opens from disk. Size shows influence, "
         "colour shows topic, green and red lines are supports and contradicts, dashed lines are closed relations, "
         "the slider replays the graph through time.",
-        "args": [("--out", "File to write (default ./knowledge-GRAPH.html)."), ("--concept", "Only this concept's neighbourhood."),
+        "args": [("--for", "The person's question, in their words: picks the view that answers it."),
+                 ("--lens", "Choose the view yourself: overview, concept, path, evidence, contradictions, history, gaps."),
+                 ("--to", "The second concept, for --lens path or gaps."),
+                 ("--out", "File to write (default ./knowledge-GRAPH.html)."), ("--concept", "Only this concept's "
+                 "neighbourhood (with --for or --lens: the concept the view is about)."),
                  ("--depth", "Neighbourhood depth with --concept (default 2)."), ("--max-nodes", "Keep the most "
                  "connected (default 1500)."), ("--no-proximity", "Hide shared-passage links."), ("--title", "Page title."),
                  ("--open", "Open it in the browser."), _ASOF_ARG, _GRAPH_ARG],
-        "example": "knowledge visualize --open\nknowledge visualize --concept \"agency\" --depth 2 --out agency.html",
-        "result": "{path, bytes, nodes, edges, topics, truncated}.",
-        "fails": "No such graph (exit 1); the file cannot be written (exit 3).",
+        "example": "knowledge visualize --for \"how does delegation relate to perceived agency?\" --open\n"
+                   "knowledge visualize --lens history --concept \"shipped default\" --as-of 2026-09-26 --open\n"
+                   "knowledge visualize --concept \"agency\" --depth 2 --out agency.html",
+        "result": "{path, bytes, nodes, edges, topics, truncated}; with --for or --lens also {lens, concept, to, as_of, why, "
+                  "alternatives: [{label, command}]}.",
+        "fails": "The question is unclear (exit 1, needs_clarification: result.question is what to ask the person, "
+                 "result.choices gives the command for each answer; ask them, do not pick); unknown lens (exit 2); "
+                 "no such graph (exit 1); the file cannot be written (exit 3).",
     },
     "serve": {
         "kind": "deterministic",
