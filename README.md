@@ -1,7 +1,7 @@
 # knowledge
 
 [![CI](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml)
-[![Smart Tools conformance](https://img.shields.io/badge/smart--tools%20conformance-16%2F16-2f5f8a)](https://github.com/microsoft/amplifier-smart-tools/tree/main/conformance)
+[![Smart Tools conformance](https://img.shields.io/badge/smart--tools%20conformance-17%2F17-2f5f8a)](https://github.com/microsoft/amplifier-smart-tools/tree/main/conformance)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-2f5f8a)](pyproject.toml)
 [![No runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-none-2f5f8a)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f5f8a)](LICENSE)

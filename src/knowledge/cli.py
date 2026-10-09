@@ -70,7 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="knowledge", add_help=False)
     parser.add_argument("-h", action=_Print, render=lambda _p: h.short_help())
     parser.add_argument("--help", action=_Print, render=lambda _p: h.skill())
-    parser.add_argument("--version", action=_Print, render=lambda _p: f"knowledge {h.VERSION}")
+    parser.add_argument("-V", "--version", action=_Print, render=lambda _p: f"knowledge {h.VERSION}")
     sub = parser.add_subparsers(dest="command", parser_class=_Parser)
 
     p = _cap(sub, "ingest")

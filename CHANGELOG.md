@@ -17,6 +17,8 @@
   AI policy for policy, legal and operations work (public domain). `scripts/build-examples.py`
   builds them and fails if any question stops opening the view it was written for;
   `tests/test_examples.py` checks the same.
+- `knowledge -V` prints the version, as `--version` does (the conformance kit's new `cli-version`
+  check; 17/17).
 - Product page and README lead with those examples; new recordings (developers, scientists, work,
   asks) and a new trailer.
 
