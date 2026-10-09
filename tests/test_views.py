@@ -176,3 +176,37 @@ def test_a_partial_name_offers_the_concepts_that_contain_it(graph):
 def test_missing_between_two_concepts_is_the_gap_between_them(example_graph):
     p = plan(example_graph, "What is missing between caching and delegation?")
     assert (p["lens"], p["concept"], p["to"]) == ("gaps", "caching", "delegation")
+
+
+def _open_of(graph, tmp_path, question):
+    out = tmp_path / "q.html"
+    r = kg.visualize(graph, str(out), question=question)
+    data = json.loads(out.read_text().split('id="data">', 1)[1].split("</script>", 1)[0])
+    return r, data["open"]
+
+
+def test_viewer_has_the_six_tabs(example_graph, tmp_path):
+    out = tmp_path / "v.html"
+    kg.visualize(example_graph, str(out))
+    html = out.read_text()
+    assert 'role="tablist"' in html and 'role="tabpanel"' in html
+    for view in ("map", "timeline", "argument", "steps", "matrix", "rhythm"):
+        assert f'role="tab" id="tab-{view}" data-view="{view}"' in html
+    assert "window.knowledgeView" in html or "knowledgeView" in html and "show:" in html
+
+
+@pytest.mark.parametrize("question,view", [
+    ("How does delegation relate to perceived agency?", "steps"),
+    ("What contradicts delegation reduces perceived agency?", "argument"),
+    ("How has our view of delegation changed over time?", "timeline"),
+    ("What are we missing?", "matrix"),
+])
+def test_visualize_puts_the_view_in_open(example_graph, tmp_path, question, view):
+    r, opened = _open_of(example_graph, tmp_path, question)
+    assert opened["view"] == view and r["view"] == view
+
+
+def test_view_keeps_the_date_asked_about(example_graph, tmp_path):
+    r = kg.visualize(example_graph, str(tmp_path / "d.html"), question="What did we believe about delegation as of 2026-02-15?")
+    html = (tmp_path / "d.html").read_text()
+    assert r["as_of"].startswith("2026-02-15") and "state.asOf = o.as_of" in html

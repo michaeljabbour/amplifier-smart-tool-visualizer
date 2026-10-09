@@ -1,7 +1,7 @@
 ---
 smart_tool_format: 1
 name: knowledge
-version: 0.2.0
+version: 0.3.0
 description: >-
   Turns notes, papers, docs, code and agent sessions into a knowledge graph that any agent can
   query and add to, and people can explore: concepts and typed relations with sources, confidence and
@@ -139,9 +139,10 @@ knowledge gaps --graph research --json                                        # 
 ```
 
 **Show the view that answers the person's question, and ask when it is unclear.** Pass their
-question, in their words, to `visualize --for`. The view opens on the lens that answers it (how
-two concepts connect, what backs a claim, where the material disagrees, what changed, the gaps,
-one concept, or the overview) and says why. If the question does not say enough, the command stops
+question, in their words, to `visualize --for`. The page opens on the form that answers it and
+says why: a timeline for what changed and what replaced it, an argument for whether a claim holds,
+steps for how two concepts connect, a matrix for what is missing, a rhythm for when things were
+written, or the map. All six are tabs in the same file; `--view` picks one yourself. If the question does not say enough, the command stops
 with `needs_clarification`: `result.question` is the question to put to the person and
 `result.choices` the command for each answer. Ask them; do not pick for them.
 

@@ -44,8 +44,8 @@ label.check { display: flex; gap: 8px; align-items: center; padding: 2px 0; curs
 .gap { border: 1px solid var(--line); border-radius: 8px; padding: 8px; margin: 6px 0; cursor: pointer; font-size: 13px; }
 .gap:hover, .gap.on { border-color: var(--accent); }
 .gap .score { color: var(--muted); font-size: 12px; }
-main { position: relative; overflow: hidden; }
-canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+main { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; }
 canvas.dragging { cursor: grabbing; }
 #time { position: absolute; left: 16px; right: 16px; bottom: 12px; display: flex; gap: 10px; align-items: center;
   background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 12px; }
@@ -54,14 +54,16 @@ canvas.dragging { cursor: grabbing; }
 #ticker { position: absolute; left: 16px; top: 12px; max-width: 46%; font-size: 12px; pointer-events: none; }
 #ticker div { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent);
   border-radius: 6px; padding: 4px 8px; margin-bottom: 4px; opacity: .95; }
-#why { display: none; position: absolute; left: 16px; top: 12px; max-width: min(480px, 60%); background: var(--panel);
-  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 10px 34px 10px 12px;
-  font-size: 13px; line-height: 1.45; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+#why { display: none; flex: none; flex-wrap: wrap; align-items: flex-start; gap: 4px 8px; padding: 5px 12px; background: var(--panel);
+  border-bottom: 1px solid var(--line); border-left: 3px solid var(--accent); font-size: 13px; line-height: 1.4; }
+#why .wl { flex: 1; min-width: 0; }
+#why button { font-size: 12px; padding: 2px 8px; } #why #whyClose { border: 0; background: none; color: var(--muted); font-size: 18px; line-height: 1; padding: 0 4px; }
+#whyBody { flex-basis: 100%; padding: 4px 0 6px; }
 #why .q { color: var(--muted); margin-bottom: 4px; }
 #why .alt { color: var(--muted); margin-top: 8px; font-size: 12px; }
 #why ul { margin: 4px 0 0; padding-left: 16px; }
 #why code { font-size: 11px; word-break: break-word; }
-#why button { position: absolute; right: 6px; top: 6px; border: 0; background: none; color: var(--muted); font-size: 16px; cursor: pointer; }
+#stage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 #hint { position: absolute; right: 16px; top: 12px; color: var(--muted); font-size: 12px; background: var(--panel);
   border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; }
 .chip { display: inline-block; background: var(--chip); border-radius: 4px; padding: 1px 6px; font-size: 12px; margin-right: 4px; }
@@ -79,6 +81,113 @@ blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line
   border-radius: 8px; padding: 10px 14px; font-size: 12px; line-height: 1.8; }
 @media (max-width: 900px) { #app { grid-template-columns: 1fr; grid-template-rows: 48px 50vh auto auto; }
   #left, #right { border: 0; border-top: 1px solid var(--line); } header { grid-column: 1; } }
+
+/* ---- views ---- */
+#tabs { display: flex; gap: 2px; margin-left: 8px; }
+#tabs button { border: 0; background: none; color: var(--muted); padding: 5px 11px; border-radius: 6px; }
+#tabs button:hover { color: var(--ink); background: var(--chip); }
+#tabs button[aria-selected=true] { background: var(--accent); color: #fff; }
+main.vmode #hint, main.vmode #ticker { display: none; }
+#vpanel { position: absolute; inset: 0; overflow: auto; padding: 14px 16px 72px; background: var(--bg); }
+#vpanel[hidden] { display: none; }
+.vhead { display: flex; align-items: center; gap: 12px; }
+.vt { font-size: 18px; text-transform: none; letter-spacing: 0; color: var(--ink); margin: 0; }
+.vmap { margin-left: auto; }
+.vcap { color: var(--muted); margin: 4px 0 8px; max-width: 78ch; }
+.vsum, .vsub { margin: 4px 0 10px; }
+.vsvg { display: block; max-width: none; font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.vlab, .vtiny { fill: var(--ink); } .vtiny { font-size: 11px; fill: var(--muted); } .vtiny.on { fill: #fff; }
+.vlink { cursor: pointer; } .vlink:hover { fill: var(--accent); }
+.vtick, .vtot { fill: var(--muted); font-size: 12px; } .vmark { fill: var(--muted); font-size: 11px; } .vmark.acc { fill: var(--accent); }
+.vgrid, .vsep { stroke: var(--line); stroke-width: 1; } .vnow { stroke: var(--muted); stroke-dasharray: 2 3; }
+.vasof { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 3; }
+.bar { cursor: pointer; fill: var(--accent); } .bar.support { fill: var(--support); } .bar.contra { fill: var(--contra); }
+.bar:hover, .bar:focus { stroke: var(--ink); stroke-width: 2; stroke-opacity: 1; outline: none; }
+.varrow { fill: none; stroke: var(--muted); stroke-width: 1.3; } .ahead { fill: var(--muted); }
+.re { fill: var(--chip); opacity: .6; } .rc { fill: var(--accent); cursor: pointer; } .rc:hover { stroke: var(--ink); stroke-width: 2; }
+.rcn { fill: var(--ink); font-size: 11px; pointer-events: none; } .rcn.hi { fill: var(--bg); }
+.rasof { fill: none; stroke: var(--accent); stroke-width: 2; pointer-events: none; }
+.arg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; margin-top: 12px; } .arg.one { grid-template-columns: 1fr; }
+.acards { display: grid; grid-template-columns: 1fr; gap: 0 10px; } .arg.one .acards { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.acol h3 { margin: 0 0 8px; font-size: 14px; } h3.for { color: var(--support); } h3.against { color: var(--contra); }
+.claim { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.claim h3 { font-size: 18px; margin: 2px 0 6px; }
+.acard { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--edge); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; font-size: 13px; }
+.acard.support { border-left-color: var(--support); } .acard.contra { border-left-color: var(--contra); }
+.acard.closed { opacity: .55; } .acard .ah { font-weight: 600; } .acard .d { color: var(--muted); }
+blockquote.qt { font-style: italic; margin: 4px 0; }
+.conf { height: 4px; background: var(--line); border-radius: 2px; margin-top: 6px; } .conf i { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+.also { margin-top: 16px; } .also summary { cursor: pointer; color: var(--muted); }
+.alsogrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 10px; margin-top: 8px; }
+.contested { max-width: 900px; } .chd, .crow { display: grid; grid-template-columns: minmax(220px, 1.1fr) 1.4fr; gap: 12px; align-items: center; }
+.axl { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
+.crow { padding: 3px 4px; border-radius: 6px; cursor: pointer; } .crow:hover, .crow:focus { background: var(--chip); outline: none; }
+.cname { line-height: 1.3; overflow-wrap: anywhere; }
+.cbar { display: flex; height: 18px; } .half { flex: 1; display: flex; } .half.l { justify-content: flex-end; border-right: 1px solid var(--muted); }
+.bi { display: flex; align-items: center; min-width: 20px; padding: 0 5px; color: #fff; font-size: 11px; height: 18px; } .bi.against { background: var(--contra); justify-content: flex-start; border-radius: 3px 0 0 3px; } .bi.for { background: var(--support); border-radius: 0 3px 3px 0; }
+.sform { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 14px; }
+.sform input { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); font: inherit; width: 220px; }
+.pcols { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; align-items: start; }
+.pcol h3 { font-size: 14px; margin: 0 0 8px; }
+.pill { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 4px 12px; font-weight: 600; cursor: pointer; text-align: center; }
+.pill:hover, .pill:focus { border-color: var(--accent); outline: none; }
+.conn { border-left: 2px solid var(--line); margin: 0 0 0 24px; padding: 4px 0 6px 12px; font-size: 13px; }
+.conn .d { color: var(--muted); } .nopath { max-width: 560px; }
+.mwrap { overflow: auto; } table.matrix { border-collapse: separate; border-spacing: 3px; table-layout: fixed; width: 100%; max-width: 1100px; }
+.matrix th { font-weight: 500; font-size: 12px; color: var(--ink); } .matrix th.corner { width: 250px; }
+.matrix th.vcol { height: 270px; vertical-align: bottom; padding: 0; }
+.matrix th.vcol span { display: inline-block; max-height: 260px; white-space: nowrap; writing-mode: vertical-rl; transform: rotate(180deg); line-height: 1.25; text-align: left; margin-bottom: 4px; }
+.matrix th.rowh { text-align: right; padding-right: 8px; line-height: 1.25; } .matrix .dot { display: inline-block; margin-right: 6px; }
+td.mc { position: relative; height: 48px; text-align: center; font-variant-numeric: tabular-nums; border-radius: 4px; background: var(--chip); cursor: pointer; }
+td.mc .mn { font-size: 11px; opacity: .78; }
+td.mc:hover, td.mc:focus { outline: none; box-shadow: inset 0 0 0 2px var(--accent); } td.mc.diag { color: var(--muted); cursor: default; }
+td.mc.gap { outline: 3px solid var(--ink); outline-offset: -3px; padding-top: 14px; }
+.gm { position: absolute; top: 4px; left: 5px; font-size: 10px; font-weight: 700; line-height: 14px; padding: 0 5px; border-radius: 3px; background: var(--ink); color: var(--bg); }
+.key { display: inline-block; width: 12px; height: 12px; vertical-align: -2px; border-radius: 3px; margin-left: 8px; }
+.warmk { background: rgb(194, 65, 12); } .acck { background: var(--accent); } .gapk { border: 3px solid var(--ink); }
+.detail button { margin-top: 4px; }
+
+/* ---- second pass ---- */
+.acol, .acard, .pcol, .conn, .alsogrid > * { min-width: 0; } .acards { grid-template-columns: minmax(0, 1fr); } .arg.one .acards { grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); }
+.vsum.legend { color: var(--muted); font-size: 12px; margin: 2px 0 6px; }
+.lg { display: inline-block; width: 22px; height: 10px; vertical-align: -1px; border-radius: 2px; } .lg.solid { background: var(--accent); }
+.lg.dashed { border: 1px dashed var(--ink); background: transparent; } .lg.arr { width: auto; color: var(--ink); }
+.vgroup { fill: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.vcap { stroke: var(--ink); stroke-width: 2; } .vbt { fill: var(--ink); font-size: 11px; pointer-events: none; } .vbt.on { fill: var(--bg); }
+.varrow { fill: none; stroke: var(--ink); stroke-opacity: .7; stroke-width: 1.5; } .ahead { fill: var(--ink); fill-opacity: .7; }
+.vlab.c, .vtot, .rcn { dominant-baseline: central; }
+.vbrk { stroke: var(--muted); stroke-dasharray: 2 3; } .vbrkt { fill: var(--muted); font-size: 14px; dominant-baseline: central; }
+.sw { display: inline-block; width: 18px; height: 12px; background: var(--accent); vertical-align: -2px; border-radius: 2px; } .sw.empty { background: var(--chip); opacity: .6; }
+.acard { padding: 7px 10px; } .ah { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; } .ah .link { font-weight: 600; }
+.rch { margin: 0; color: var(--muted); } .rch.support { color: var(--support); } .rch.contra { color: var(--contra); }
+.adate { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.acard .d { margin-top: 2px; }
+details.qd summary { cursor: pointer; font-style: italic; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px; }
+details.qd[open] summary { white-space: normal; overflow: visible; }
+.src { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.cname { font-size: 13px; }
+.conn { margin: 0 0 0 20px; padding: 2px 0 4px 10px; } .pill { padding: 3px 10px; } .pcols { gap: 14px; }
+.mleg { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: center; color: var(--muted); font-size: 12px; }
+.midk { background: var(--chip); border: 1px solid var(--line); }
+table.matrix { table-layout: auto; max-width: 1200px; } .matrix th.corner { width: 220px; } .matrix th.rowh { max-width: 240px; }
+td.mc { min-width: 56px; height: 64px; }
+td.mc .gm { position: static; display: inline-block; max-width: 100%; font-size: 11px; line-height: 14px; font-weight: 700; padding: 2px 4px;
+  background: var(--panel); color: var(--ink); border: 1px solid var(--ink); border-radius: 4px; white-space: normal; }
+td.mc.gap { padding-top: 0; }
+
+/* ---- third pass ---- */
+.bar.closed { fill: url(#hatch); color: var(--muted); stroke: var(--muted); stroke-opacity: 1; stroke-width: 1.5; stroke-dasharray: 4 3; pointer-events: all; }
+.bar.closed:hover, .bar.closed:focus { stroke: var(--ink); }
+.vcap { stroke: var(--muted); } .vbt { fill: var(--muted); } .vbt.on { fill: var(--bg); }
+.lg.dashed { border-color: var(--muted); background: repeating-linear-gradient(45deg, transparent 0 3px, var(--muted) 3px 4px); }
+.vbrks { fill: var(--muted); font-size: 10px; }
+.tbars { max-width: 760px; } .trow { display: grid; grid-template-columns: minmax(220px, 1.2fr) 1.5fr 40px; gap: 12px; align-items: center; padding: 3px 0; }
+.tbar { height: 14px; background: var(--chip); border-radius: 3px; } .tb { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.axl { font-size: 12px; font-weight: 600; color: var(--ink); }
+.half { align-items: center; gap: 6px; } .half.l { justify-content: flex-end; } .half.r { justify-content: flex-start; }
+.bi { padding: 0; min-width: 4px; } .bn { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; } .bn.against { color: var(--contra); } .bn.for { color: var(--support); }
+.mwrap .mleg { margin: 10px 0 0; justify-content: flex-start; }
+td.mc .gm { border: 1px solid var(--ink); }
 </style>
 </head>
 <body>
@@ -86,6 +195,14 @@ blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line
   <header>
     <h1 id="title"></h1>
     <span class="counts" id="counts"></span>
+    <div id="tabs" role="tablist" aria-label="Views">
+      <button type="button" role="tab" id="tab-map" data-view="map" aria-selected="true" aria-controls="vpanel">Map</button>
+      <button type="button" role="tab" id="tab-timeline" data-view="timeline" aria-selected="false" tabindex="-1" aria-controls="vpanel">Timeline</button>
+      <button type="button" role="tab" id="tab-argument" data-view="argument" aria-selected="false" tabindex="-1" aria-controls="vpanel">Argument</button>
+      <button type="button" role="tab" id="tab-steps" data-view="steps" aria-selected="false" tabindex="-1" aria-controls="vpanel">Steps</button>
+      <button type="button" role="tab" id="tab-matrix" data-view="matrix" aria-selected="false" tabindex="-1" aria-controls="vpanel">Matrix</button>
+      <button type="button" role="tab" id="tab-rhythm" data-view="rhythm" aria-selected="false" tabindex="-1" aria-controls="vpanel">Rhythm</button>
+    </div>
     <span class="spacer"></span>
     <input type="search" id="search" placeholder="Find a concept" aria-label="Find a concept">
     <button id="fit" title="Show the whole graph">Fit</button>
@@ -107,9 +224,10 @@ blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line
     <div id="diversity" class="num"></div>
   </aside>
   <main>
+    <div id="why" role="status" aria-live="polite"></div>
+    <div id="stage">
     <canvas id="c" aria-label="Knowledge graph"></canvas>
     <div id="ticker"></div>
-    <div id="why" role="status" aria-live="polite"></div>
     <div id="hint">Click a concept · drag to move · scroll to zoom</div>
     <div id="keys">/ find · F fit · L labels · Esc clear<br>← → step through time · H history</div>
     <div id="time">
@@ -117,6 +235,8 @@ blockquote { margin: 6px 0; padding: 4px 10px; border-left: 3px solid var(--line
       <span>As of</span>
       <input type="range" id="slider" min="0" max="0" value="0" aria-label="As of">
       <span class="when" id="when">now</span>
+    </div>
+    <div id="vpanel" role="tabpanel" aria-labelledby="tab-map" tabindex="-1" hidden></div>
     </div>
   </main>
   <aside id="right"><div id="detail" class="detail"><p class="empty">Click a concept to see its relations, where it comes from, and its history.</p></div></aside>
@@ -138,6 +258,7 @@ let nodes = [], byId = new Map(), links = [], prox = [];
 const cam = { x: 0, y: 0, k: 1 };
 const canvas = $("c"), ctx = canvas.getContext("2d");
 let W = 0, H = 0, alpha = 1;
+let curView = "map", vsub = null, vtouched = false, vlastSubject = null, stepsEnds = null, lastStepsPair = null, openInfo = null, viewReady = false, renderQueued = false;
 
 function build(keepPositions) {
   const old = byId;
@@ -166,6 +287,7 @@ function build(keepPositions) {
   renderSidebar();
   setupTime();
   alpha = keepPositions ? Math.max(alpha, .3) : 1;
+  if (viewReady && curView !== "map") renderView();
 }
 
 // ---- visibility ----
@@ -329,6 +451,7 @@ function bfsPath(a, b, withProx) {
 }
 function showPath(a, b) {
   const steps = tracePath(a, b);
+  state.pathEnds = [a, b]; stepsEnds = [a, b];
   state.selected = null; state.gap = null;
   if (!steps) { state.path = null; state.pathEdges = null;
     $("detail").innerHTML = "<h3>No path</h3><p>" + esc(a) + " and " + esc(b) + ' are not connected in what is shown. That is a gap worth asking about: <code>knowledge gaps --between "' + esc(a) + '" "' + esc(b) + '"</code></p>'; return; }
@@ -460,28 +583,555 @@ resize(); build(false);
 for (let i = 0; i < 220; i++) tick();
 fit(); loop();
 if (LIVE) poll();
-window.knowledgeView = { select: (id) => select(id, true), path: showPath, fit, state,
+window.knowledgeView = { select: (id) => select(id, true), path: showPath, fit, state, show: (v) => setView(v), get view() { return curView; }, lastRenderMs: 0,
   screen: (id) => { const n = byId.get(id); if (!n) return null; const [x, y] = toScreen(n.x, n.y), r = canvas.getBoundingClientRect(); return [x + r.left, y + r.top]; } };
+// ---- views: Timeline, Argument, Steps, Matrix, Rhythm ----
+const VIEWS = ["map", "timeline", "argument", "steps", "matrix", "rhythm"];
+const VIEW_NAMES = { map: "Map", timeline: "Timeline", argument: "Argument", steps: "Steps", matrix: "Matrix", rhythm: "Rhythm" };
+const CAPTIONS = {
+  timeline: "What held when. Each bar is a relation, drawn from when it started to hold until it was replaced (or until now). Faded bars with a dashed outline no longer hold; arrows lead to what replaced them. Click a bar for the details.",
+  argument: "Is it true? The evidence for and against one claim. Green cards support it, red cards argue against it. Click any concept to read more about it.",
+  steps: "How does one concept connect to another? Each step is one relation, with the words it came from. The shortest chain comes first; other routes avoid its middle steps.",
+  matrix: "What is missing? How strongly each pair of topics is linked, compared with what you would expect by chance. Blue means more linked than expected, orange means less. A dashed outline marks a gap the tool flagged.",
+  rhythm: "What is this about, and when? Each row is a topic; each column is a stretch of time. Darker cells mean more relations about that topic began then."
+};
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DAY = 864e5;
+
+const dstr = (s) => (s ? String(s).slice(0, 10) : "");
+const rl = (r) => String(r).replace(/_/g, " ");
+const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1) + "\u2026" : s);
+const lab = (id) => { const n = byId.get(id); return n ? n.label : id; };
+const typedEdge = (e) => e.method !== "cooccurrence";
+const tms = (s, d) => { const t = Date.parse(s); return t === t ? t : d; };
+const relClass = (r) => (SUPPORT.has(r) ? "support" : CONTRA.has(r) ? "contra" : "");
+const nlink = (id) => '<span class="link" data-node="' + esc(id) + '">' + esc(lab(id)) + "</span>";
+const heldEdge = (e) => (state.asOf ? edgeLive(e) : !e.valid_to);
+const seenAt = (e) => !state.asOf || !e.valid_from || e.valid_from <= state.asOf;
+const byFrom = (a, b) => tms(a.valid_from, 0) - tms(b.valid_from, 0);
+function viewEdges() { const t = D.edges.filter(typedEdge); return t.length ? t : D.edges; }
+let edgeMapFor = null, edgeMapVal = null;
+function edgeMap() { if (edgeMapFor !== D.edges) { edgeMapFor = D.edges; edgeMapVal = new Map(D.edges.map((e) => [e.id, e])); } return edgeMapVal; }
+function subject() {
+  const c = vsub || (D.open && D.open.concept) || state.selected;
+  return c && byId.has(c) ? c : (state.selected && byId.has(state.selected) ? state.selected : null);
+}
+function asOfStr() { return state.asOf || (!vtouched && D.open && D.open.as_of) || null; }
+function timeSpan() {
+  let lo = Infinity, hi = -Infinity;
+  const add = (s) => { const t = Date.parse(s); if (t === t) { if (t < lo) lo = t; if (t > hi) hi = t; } };
+  if (D.time) { add(D.time.first); add(D.time.last); }
+  for (const e of D.edges) { add(e.valid_from); add(e.valid_to); }
+  if (lo === Infinity) { lo = Date.now() - 30 * DAY; hi = Date.now(); }
+  if (hi - lo < DAY) { const m = (lo + hi) / 2; lo = m - 7 * DAY; hi = m + 7 * DAY; }
+  return [lo, hi];
+}
+function genTicks(u, k, lo, hi) {
+  const out = []; const d = new Date(lo);
+  if (u === "d") { let t = Math.floor(lo / DAY) * DAY; if (k >= 7) t -= ((new Date(t).getUTCDay() + 6) % 7) * DAY;
+    for (; t <= hi; t += k * DAY) if (t >= lo) out.push(t); }
+  else if (u === "m") { let y = d.getUTCFullYear(), m = d.getUTCMonth(); m -= m % k;
+    for (;;) { const t = Date.UTC(y, m, 1); if (t > hi) break; if (t >= lo) out.push(t); m += k; if (m >= 12) { y += Math.floor(m / 12); m %= 12; } } }
+  else { let y = d.getUTCFullYear(); y -= ((y % k) + k) % k; for (;; y += k) { const t = Date.UTC(y, 0, 1); if (t > hi) break; if (t >= lo) out.push(t); } }
+  return out;
+}
+function makeTicks(lo, hi, px) {
+  const max = Math.max(3, Math.floor(px / 100));
+  const steps = [["d", 1], ["d", 2], ["d", 7], ["d", 14], ["m", 1], ["m", 2], ["m", 3], ["m", 6], ["y", 1], ["y", 2], ["y", 5], ["y", 10], ["y", 25], ["y", 50], ["y", 100]];
+  const span = hi - lo;
+  for (const [u, k] of steps) {
+    const unit = u === "d" ? DAY : u === "m" ? 30.4 * DAY : 365.25 * DAY;
+    if (span / (k * unit) > max * 2.5 && !(u === "y" && k === 100)) continue;
+    const t = genTicks(u, k, lo, hi); if (t.length <= max || (u === "y" && k === 100)) return { ticks: t, unit: u };
+  }
+  return { ticks: [], unit: "y" };
+}
+function tickLabel(t, unit) { const d = new Date(t);
+  return unit === "d" ? d.toISOString().slice(0, 10) : unit === "m" ? MONTHS[d.getUTCMonth()] + " " + d.getUTCFullYear() : String(d.getUTCFullYear()); }
+function vhead(name, extra) {
+  return '<div class="vhead"><h2 class="vt">' + esc(VIEW_NAMES[name]) + '</h2><button type="button" class="vmap" data-act="map" title="Switch to the map">Show in map</button></div>' +
+    '<p class="vcap">' + esc(CAPTIONS[name]) + "</p>" + (extra || "");
+}
+const measureCtx = document.createElement("canvas").getContext("2d");
+const LABEL_FONT = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+const textW = (s) => { measureCtx.font = LABEL_FONT; return measureCtx.measureText(s).width; };
+function wrapLabel(text, maxW, maxLines) {
+  measureCtx.font = LABEL_FONT;
+  const wd = (s) => measureCtx.measureText(s).width, words = [];
+  for (let w of String(text).split(/\s+/)) { if (!w) continue;
+    while (wd(w) > maxW && w.length > 1) { let k = w.length - 1; while (k > 1 && wd(w.slice(0, k)) > maxW) k--; words.push(w.slice(0, k)); w = w.slice(k); }
+    words.push(w); }
+  const lines = []; let cur = "";
+  for (const w of words) { const t = cur ? cur + " " + w : w; if (!cur || wd(t) <= maxW) cur = t; else { lines.push(cur); cur = w; } }
+  if (cur) lines.push(cur);
+  if (lines.length > maxLines) { let l = lines.slice(maxLines - 1).join(" "); while (l.length > 1 && wd(l + "\u2026") > maxW) l = l.slice(0, -1);
+    lines.length = maxLines - 1; lines.push(l + "\u2026"); }
+  return lines.length ? lines : [""];
+}
+const svgLines = (lines, x) => lines.map((l, i) => '<tspan x="' + x + '" dy="' + (i ? 15 : 0) + '">' + esc(l) + "</tspan>").join("");
+const noData = (msg) => '<p class="empty">' + msg + "</p>";
+
+// relation text used in detail lists
+function edgeLine(e, full) {
+  const cls = relClass(e.relation);
+  return '<div class="rel' + (e.valid_to ? " closed" : "") + '">' + nlink(e.source) + ' <span class="r ' + cls + '">' + esc(rl(e.relation)) + "</span> " + nlink(e.target) +
+    (e.description ? '<div class="d">' + esc(e.description) + "</div>" : "") +
+    (full && e.evidence ? "<blockquote>\u201c" + esc(e.evidence) + "\u201d" + (e.from_source ? "<br>\u2014 " + esc(e.from_source) : "") + "</blockquote>" : "") +
+    '<div class="num">' + [e.confidence != null ? "confidence " + (+e.confidence).toFixed(2) : "", e.agent ? "by " + esc(e.agent) : "",
+      e.valid_from ? "from " + dstr(e.valid_from) : "", e.valid_to ? "closed " + dstr(e.valid_to) : ""].filter(Boolean).join(" \u00b7 ") + "</div></div>";
+}
+function edgeDetail(e) {
+  if (!e) return;
+  const rep = e.invalidated_by && e.invalidated_by.indexOf("edge:") === 0 ? edgeMap().get(e.invalidated_by.slice(5)) : null;
+  $("detail").innerHTML = "<h3>" + esc(rl(e.relation)) + "</h3>" + '<div class="meta">' + (e.valid_to ? "No longer holds" : "Still holds") + "</div>" +
+    "<p>" + nlink(e.source) + " <b>" + esc(rl(e.relation)) + "</b> " + nlink(e.target) + "</p>" +
+    (e.description ? "<p>" + esc(e.description) + "</p>" : "") +
+    (e.evidence ? "<blockquote>\u201c" + esc(e.evidence) + "\u201d" + (e.from_source ? "<br>\u2014 " + esc(e.from_source) : "") + "</blockquote>" : (e.from_source ? '<p class="num">From ' + esc(e.from_source) + "</p>" : "")) +
+    '<p class="num">' + [e.agent ? "by " + esc(e.agent) : "", e.confidence != null ? "confidence " + (+e.confidence).toFixed(2) : "",
+      e.valid_from ? "held from " + dstr(e.valid_from) : "", e.valid_to ? "until " + dstr(e.valid_to) : ""].filter(Boolean).join(" \u00b7 ") + "</p>" +
+    (rep ? "<h2>Replaced by</h2>" + edgeLine(rep, false) : (e.valid_to ? '<p class="num">Closed' + (e.invalidated_by ? " (" + esc(e.invalidated_by) + ")" : "") + ".</p>" : ""));
+}
+
+// ---- Timeline ----
+function viewTimeline(p) {
+  const subj = subject(), all = viewEdges();
+  const [lo0, hi0] = timeSpan(), pad = (hi0 - lo0) * .03, lo = lo0 - pad, hi = hi0 + pad * .35;
+  let lanes = [], note = "";
+  if (subj) {
+    const es = all.filter((e) => e.source === subj || e.target === subj).sort(byFrom);
+    if (es.length > 70) note = (es.length - 70) + " more relations are not drawn.";
+    const groups = new Map();
+    for (const e of es.slice(0, 70)) { const o = e.source === subj ? e.target : e.source;
+      const it = { label: (e.source === subj ? "\u2192 " : "\u2190 ") + lab(o), node: o, edges: [e] };
+      (groups.get(e.relation) || groups.set(e.relation, []).get(e.relation)).push(it); }
+    for (const [k, arr] of groups) arr.forEach((it, i) => { it.header = i === 0 ? rl(k) : null; });
+    lanes = [...groups.values()].flat();
+  } else {
+    const st = new Map();
+    for (const e of all) for (const id of (e.source === e.target ? [e.source] : [e.source, e.target])) {
+      let s = st.get(id); if (!s) st.set(id, s = { id, closed: 0, total: 0, edges: [] }); s.total++; if (e.valid_to) s.closed++; s.edges.push(e); }
+    lanes = [...st.values()].sort((a, b) => b.closed - a.closed || b.total - a.total).slice(0, 12).map((s) => {
+      const es = s.edges.sort((a, b) => (!!b.valid_to - !!a.valid_to) || (b.confidence || 0) - (a.confidence || 0)).slice(0, 12).sort(byFrom);
+      return { label: lab(s.id) + (s.total > es.length ? " (+" + (s.total - es.length) + ")" : ""), node: s.id, edges: es, self: s.id }; });
+  }
+  const head = vhead("timeline", '<p class="vsum legend"><span class="lg solid"></span> filled = still holds \u00b7 <span class="lg dashed"></span> dashed and hatched = replaced or ended \u00b7 <span class="lg arr">\u2192</span> arrow = what replaced it</p>' +
+    '<p class="vsub">' + (subj ? "About <b>" + esc(lab(subj)) + "</b>." : "The whole graph: the concepts whose relations changed most.") + "</p>");
+  if (!lanes.length) { p.innerHTML = head + noData("No relations to draw yet."); return; }
+  const uniq = new Map(); for (const l of lanes) for (const e of l.edges) uniq.set(e.id, e);
+  let held = 0, replaced = 0; for (const e of uniq.values()) { if (e.valid_to) replaced++; else held++; }
+  const summary = uniq.size + " relation" + (uniq.size === 1 ? "" : "s") + " held at some point; " + held + " still hold; " + replaced + " " + (replaced === 1 ? "was" : "were") + " replaced." + (note ? " " + note : "");
+  const width = Math.max(p.clientWidth - 32, 640), RM = 36;
+  const need = Math.max(...lanes.map((l) => textW(l.label)));
+  const LM = Math.round(Math.min(width * .3, Math.max(150, need + 18))), plotW = width - LM - RM;
+  const xs = (t) => LM + (t - lo) / (hi - lo) * plotW;
+  const pos = new Map(); let y = 64, body = "", seps = "";
+  lanes.forEach((lane, li) => {
+    if (lane.header) { if (li) y += 10; body += '<text class="vgroup" x="4" y="' + (y + 13) + '">' + esc(lane.header) + "</text>"; y += 20; }
+    const items = lane.edges.map((e) => {
+      const x0 = xs(tms(e.valid_from, lo0)); let x1 = e.valid_to ? xs(tms(e.valid_to, hi0)) : xs(hi0); x1 = Math.max(x1, x0 + 6);
+      return { e, x0, x1, row: 0 }; });
+    const ends = [];
+    for (const it of items) { let r = 0; while (ends[r] !== undefined && ends[r] > it.x0 - 4) r++; ends[r] = it.x1 + 3; it.row = r; }
+    const lines = wrapLabel(lane.label, LM - 14, 4), h = Math.max(ends.length * 18 + 12, lines.length * 15 + 14), ly = y;
+    seps += '<line class="vsep" x1="0" x2="' + width + '" y1="' + (ly + h) + '" y2="' + (ly + h) + '"/>';
+    body += '<text class="vlab' + (lane.node ? " vlink" : "") + '"' + (lane.node ? ' data-node="' + esc(lane.node) + '"' : "") + ' x="4" y="' + (ly + 16) + '"><title>' + esc(lane.label) + "</title>" + svgLines(lines, 4) + "</text>";
+    for (const it of items) {
+      const e = it.e, by = ly + 6 + it.row * 18, cls = "bar " + (relClass(e.relation) || "plain") + (e.valid_to ? " closed" : "");
+      pos.set(e.id, { x0: it.x0, x1: it.x1, yc: by + 6 });
+      const tip = rl(e.relation) + ": " + lab(e.source) + " \u2192 " + lab(e.target) + (e.description ? "\n" + e.description : "") + (e.evidence ? "\n\u201c" + e.evidence + "\u201d" : "") +
+        "\nfrom " + dstr(e.valid_from) + (e.valid_to ? ", ended " + dstr(e.valid_to) : ", still holds");
+      body += '<rect class="' + cls + '" x="' + it.x0.toFixed(1) + '" y="' + by + '" width="' + (it.x1 - it.x0).toFixed(1) + '" height="12" rx="3" data-edge="' + esc(e.id) + '" tabindex="0" role="button" aria-label="' + esc(tip.split("\n")[0]) + '"><title>' + esc(tip) + "</title></rect>";
+      if (e.valid_to) body += '<line class="vcap" x1="' + it.x1.toFixed(1) + '" x2="' + it.x1.toFixed(1) + '" y1="' + (by - 2) + '" y2="' + (by + 14) + '"/>';
+      if (lane.self) { const o = e.source === lane.self ? e.target : e.source, full = rl(e.relation) + " " + lab(o), w = it.x1 - it.x0 - 10;
+        const txt = textW(full) <= w ? full : textW(rl(e.relation)) <= w ? rl(e.relation) : "";
+        if (txt) body += '<text class="vbt' + (e.valid_to ? "" : " on") + '" x="' + (it.x0 + 5).toFixed(1) + '" y="' + (by + 10) + '">' + esc(txt) + "</text>"; }
+    }
+    y += h;
+  });
+  let arrows = "";
+  for (const e of uniq.values()) { if (!e.valid_to || !e.invalidated_by || e.invalidated_by.indexOf("edge:") !== 0) continue;
+    const a = pos.get(e.id), b = pos.get(e.invalidated_by.slice(5)); if (!a || !b) continue;
+    let d;
+    if (b.x0 >= a.x1) { const c = Math.min(18, (b.x0 - a.x1) / 2);   // forward in time: curve from the old end to the new start
+      d = "M" + a.x1.toFixed(1) + "," + a.yc + " C" + (a.x1 + c).toFixed(1) + "," + a.yc + " " + (b.x0 - c).toFixed(1) + "," + b.yc + " " + b.x0.toFixed(1) + "," + b.yc; }
+    else { const up = b.yc < a.yc, ey = b.yc + (up ? 7 : -7);   // new bar starts earlier: drop straight to its lane at the old end
+      d = "M" + a.x1.toFixed(1) + "," + a.yc + " L" + a.x1.toFixed(1) + "," + ey; }
+    arrows += '<path class="varrow" marker-end="url(#arr)" d="' + d + '"/>'; }
+  const { ticks, unit } = makeTicks(lo, hi, plotW); let grid = "";
+  for (const t of ticks) { const x = xs(t); grid += '<line class="vgrid" x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="56" y2="' + y + '"/><text class="vtick" x="' + x.toFixed(1) + '" y="52" text-anchor="middle">' + esc(tickLabel(t, unit)) + "</text>"; }
+  const xn = xs(hi0); let marks = '<line class="vnow" x1="' + xn.toFixed(1) + '" x2="' + xn.toFixed(1) + '" y1="18" y2="' + y + '"/><text class="vmark" x="' + xn.toFixed(1) + '" y="12" text-anchor="middle">now</text>';
+  const ao = asOfStr(), at = ao ? Date.parse(ao) : NaN;
+  if (at === at && at >= lo && at <= hi) { const xa = xs(at), near = xa > xn - 90;
+    marks += '<line class="vasof" x1="' + xa.toFixed(1) + '" x2="' + xa.toFixed(1) + '" y1="' + (near ? 30 : 18) + '" y2="' + y + '"/><text class="vmark acc" x="' + xa.toFixed(1) + '" y="' + (near ? 26 : 12) + '" text-anchor="' + (near || xa > width - 100 ? "end" : xa < LM + 50 ? "start" : "middle") + '">as of ' + esc(dstr(ao)) + "</text>"; }
+  p.innerHTML = head + '<p class="vsum">' + esc(summary) + "</p>" +
+    '<svg class="vsvg" width="' + width + '" height="' + (y + 12) + '" viewBox="0 0 ' + width + " " + (y + 12) + '" role="group" aria-label="Timeline of relations">' +
+    '<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="1.2" stroke-opacity=".55"/></pattern><marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path class="ahead" d="M0,0L8,4L0,8z"/></marker></defs>' +
+    grid + seps + marks + body + arrows + "</svg>";
+}
+
+// ---- Argument ----
+const quoteLine = (t) => '<details class="qd"><summary>\u201c' + esc(t) + "\u201d</summary></details>";
+function argCard(e, claim) {
+  const out = e.source === claim, other = out ? e.target : e.source, cls = relClass(e.relation);
+  return '<div class="acard ' + cls + (e.valid_to ? " closed" : "") + '"><div class="ah">' + nlink(other) +
+    ' <span class="chip rch ' + cls + '" title="' + (out ? "this claim " : "") + esc(rl(e.relation)) + (out ? " it" : " this claim") + '">' + (out ? "\u2192 " : "\u2190 ") + esc(rl(e.relation)) + "</span>" +
+    '<span class="adate">' + esc(e.valid_to ? "closed " + dstr(e.valid_to) : dstr(e.valid_from)) + "</span></div>" +
+    (e.description ? '<div class="d">' + esc(e.description) + "</div>" : "") +
+    (e.evidence ? quoteLine(e.evidence) : "") + (e.from_source ? '<div class="src">' + esc(e.from_source) + "</div>" : "") +
+    (e.confidence != null ? '<div class="conf" title="confidence ' + (+e.confidence).toFixed(2) + '"><i style="width:' + Math.round(100 * Math.max(0, Math.min(1, e.confidence))) + '%"></i></div>' : "") + "</div>";
+}
+function contested() {
+  const m = new Map();
+  for (const e of D.edges) { if (!typedEdge(e) || !seenAt(e) || !heldEdge(e)) continue;
+    const s = SUPPORT.has(e.relation), c = CONTRA.has(e.relation); if (!s && !c) continue;
+    for (const id of (e.source === e.target ? [e.source] : [e.source, e.target])) { let r = m.get(id); if (!r) m.set(id, r = { id, sup: 0, con: 0 }); if (s) r.sup++; else r.con++; } }
+  return [...m.values()].sort((a, b) => (b.sup + b.con) - (a.sup + a.con) || b.con - a.con).slice(0, 15)
+    .sort((a, b) => b.con / (b.sup + b.con) - a.con / (a.sup + a.con) || (b.sup + b.con) - (a.sup + a.con));
+}
+function viewArgument(p) {
+  const claim = subject();
+  let note = "";
+  if (claim) {
+    const es = D.edges.filter((e) => typedEdge(e) && seenAt(e) && (e.source === claim || e.target === claim))
+      .sort((a, b) => (!!a.valid_to - !!b.valid_to) || (b.confidence || 0) - (a.confidence || 0));
+    const pro = es.filter((e) => SUPPORT.has(e.relation)), con = es.filter((e) => CONTRA.has(e.relation));
+    const other = es.filter((e) => !SUPPORT.has(e.relation) && !CONTRA.has(e.relation));
+    if (pro.length || con.length) {
+      const n = byId.get(claim);
+      const side = (cls, title, list, none) => '<div class="acol"><h3 class="' + cls + '">' + title + " (" + list.length + ')</h3><div class="acards">' +
+        (list.map((e) => argCard(e, claim)).join("") || '<p class="empty">' + none + "</p>") + "</div></div>";
+      p.innerHTML = vhead("argument") + '<div class="claim"><div class="num">The claim</div><h3>' + esc(n.label) + '</h3><div class="num"><span class="chip">' + esc(n.type) + "</span> " + pro.length + " for \u00b7 " + con.length + " against</div>" +
+        (n.summary ? "<p>" + esc(n.summary) + "</p>" : "") + "</div>" +
+        '<div class="arg' + (pro.length && con.length ? "" : " one") + '">' + side("against", "Against", con, "Nothing argues against it.") + side("for", "For", pro, "Nothing supports it yet.") + "</div>" +
+        (other.length ? '<details class="also"><summary>Also linked (' + other.length + ")</summary>" + '<div class="alsogrid">' + other.slice(0, 60).map((e) => argCard(e, claim)).join("") + "</div>" +
+          (other.length > 60 ? '<p class="num">' + (other.length - 60) + " more not shown.</p>" : "") + "</details>" : "");
+      return;
+    }
+    note = "\u201c" + esc(lab(claim)) + "\u201d has nothing recorded for or against it. These are the most contested claims in this graph:";
+  }
+  const rows = contested();
+  if (!rows.length) { p.innerHTML = vhead("argument") + noData("Nothing in this graph supports or contradicts anything yet. Relations such as \u201csupports\u201d and \u201ccontradicts\u201d make this view work."); return; }
+  const mx = Math.max(...rows.map((r) => Math.max(r.sup, r.con)));
+  p.innerHTML = vhead("argument", '<p class="vsum">' + (note || "Pick a claim on the map, or click one below. These are the most contested claims, most opposed first.") + "</p>") +
+    '<div class="contested"><div class="chd"><span></span><span class="axl"><span>against</span><span>for</span></span></div>' +
+    rows.map((r) => '<div class="crow" data-claim="' + esc(r.id) + '" tabindex="0" role="button" title="Open the argument for ' + esc(lab(r.id)) + '"><span class="cname">' + esc(lab(r.id)) + '</span><span class="cbar"><span class="half l">' +
+      (r.con ? '<span class="bn against">' + r.con + '</span><span class="bi against" style="width:' + (80 * r.con / mx).toFixed(1) + '%"></span>' : "") + '</span><span class="half r">' +
+      (r.sup ? '<span class="bi for" style="width:' + (80 * r.sup / mx).toFixed(1) + '%"></span><span class="bn for">' + r.sup + "</span>" : "") + "</span></span></div>").join("") + "</div>";
+}
+
+// ---- Steps ----
+function bfsX(a, b, withProx, exN, exE) {
+  const adj = new Map();
+  const add = (x, y, e) => { (adj.get(x) || adj.set(x, []).get(x)).push([y, e]); };
+  for (const e of links) if (linkVisible(e)) { if (exE.has(e.source + "|" + e.target)) continue; add(e.source, e.target, e); add(e.target, e.source, e); }
+  if (withProx) for (const q of prox) if (nodeVisible(q.s) && nodeVisible(q.t) && !exE.has(q.source + "|" + q.target)) { add(q.source, q.target, null); add(q.target, q.source, null); }
+  const prev = new Map([[a, null]]), queue = [a]; let qi = 0;
+  while (qi < queue.length) { const v = queue[qi++]; if (v === b) break;
+    for (const [w, e] of (adj.get(v) || [])) if (!prev.has(w) && !exN.has(w)) { prev.set(w, [v, e]); queue.push(w); } }
+  if (!prev.has(b)) return null;
+  const steps = []; let cur = b; while (prev.get(cur)) { const [v, e] = prev.get(cur); steps.unshift([v, cur, e]); cur = v; }
+  return steps;
+}
+function stepsPair() {
+  if (stepsEnds && byId.has(stepsEnds[0]) && byId.has(stepsEnds[1])) return stepsEnds;
+  const o = D.open; if (o && byId.has(o.concept) && byId.has(o.to)) return [o.concept, o.to];
+  const pe = state.pathEnds; if (pe && byId.has(pe[0]) && byId.has(pe[1])) return pe;
+  return null;
+}
+// with nothing chosen: the two bridge candidates of the first gap, else the two most central concepts in different topics
+function defaultPair() {
+  const tried = [];
+  for (const g of D.gaps.slice(0, 4)) { const c = g.bridge_candidates || [], a = c[0] && c[0][0], b = c[1] && c[1][0];
+    if (a && b && a !== b && byId.has(a) && byId.has(b)) tried.push([a, b, "gap"]); }
+  const cen = nodes.slice().sort((x, y) => (y.betweenness || 0) - (x.betweenness || 0) || y.degree - x.degree);
+  if (cen.length) { const b = cen.find((n) => n.community !== cen[0].community); if (b) tried.push([cen[0].id, b.id, "central"]); }
+  for (const t of tried) if (tracePath(t[0], t[1])) return t;
+  return tried[0] || null;
+}
+function pathColumn(title, steps) {
+  const ids = [steps[0][0]].concat(steps.map((s) => s[1]));
+  let h = '<div class="pcol"><h3>' + esc(title) + ' <span class="num">' + steps.length + " step" + (steps.length > 1 ? "s" : "") + "</span></h3>";
+  ids.forEach((id, i) => { h += '<div class="pill" data-node="' + esc(id) + '" tabindex="0" role="button">' + esc(lab(id)) + "</div>";
+    if (i < steps.length) { const [x, y, e] = steps[i];
+      if (e && typedEdge(e)) { const fwd = e.source === x;
+        h += '<div class="conn"><div class="cl"><span class="r ' + relClass(e.relation) + '">' + (fwd ? "\u2193 " : "\u2191 ") + esc(rl(e.relation)) + "</span>" +
+          (fwd ? "" : ' <span class="num">(reads ' + esc(lab(y)) + " " + esc(rl(e.relation)) + " " + esc(lab(x)) + ")</span>") + "</div>" +
+          (e.description ? '<div class="d">' + esc(e.description) + "</div>" : "") + (e.evidence ? quoteLine(e.evidence) : "") + "</div>"; }
+      else h += '<div class="conn"><div class="cl"><span class="r">\u2193</span> <span class="num">appear in the same passage</span></div></div>'; } });
+  return h + "</div>";
+}
+function viewSteps(p) {
+  let pair = stepsPair(), def = null;
+  if (!pair) { def = defaultPair(); pair = def ? [def[0], def[1]] : null; }
+  lastStepsPair = pair;
+  const opts = nodes.slice().sort((a, b) => b.degree - a.degree).map((n) => '<option value="' + esc(n.id) + '"></option>').join("");
+  const form = '<form class="sform" id="stepsForm" autocomplete="off"><label>From <input id="stepsA" list="stepsList" value="' + esc(pair ? pair[0] : "") + '" placeholder="a concept"></label> ' +
+    '<label>to <input id="stepsB" list="stepsList" value="' + esc(pair ? pair[1] : "") + '" placeholder="another concept"></label> <button type="submit" id="stepsGo">Trace</button><datalist id="stepsList">' + opts + "</datalist></form>";
+  const intro = def ? '<p class="vsum"><b>' + (def[2] === "gap" ? "How the two most separate topics connect" : "How the two most central concepts connect") + "</b>: " +
+    esc(lab(def[0])) + " to " + esc(lab(def[1])) + ". Pick two other concepts below to trace another pair.</p>" : "";
+  let body = "";
+  if (!pair) body = noData("Choose two concepts above, or shift-click two concepts on the map.");
+  else {
+    const [a, b] = pair, first = tracePath(a, b);
+    if (!first) body = '<div class="nopath"><h3>No path</h3><p>' + esc(lab(a)) + " and " + esc(lab(b)) + ' are not connected in what is shown. That is a gap worth asking about: <code>knowledge gaps --between "' + esc(a) + '" "' + esc(b) + '"</code></p></div>';
+    else {
+      const found = [first], seen = new Set([first.map((s) => s[0] + ">" + s[1]).join(",")]), exN = new Set(), exE = new Set();
+      const names = ["Shortest", "Another route", "A third route"];
+      const ban = (st) => { if (st.length === 1) { exE.add(st[0][0] + "|" + st[0][1]); exE.add(st[0][1] + "|" + st[0][0]); } else st.slice(1).forEach((s) => exN.add(s[0])); };
+      ban(first);
+      while (found.length < 3) {
+        const alt = bfsX(a, b, false, exN, exE) || ($("showProx").checked ? bfsX(a, b, true, exN, exE) : null);
+        if (!alt) break; const key = alt.map((s) => s[0] + ">" + s[1]).join(",");
+        if (seen.has(key)) break; seen.add(key); found.push(alt); ban(alt);
+      }
+      body = '<div class="pcols">' + found.map((st, i) => pathColumn(names[i], st)).join("") + "</div>" +
+        (found.length < 2 ? '<p class="num">No other route avoids the middle of this one.</p>' : "");
+    }
+  }
+  p.innerHTML = vhead("steps") + intro + form + body;
+}
+function traceFromInputs() {
+  const find = (v) => { v = v.trim().toLowerCase().replace(/\s+/g, " "); if (byId.has(v)) return v; const n = nodes.find((x) => x.label.toLowerCase() === v); return n ? n.id : null; };
+  const a = find($("stepsA").value), b = find($("stepsB").value);
+  if (!a || !b || a === b) { const el = $("stepsMsg") || document.createElement("p"); el.id = "stepsMsg"; el.className = "empty";
+    el.textContent = !a || !b ? "I can't find one of those concepts. Pick from the list that appears as you type." : "Choose two different concepts."; $("stepsForm").after(el); return; }
+  stepsEnds = [a, b]; renderView();
+}
+
+// ---- Matrix ----
+function hexRgb(h) { h = h.replace("#", ""); if (h.length === 3) h = h.replace(/./g, "$&$&"); const n = parseInt(h, 16); return isNaN(n) ? [47, 111, 222] : [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function topTopics(k) { return D.topics.slice().sort((a, b) => b.size - a.size).slice(0, k); }
+const commOf = (id) => { const n = byId.get(id); return n ? n.community : undefined; };
+const pkey = (i, j) => (i < j ? i + "|" + j : j + "|" + i);
+function viewMatrix(p) {
+  const top = topTopics(10);
+  if (top.length < 2) { p.innerHTML = vhead("matrix") + noData("Needs at least two topics."); return; }
+  const str = new Map(), pw = new Map(); let Wt = 0;
+  const addw = (a, b, w) => { if (a === undefined || b === undefined || !(w > 0)) return; Wt += w; str.set(a, (str.get(a) || 0) + w); str.set(b, (str.get(b) || 0) + w); const k = pkey(a, b); pw.set(k, (pw.get(k) || 0) + w); };
+  for (const e of D.edges) { if (!heldEdge(e) || !seenAt(e)) continue; addw(commOf(e.source), commOf(e.target), typedEdge(e) ? 4 * (e.confidence == null ? 1 : e.confidence) : (e.weight || 1)); }
+  for (const q of D.proximity) addw(commOf(q.source), commOf(q.target), q.count);
+  if (!(Wt > 0)) { p.innerHTML = vhead("matrix") + noData("No links between concepts yet, so there is nothing to compare."); return; }
+  const gapKeys = new Set(D.gaps.map((g) => pkey(g.between[0], g.between[1])));
+  const acc = hexRgb(css("--accent")), warm = [194, 65, 12];
+  let h = '<div class="mwrap"><table class="matrix"><thead><tr><th class="corner"></th>' + top.map((t) => '<th class="vcol" scope="col" title="' + esc(t.label) + '"><span>' + wrapLabel(t.label, 250, 3).map(esc).join("<br>") + "</span></th>").join("") + "</tr></thead><tbody>";
+  for (const ti of top) {
+    h += '<tr><th scope="row" class="rowh" title="' + esc(ti.label) + '"><span class="dot" style="background:' + esc(ti.color) + '"></span>' + wrapLabel(ti.label, 230, 4).map(esc).join("<br>") + "</th>";
+    for (const tj of top) {
+      if (ti.id === tj.id) { h += '<td class="mc diag" data-cell="' + ti.id + "|" + tj.id + '" tabindex="0" title="' + esc(ti.label) + '"><span class="mn">\u2014</span></td>'; continue; }
+      const obs = pw.get(pkey(ti.id, tj.id)) || 0, exp = (str.get(ti.id) || 0) * (str.get(tj.id) || 0) / (2 * Wt), gap = gapKeys.has(pkey(ti.id, tj.id));
+      let style = "", txt = "\u2013";
+      if (exp > 0) { const r = obs / exp, lr = r > 0 ? Math.max(-3, Math.min(3, Math.log2(r))) : -3, t = Math.abs(lr) / 3, c = lr < 0 ? warm : acc;
+        style = "background:rgba(" + c.join(",") + "," + (.12 + .78 * t).toFixed(2) + ");" + (t > .55 ? (lr < 0 ? "color:#fff;" : "color:var(--bg);") : "");
+        txt = r >= 10 ? Math.round(r) + "\u00d7" : r.toFixed(r < 1 && r > 0 ? 2 : 1) + "\u00d7"; if (r === 0) txt = "0\u00d7"; }
+      h += '<td class="mc' + (gap ? " gap" : "") + '" data-cell="' + ti.id + "|" + tj.id + '" tabindex="0" style="' + style + '" title="' + esc(ti.label + " \u00d7 " + tj.label + ": " + obs.toFixed(1) + " observed, about " + exp.toFixed(1) + " expected" + (gap ? " (flagged gap)" : "")) + '">' +
+        (gap ? '<span class="gm">gap \u00b7 ' + txt + "</span>" : '<span class="mn">' + txt + "</span>") + "</td>";
+    }
+    h += "</tr>";
+  }
+  p.innerHTML = vhead("matrix", '<p class="vsum">Each cell is links found divided by links expected. Showing the ' + top.length + " largest topics.</p>") + h + "</tbody></table>" + '<div class="vsum mleg"><span><span class="key warmk"></span> fewer than expected</span><span><span class="key midk"></span> about as many as expected</span><span><span class="key acck"></span> more than expected</span><span><span class="gm">gap \u00b7 0.1\u00d7</span> a gap the tool flagged</span></div>' + "</div>";
+}
+function matrixDetail(i, j) {
+  const ti = D.topics.find((t) => t.id === i), tj = D.topics.find((t) => t.id === j); if (!ti || !tj) return;
+  const es = D.edges.filter((e) => heldEdge(e) && seenAt(e) && ((commOf(e.source) === i && commOf(e.target) === j) || (commOf(e.source) === j && commOf(e.target) === i)))
+    .sort((a, b) => (b.confidence || 0) - (a.confidence || 0) || (b.weight || 0) - (a.weight || 0));
+  const px = D.proximity.filter((q) => (commOf(q.source) === i && commOf(q.target) === j) || (commOf(q.source) === j && commOf(q.target) === i)).sort((a, b) => b.count - a.count);
+  const g = D.gaps.find((x) => pkey(x.between[0], x.between[1]) === pkey(i, j));
+  $("detail").innerHTML = "<h3>" + esc(i === j ? ti.label : ti.label + " \u2194 " + tj.label) + "</h3>" +
+    '<div class="meta">' + (i === j ? "Relations inside this topic" : es.length + " relation" + (es.length === 1 ? "" : "s") + " between them") + (px.length ? " \u00b7 " + px.length + " shared-passage links" : "") + "</div>" +
+    (es.slice(0, 10).map((e) => edgeLine(e, false)).join("") || (px.length ? "" : '<p class="empty">No relations between these topics.</p>')) +
+    (px.length && !es.length ? "<h2>Appear together</h2><p>" + px.slice(0, 10).map((q) => nlink(q.source) + " + " + nlink(q.target)).join("<br>") + "</p>" : "") +
+    (g ? "<h2>A flagged gap</h2><p>" + esc(g.prompt) + "</p><p>Bridge candidates:<br>" + g.bridge_candidates.map((c) => c.map((x) => '<span class="link" data-node="' + esc(x) + '">' + esc(x) + "</span>").join(", ")).join("<br>") + "</p>" : "") +
+    '<p><button type="button" data-act="mapgap" data-i="' + i + '" data-j="' + j + '">Show these topics in the map</button></p>';
+}
+
+// ---- Rhythm ----
+function makeBins(u, k, lo) {
+  const mi = (t) => { const x = new Date(t); return x.getUTCFullYear() * 12 + x.getUTCMonth(); };
+  if (u === "d") { let start = Math.floor(lo / DAY) * DAY; if (k === 7) start -= ((new Date(start).getUTCDay() + 6) % 7) * DAY; const step = k * DAY;
+    return { bucket: (t) => Math.floor((t - start) / step), label: (c) => new Date(start + c * step).toISOString().slice(0, 10) }; }
+  if (u === "m") { const m0 = mi(lo) - (((mi(lo) % k) + k) % k);
+    return { bucket: (t) => Math.floor((mi(t) - m0) / k), label: (c) => { const m = m0 + c * k; return MONTHS[m % 12] + " " + Math.floor(m / 12); } }; }
+  const y0 = new Date(lo).getUTCFullYear(), yy = y0 - (((y0 % k) + k) % k);
+  return { bucket: (t) => Math.floor((new Date(t).getUTCFullYear() - yy) / k), label: (c) => String(yy + c * k) };
+}
+function rhythmBins(lo, hi) {
+  const cands = [["d", 1, "day"], ["d", 2, "2 days"], ["d", 7, "week"], ["d", 14, "2 weeks"], ["m", 1, "month"], ["m", 2, "2 months"], ["m", 3, "quarter"], ["m", 6, "half year"], ["y", 1, "year"], ["y", 2, "2 years"], ["y", 5, "5 years"], ["y", 10, "decade"]];
+  for (let i = 0; i < cands.length; i++) { const b = makeBins(cands[i][0], cands[i][1], lo); b.cols = b.bucket(hi) + 1; b.name = cands[i][2]; if (b.cols <= 40 || i === cands.length - 1) return b; }
+}
+function contrast(c1, c2) { const L = (c) => { const f = c.map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * f[0] + .7152 * f[1] + .0722 * f[2]; };
+  const a = L(c1), b = L(c2); return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); }
+function minCellOpacity() { const ac = hexRgb(css("--accent")), bg = hexRgb(css("--bg"));
+  for (let a = .3; a < 1; a += .02) if (contrast(ac.map((v, i) => v * a + bg[i] * (1 - a)), bg) >= 1.6) return a; return 1; }
+function oneDay(p, top) {
+  const ds = D.edges.map((e) => dstr(e.valid_from)).filter(Boolean).sort(), when = ds.length ? ds[0] : "";
+  const cnt = new Map(top.map((t) => [t.id, 0]));
+  for (const e of D.edges) { const a = commOf(e.source), b = commOf(e.target); if (cnt.has(a)) cnt.set(a, cnt.get(a) + 1); if (b !== a && cnt.has(b)) cnt.set(b, cnt.get(b) + 1); }
+  const rows = top.map((t) => [t, cnt.get(t.id)]).sort((a, b) => b[1] - a[1]), mx = Math.max(1, ...rows.map((r) => r[1]));
+  p.innerHTML = vhead("rhythm") + '<p class="vsum nodates">' + (when ? "Everything here is dated " + esc(when) + ", so there is no rhythm to show. Rhythm needs material written on different dates." : "Nothing here has a date, so there is no rhythm to show. Rhythm needs material written on different dates.") + "</p>" +
+    '<h3 class="vsub">Topics by number of relations</h3><div class="tbars">' + rows.map(([t, n]) => '<div class="trow"><span class="cname"><span class="dot" style="background:' + esc(t.color) + '"></span> ' + esc(t.label) +
+      '</span><span class="tbar"><span class="tb" style="width:' + (100 * n / mx).toFixed(1) + '%"></span></span><span class="num">' + n + "</span></div>").join("") + "</div>";
+}
+function viewRhythm(p) {
+  const top = topTopics(12);
+  if (!top.length || !D.edges.length) { p.innerHTML = vhead("rhythm") + noData("No relations to chart yet."); return; }
+  const [lo, hi] = timeSpan(), B = rhythmBins(lo, hi), cols = B.cols, bucket = B.bucket;
+  const rowOf = new Map(top.map((t, i) => [t.id, i])), grid = top.map(() => new Uint32Array(cols));
+  for (const e of D.edges) { const t = tms(e.valid_from, NaN); if (t !== t) continue; const c = Math.max(0, Math.min(cols - 1, bucket(t)));
+    const a = rowOf.get(commOf(e.source)), b = rowOf.get(commOf(e.target)); if (a !== undefined) grid[a][c]++; if (b !== undefined && b !== a) grid[b][c]++; }
+  let mx = 1; for (const r of grid) for (const v of r) if (v > mx) mx = v;
+  const colTot = Array.from({ length: cols }, (_, c) => grid.reduce((s, r) => s + r[c], 0));
+  const dated = D.edges.map((e) => tms(e.valid_from, NaN)).filter((t) => t === t);
+  if (colTot.filter((v) => v > 0).length <= 1 || !dated.length || Math.max(...dated) - Math.min(...dated) < 2 * DAY) { oneDay(p, top); return; }
+  const MO = minCellOpacity();
+  let first = colTot.findIndex((v) => v > 0); if (first < 0) first = 0; let last = cols - 1; while (last > first && !colTot[last]) last--;
+  const seq = [];
+  for (let c = first; c <= last;) { if (colTot[c] || c === first) { seq.push({ c }); c++; } else { const c0 = c; while (c <= last && !colTot[c]) c++; seq.push({ skip: c - c0, c0 }); } }
+  const nReal = seq.filter((s) => s.c !== undefined).length, nBrk = seq.length - nReal, BR = 18;
+  const width = Math.max(p.clientWidth - 32, 640), RM = 56, need = Math.max(...top.map((t) => textW(t.label)));
+  const LM = Math.round(Math.min(width * .34, Math.max(180, need + 18))), cw = Math.min(90, (width - LM - RM - nBrk * BR) / nReal), used = nReal * cw + nBrk * BR, top0 = 36;
+  const totX = LM + used + 10, W2 = Math.round(LM + used + RM);
+  let x = LM; const xOf = new Map(), brk = [];
+  for (const s of seq) { if (s.c !== undefined) { xOf.set(s.c, x); x += cw; } else { brk.push([x, s]); for (let c = s.c0; c < s.c0 + s.skip; c++) xOf.set(c, x); x += BR; } }
+  const every = Math.max(1, Math.ceil(84 / cw)), ao = asOfStr(), at = ao ? Date.parse(ao) : NaN;
+  let s = "", y = top0, ri = 0;
+  for (const q of seq) { if (q.c === undefined) continue; if (ri++ % every) continue; const lb = B.label(q.c), lx = xOf.get(q.c);
+    if (lx + textW(lb) > LM + used + 4) continue; s += '<text class="vtick" x="' + (lx + 1).toFixed(1) + '" y="24">' + esc(lb) + "</text>"; }
+  s += '<text class="vtick" x="' + totX + '" y="24">total</text>';
+  const rowsTop = y, rowsInfo = [];
+  top.forEach((t, r) => {
+    const lines = wrapLabel(t.label, LM - 16, 4), rh = Math.max(30, lines.length * 15 + 10), tot = grid[r].reduce((a, v) => a + v, 0), mid = y + rh / 2; rowsInfo.push(rh);
+    s += '<text class="vlab c" x="4" y="' + (mid - (lines.length - 1) * 7.5).toFixed(1) + '"><title>' + esc(t.label) + "</title>" + svgLines(lines, 4) + "</text>";
+    for (const q of seq) { if (q.c === undefined) continue; const c = q.c, v = grid[r][c], cx = xOf.get(c), w = Math.max(1, cw - 2);
+      if (!v) { s += '<rect class="re" x="' + cx.toFixed(1) + '" y="' + (y + 2) + '" width="' + w.toFixed(1) + '" height="' + (rh - 4) + '"/>'; continue; }
+      const op = MO + (1 - MO) * Math.sqrt(v / mx);
+      s += '<rect class="rc" x="' + cx.toFixed(1) + '" y="' + (y + 2) + '" width="' + w.toFixed(1) + '" height="' + (rh - 4) + '" style="fill-opacity:' + op.toFixed(2) + '" data-rc="' + t.id + "|" + c + '"><title>' + esc(t.label + ", " + B.label(c) + ": " + v + " relation" + (v === 1 ? "" : "s")) + "</title></rect>";
+      if (cw >= 24) s += '<text class="rcn' + (op > .62 ? " hi" : "") + '" x="' + (cx + w / 2).toFixed(1) + '" y="' + mid.toFixed(1) + '" text-anchor="middle">' + v + "</text>"; }
+    s += '<text class="vtot" x="' + totX + '" y="' + mid.toFixed(1) + '">' + tot + "</text>"; y += rh; });
+  for (const [bx, q] of brk) { const m = bx + BR / 2;
+    s += '<line class="vbrk" x1="' + m + '" x2="' + m + '" y1="' + rowsTop + '" y2="' + y + '"/><text class="vbrkt" x="' + m + '" y="' + (rowsTop + 10) + '" text-anchor="middle"><title>' + q.skip + " empty " + esc(B.name) + (q.skip === 1 ? "" : "s") + ' skipped</title>\u22ef</text><text class="vbrks" transform="rotate(-90 ' + m + " " + ((rowsTop + y) / 2 + 8) + ')" x="' + m + '" y="' + ((rowsTop + y) / 2 + 8) + '" text-anchor="middle">skipped</text>'; }
+  if (at === at && xOf.has(Math.max(0, Math.min(cols - 1, bucket(at))))) { const ax = xOf.get(Math.max(0, Math.min(cols - 1, bucket(at))));
+    s += '<rect class="rasof" x="' + (ax - 1).toFixed(1) + '" y="' + (top0 - 2) + '" width="' + cw.toFixed(1) + '" height="' + (y - top0 + 4) + '"/><text class="vmark acc" x="' + ax.toFixed(1) + '" y="' + (y + 18) + '" text-anchor="' + (ax > LM + used / 2 ? "end" : "start") + '">as of ' + esc(dstr(ao)) + "</text>"; }
+  const height = y + 30, steps = [1, Math.max(2, Math.round(mx / 4)), Math.max(3, Math.round(mx / 2)), mx].filter((v, i, a) => a.indexOf(v) === i);
+  const legend = '<p class="vsum legend">Relations that began: ' + steps.map((v) => '<span class="sw" style="opacity:' + (MO + (1 - MO) * Math.sqrt(v / mx)).toFixed(2) + '"></span> ' + v).join(" ") + ' <span class="sw empty"></span> none</p>';
+  p.innerHTML = vhead("rhythm", '<p class="vsum">Relations by topic, one column per ' + esc(B.name) + (nBrk ? "; empty periods collapsed (\u22ef)" : "") + ". Click a cell to list them.</p>" + legend) +
+    '<svg class="vsvg" width="' + W2 + '" height="' + height + '" viewBox="0 0 ' + W2 + " " + height + '" role="group" aria-label="Relations per topic over time">' + s + "</svg>";
+  p._rhythm = { name: B.name, cols, bucket };
+}
+function rhythmDetail(tid, c) {
+  const t = D.topics.find((x) => x.id === tid), r = $("vpanel")._rhythm; if (!t || !r) return;
+  const es = D.edges.filter((e) => { const tt = tms(e.valid_from, NaN); return tt === tt && Math.max(0, Math.min(r.cols - 1, r.bucket(tt))) === c && (commOf(e.source) === tid || commOf(e.target) === tid); }).sort(byFrom);
+  $("detail").innerHTML = "<h3>" + esc(t.label) + "</h3>" + '<div class="meta">' + es.length + " relation" + (es.length === 1 ? "" : "s") + " began in this period</div>" +
+    es.slice(0, 12).map((e) => edgeLine(e, false)).join("") + (es.length > 12 ? '<p class="num">' + (es.length - 12) + " more not listed.</p>" : "");
+}
+
+// ---- switching, tabs, wiring ----
+function renderView() {
+  if (curView === "map") return;
+  const p = $("vpanel"), t0 = performance.now();
+  try { ({ timeline: viewTimeline, argument: viewArgument, steps: viewSteps, matrix: viewMatrix, rhythm: viewRhythm })[curView](p); }
+  catch (err) { console.error(err); p.innerHTML = '<p class="empty">This view could not be drawn. Try the map instead.</p>'; }
+  vlastSubject = subject();
+  window.knowledgeView.lastRenderMs = performance.now() - t0;
+}
+function scheduleRender() { if (renderQueued || curView === "map") return; renderQueued = true; requestAnimationFrame(() => { renderQueued = false; renderView(); }); }
+function stripText() {
+  const el = $("whyLine"); if (!el || !openInfo) return;
+  el.innerHTML = (curView !== openInfo.view ? "Showing the " + VIEW_NAMES[curView].toLowerCase() + " view. " : "") + "Opened as " + openInfo.phrase +
+    (openInfo.q ? " because you asked: \u201c" + esc(openInfo.q) + "\u201d" : ".");
+}
+function setView(name, opts) {
+  if (VIEWS.indexOf(name) < 0) name = "map";
+  opts = opts || {}; curView = name;
+  document.querySelectorAll("#tabs [role=tab]").forEach((b) => { const on = b.dataset.view === name; b.setAttribute("aria-selected", on ? "true" : "false"); b.tabIndex = on ? 0 : -1; });
+  const map = name === "map";
+  canvas.style.display = map ? "" : "none"; $("vpanel").hidden = map; document.querySelector("main").classList.toggle("vmode", !map);
+  $("vpanel").setAttribute("aria-labelledby", "tab-" + name);
+  ["fit", "labels"].forEach((id) => { $(id).style.display = map ? "" : "none"; });
+  if (!opts.noHash) { const c = state.selected && byId.has(state.selected) ? "&concept=" + encodeURIComponent(state.selected) : "";
+    try { history.replaceState(null, "", "#view=" + name + c); } catch (e) { location.hash = "view=" + name + c; } }
+  stripText();
+  if (!map) renderView();
+}
+function showInMap() {
+  const pair = curView === "steps" ? (stepsPair() || lastStepsPair) : null, s = subject() || state.selected;
+  setView("map");
+  if (pair) { select(pair[0], true); showPath(pair[0], pair[1]); } else if (s && byId.has(s)) select(s, true);
+}
+const baseSelect = select;
+select = function (id, center) {
+  baseSelect(id, center);
+  if (curView === "map" || !byId.has(id)) return;
+  const sub = curView === "timeline" || curView === "argument";
+  $("detail").insertAdjacentHTML("beforeend", "<h2>In this view</h2><p>" + (sub && subject() !== id ? '<button type="button" data-act="subject" data-id="' + esc(id) + '">Use as the subject</button> ' : "") +
+    '<button type="button" data-act="map" data-id="' + esc(id) + '">Show in map</button></p>');
+  if (sub && vlastSubject !== subject()) renderView();
+};
+$("tabs").addEventListener("click", (ev) => { const b = ev.target.closest("[role=tab]"); if (b) setView(b.dataset.view); });
+$("tabs").addEventListener("keydown", (ev) => {
+  const keys = { ArrowRight: 1, ArrowLeft: -1, Home: "h", End: "e" }; if (!(ev.key in keys)) return;
+  ev.preventDefault(); ev.stopPropagation();
+  let i = VIEWS.indexOf(curView); const k = keys[ev.key]; i = k === "h" ? 0 : k === "e" ? VIEWS.length - 1 : (i + k + VIEWS.length) % VIEWS.length;
+  setView(VIEWS[i]); $("tab-" + VIEWS[i]).focus(); });
+$("right").addEventListener("click", (ev) => { if (curView !== "timeline" && curView !== "argument") return; const s = subject(); if (s && ev.target.closest("[data-node]")) vsub = s; }, true);
+$("right").addEventListener("click", (ev) => { const b = ev.target.closest("[data-act]"); if (!b) return;
+  if (b.dataset.act === "map") { if (b.dataset.id && byId.has(b.dataset.id)) state.selected = b.dataset.id; showInMap(); }
+  else if (b.dataset.act === "subject") { vsub = b.dataset.id; renderView(); }
+  else if (b.dataset.act === "mapgap") { const i = +b.dataset.i, j = +b.dataset.j; state.path = null; state.pathEdges = null; state.selected = null;
+    state.gap = new Set(nodes.filter((n) => n.community === i || n.community === j).map((n) => n.id)); setView("map"); } });
+$("vpanel").addEventListener("click", (ev) => {
+  const t = ev.target; let el;
+  if ((el = t.closest("[data-edge]"))) return edgeDetail(edgeMap().get(el.dataset.edge));
+  if ((el = t.closest("[data-claim]"))) { vsub = el.dataset.claim; select(vsub); if (vlastSubject !== subject()) renderView(); return; }
+  if ((el = t.closest("[data-node]"))) { if (curView === "argument" || (curView === "timeline" && subject() && el.tagName !== "text")) vsub = subject(); return select(el.dataset.node); }
+  if ((el = t.closest("[data-cell]"))) { const [i, j] = el.dataset.cell.split("|").map(Number); return matrixDetail(i, j); }
+  if ((el = t.closest("[data-rc]"))) { const [i, c] = el.dataset.rc.split("|").map(Number); return rhythmDetail(i, c); }
+  if (t.closest(".vmap")) showInMap(); });
+$("vpanel").addEventListener("submit", (ev) => { ev.preventDefault(); traceFromInputs(); });
+$("vpanel").addEventListener("keydown", (ev) => { if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches("[data-edge],[data-claim],[data-cell],[data-node]")) {
+  ev.preventDefault(); ev.target.dispatchEvent(new MouseEvent("click", { bubbles: true })); } });
+$("slider").addEventListener("input", () => { vtouched = true; scheduleRender(); });
+$("showClosed").addEventListener("change", scheduleRender);
+$("showProx").addEventListener("change", scheduleRender);
+window.addEventListener("resize", scheduleRender);
+new ResizeObserver(() => { resize(); scheduleRender(); }).observe($("stage"));
+
 // ---- the view chosen for a question (visualize --for / --lens) ----
 function applyOpen(o) {
   if (!o) return;
   const alts = (o.alternatives || []).map((a) => "<li>" + esc(a.label) + "<br><code>" + esc(a.command) + "</code></li>").join("");
-  $("why").innerHTML = (o.question ? '<div class="q">\u201c' + esc(o.question) + '\u201d</div>' : "") + "<b>" + esc(o.why) + "</b>" +
-    (alts ? '<div class="alt">Not what you meant? Another view:<ul>' + alts + "</ul></div>" : "") +
-    '<button id="whyClose" type="button" aria-label="Hide this note">\u00d7</button>';
-  $("why").style.display = "block";
+  const vname = VIEW_NAMES[o.view] ? o.view : "map";
+  const phrase = ({ map: "the map", timeline: "a timeline", argument: "an argument", steps: "a step-by-step chain", matrix: "a matrix", rhythm: "a rhythm chart" })[vname];
+  openInfo = { view: vname, phrase, q: o.question || "" };
+  $("why").innerHTML = '<span class="wl" id="whyLine"></span>' +
+    '<button id="whyMore" type="button" aria-expanded="false" aria-controls="whyBody">Why / other views</button>' +
+    '<button id="whyClose" type="button" aria-label="Hide this note">\u00d7</button>' +
+    '<div id="whyBody" hidden>' + (o.question ? '<div class="q">\u201c' + esc(o.question) + "\u201d</div>" : "") + "<b>" + esc(o.why) + "</b>" +
+    (alts ? '<div class="alt">Not what you meant? Another view:<ul>' + alts + "</ul></div>" : "") + "</div>";
+  $("why").style.display = "flex";
+  $("whyMore").onclick = () => { const b = $("whyBody"); b.hidden = !b.hidden; $("whyMore").setAttribute("aria-expanded", String(!b.hidden)); };
   $("whyClose").onclick = () => { $("why").style.display = "none"; };
   if (o.closed) $("showClosed").checked = true;
   if (o.as_of) { const marks = (D.time && D.time.marks) || []; let i = 0;
     for (let k = 0; k < marks.length; k++) if (marks[k] <= o.as_of) i = k;
-    if (marks.length) { $("slider").value = i; $("slider").dispatchEvent(new Event("input")); } }
+    if (marks.length) { $("slider").value = i; $("slider").dispatchEvent(new Event("input")); }
+    state.asOf = o.as_of;  // the date asked about, not the nearest earlier mark: the same relations hold, the label is right
+    $("when").textContent = o.as_of.replace("T", " ").replace("Z", " UTC"); }
   const has = (id) => id && byId.has(id);
   if ((o.lens === "path" || o.lens === "gaps") && has(o.concept) && has(o.to)) { select(o.concept, true); showPath(o.concept, o.to); }
   else if (o.lens === "gaps") { const el = document.querySelector('[data-gap="0"]'); if (el) el.click(); }
   else if (has(o.concept)) select(o.concept, true);
   alpha = Math.max(alpha, .2);
+  if (vname === "timeline" || vname === "argument") vsub = has(o.concept) ? o.concept : null;
+  if (vname === "steps" && has(o.concept) && has(o.to)) stepsEnds = [o.concept, o.to];
+  vtouched = false;
+  setView(vname, { noHash: true });
 }
 applyOpen(D.open);
+viewReady = true;
+{ const hv = new URLSearchParams(location.hash.slice(1)).get("view");
+  if (VIEWS.indexOf(hv) >= 0) setView(hv, { noHash: true });  // a link that names a view is an explicit choice
+  const hc = new URLSearchParams(location.hash.slice(1)).get("concept");
+  if (hv && hc && byId.has(hc)) select(hc, true); }
 if (location.hash.startsWith("#concept=")) { const id = decodeURIComponent(location.hash.slice(9)); if (byId.has(id)) select(id, true); }
 </script>
 </body>

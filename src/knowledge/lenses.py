@@ -24,6 +24,27 @@ LENSES = {
     "gaps": "topics that should be linked but barely are",
 }
 NEEDS = {"path": 2, "evidence": 1, "concept": 1}  # concepts a lens cannot do without
+# The form that answers each kind of question best. All live in the one view file as tabs.
+VIEWS = {
+    "map": "the network: concepts, topics and every relation",
+    "timeline": "lanes of what held when; replaced relations end, dashed, and point to what replaced them",
+    "argument": "a claim with the quotes for it on one side and against it on the other",
+    "steps": "the chain of steps between two concepts, each with its sentence and quote",
+    "matrix": "topics against topics: links observed against links expected, gaps outlined",
+    "rhythm": "topics against time: when each part of the material was written about",
+}
+def lens_for_view(view: str, concept: str | None = None) -> str:
+    """The lens a view answers, for `visualize --view NAME` without a question."""
+    if view not in VIEWS:
+        raise ToolError("usage", f"Unknown view \"{view}\".", hint="Use one of: " + ", ".join(VIEWS), exit_code=USAGE)
+    if view == "map":
+        return "concept" if concept else "overview"
+    return {"timeline": "history", "argument": "contradictions", "matrix": "gaps", "rhythm": "overview",
+            "steps": "path"}[view]
+
+
+VIEW_FOR = {"overview": "rhythm", "concept": "map", "path": "steps", "evidence": "argument",
+            "contradictions": "argument", "history": "timeline", "gaps": "matrix"}
 
 _INTENTS = [
     ("path", r"\bhow (?:does|do|is|are|did)\b.*\b(?:relate[sd]?|connect(?:s|ed)?|link(?:s|ed)?|lead(?:s)? to|affect(?:s|ed)?)\b"
@@ -180,13 +201,15 @@ def _alternatives(graph_name, lens, concepts, as_of) -> list[dict]:
 
 
 def choose_view(g, question: str | None = None, *, lens: str | None = None, concept: str | None = None,
-                to: str | None = None, as_of: str | None = None) -> dict:
+                to: str | None = None, as_of: str | None = None, view: str | None = None) -> dict:
     """Pick the lens and its concepts for a question (or an explicit lens). Returns
     {lens, concept, to, as_of, closed, why, alternatives, question}; raises needs_clarification
     when the question does not say enough to choose."""
     name = g.name
     if lens is not None and lens not in LENSES:
         raise ToolError("usage", f"Unknown lens \"{lens}\".", hint="Use one of: " + ", ".join(LENSES), exit_code=USAGE)
+    if view is not None and view not in VIEWS:
+        raise ToolError("usage", f"Unknown view \"{view}\".", hint="Use one of: " + ", ".join(VIEWS), exit_code=USAGE)
     q = (question or "").strip()
     text = _normalise(q)
     intents = [i for i, rx in _INTENTS if re.search(rx, text)]
@@ -284,7 +307,7 @@ def choose_view(g, question: str | None = None, *, lens: str | None = None, conc
         c, t = (concepts + [None, None])[:2]
     else:
         c, t = (concepts[0] if concepts else None), None
-    return {"lens": lens, "concept": c, "to": t, "as_of": as_of,
+    return {"lens": lens, "view": view or VIEW_FOR[lens], "concept": c, "to": t, "as_of": as_of,
             "closed": lens in ("history", "contradictions") or "history" in intents,
             "question": q or None, "why": _why(lens, c, t, as_of),
             "alternatives": _alternatives(name, lens, [x for x in (c, t) if x] or concepts, as_of),
