@@ -1092,18 +1092,45 @@ def graph_data(graph=None, *, as_of: str | None = None, concept: str | None = No
                          "marks": times[-400:]}}
 
 
+def choose_view(graph=None, question: str | None = None, *, lens: str | None = None, concept: str | None = None,
+                to: str | None = None, as_of: str | None = None) -> dict:
+    """Pick the view that answers a question: a lens (overview, concept, path, evidence, contradictions,
+    history, gaps) and the concepts it is about. Raises `needs_clarification` with a question to ask the
+    person, and the command for each answer, when the question does not say enough to choose."""
+    from .lenses import choose_view as _choose
+
+    with _open(graph, create=False) as g:
+        return _choose(g, question, lens=lens, concept=concept, to=to, as_of=as_of)
+
+
 def visualize(graph=None, out: str | None = None, *, as_of: str | None = None, concept: str | None = None,
-              depth: int = 2, max_nodes: int = 1500, title: str | None = None, proximity: bool = True) -> dict:
-    """Write one self-contained interactive HTML file (no outside requests) and return where it is."""
+              depth: int = 2, max_nodes: int = 1500, title: str | None = None, proximity: bool = True,
+              question: str | None = None, lens: str | None = None, to: str | None = None) -> dict:
+    """Write one self-contained interactive HTML file (no outside requests) and return where it is.
+    With `question` (or `lens`), the view opens on the lens that answers it, and says why."""
     from .render import render_html
 
-    data = graph_data(graph, as_of=as_of, concept=concept, depth=depth, max_nodes=max_nodes, proximity=proximity)
+    plan = None
+    if question is not None or lens is not None:
+        plan = choose_view(graph, question, lens=lens, concept=concept, to=to, as_of=as_of)
+        data = graph_data(graph, max_nodes=max_nodes, proximity=proximity)
+        shown = {n["id"] for n in data["nodes"]}
+        if any(c and c not in shown for c in (plan["concept"], plan["to"])):  # trimmed away: draw its neighbourhood
+            data = graph_data(graph, concept=plan["concept"], depth=depth, max_nodes=max_nodes, proximity=proximity)
+        data["open"] = {k: plan[k] for k in ("lens", "concept", "to", "as_of", "closed", "question", "why",
+                                             "alternatives", "description")}
+    else:
+        data = graph_data(graph, as_of=as_of, concept=concept, depth=depth, max_nodes=max_nodes, proximity=proximity)
     html = render_html(data, title=title)
-    target = out or f"knowledge-{data['graph']}{'-' + node_key(concept).replace(' ', '-') if concept else ''}.html"
+    focus = concept if plan is None else plan["concept"]
+    target = out or f"knowledge-{data['graph']}{'-' + node_key(focus).replace(' ', '-') if focus else ''}.html"
     with open(target, "w", encoding="utf-8") as fh:
         fh.write(html)
-    return {"path": os.path.abspath(target), "bytes": len(html.encode()), "nodes": data["counts"]["nodes"],
-            "edges": data["counts"]["edges"], "topics": data["counts"]["topics"], "truncated": data["truncated"]}
+    result = {"path": os.path.abspath(target), "bytes": len(html.encode()), "nodes": data["counts"]["nodes"],
+              "edges": data["counts"]["edges"], "topics": data["counts"]["topics"], "truncated": data["truncated"]}
+    if plan:
+        result.update({k: plan[k] for k in ("lens", "concept", "to", "as_of", "why", "alternatives")})
+    return result
 
 
 def export(graph=None, format: str = "json", out: str | None = None, *, as_of: str | None = None,

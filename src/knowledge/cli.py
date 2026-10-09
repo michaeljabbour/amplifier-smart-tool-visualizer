@@ -70,7 +70,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = _Parser(prog="knowledge", add_help=False)
     parser.add_argument("-h", action=_Print, render=lambda _p: h.short_help())
     parser.add_argument("--help", action=_Print, render=lambda _p: h.skill())
-    parser.add_argument("--version", action=_Print, render=lambda _p: f"knowledge {h.VERSION}")
+    parser.add_argument("-V", "--version", action=_Print, render=lambda _p: f"knowledge {h.VERSION}")
     sub = parser.add_subparsers(dest="command", parser_class=_Parser)
 
     p = _cap(sub, "ingest")
@@ -201,6 +201,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--title")
     p.add_argument("--open", action="store_true")
     p.add_argument("--as-of")
+    p.add_argument("--for", dest="question")
+    p.add_argument("--lens")
+    p.add_argument("--to")
 
     p = _cap(sub, "serve")
     p.add_argument("--port", type=int, default=0)
@@ -327,8 +330,11 @@ def run(args) -> tuple[object, list[dict], list[str]]:
         return lib.reconcile(g, args.concept, limit=args.limit, apply=not args.dry_run, **prov), [], []
     if c == "visualize":
         r = lib.visualize(g, args.out, as_of=args.as_of, concept=args.concept, depth=args.depth,
-                          max_nodes=args.max_nodes, title=args.title, proximity=not args.no_proximity)
+                          max_nodes=args.max_nodes, title=args.title, proximity=not args.no_proximity,
+                          question=args.question, lens=args.lens, to=args.to)
         progress(f"Wrote {r['path']} ({r['nodes']} concepts, {r['edges']} relations).")
+        if r.get("lens"):
+            progress(f"Opens on the {r['lens']} view: {r['why']}")
         if args.open:
             _open_browser(r["path"])
         return r, [{"path": r["path"], "kind": "view"}], []

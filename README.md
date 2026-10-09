@@ -1,17 +1,18 @@
 # knowledge
 
 [![CI](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml)
-[![Smart Tools conformance](https://img.shields.io/badge/smart--tools%20conformance-16%2F16-2f5f8a)](https://github.com/microsoft/amplifier-smart-tools/tree/main/conformance)
+[![Smart Tools conformance](https://img.shields.io/badge/smart--tools%20conformance-17%2F17-2f5f8a)](https://github.com/microsoft/amplifier-smart-tools/tree/main/conformance)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-2f5f8a)](pyproject.toml)
 [![No runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-none-2f5f8a)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2f5f8a)](LICENSE)
 
-**One knowledge graph your agents remember with, and you can explore.**
+**Ask your documents a question. See the answer as a map.**
 
-Point it at notes, papers, docs, code or agent sessions. You get a graph any agent can query and
-add to: concepts and typed relations, each with the passage it came from, the agent that added it,
-a confidence and the dates it held. Then trace how two ideas connect, check what supports or
-contradicts a claim, find the gaps between topics, and replay how understanding changed.
+Point it at papers, specs, policies, notes, code or agent sessions. You get a graph any agent can
+query and add to: concepts and typed relations, each with the passage it came from, the agent that
+added it, a confidence and the dates it held. Ask in plain words and the view opens on the answer:
+how two ideas connect, what supports or contradicts a claim, what changed and what replaced it, or
+what is missing. When a question is unclear, it asks you instead of guessing.
 
 It is an [Amplifier Smart Tool](https://github.com/microsoft/amplifier-smart-tools): a Python
 library with a thin CLI and an optional MCP server, usable from Claude Code, Codex, Amplifier, a
@@ -33,13 +34,32 @@ knowledge doctor
 
 knowledge ingest ./notes --method cooccurrence --graph notes   # a word network, no model
 knowledge analyze --graph notes                                # central ideas, bridges, topics, gaps
-knowledge visualize --graph notes --open                       # one self-contained page
+knowledge visualize --for "what are the main topics?" --graph notes --open   # opens on the answer
 ```
 
 With a model, `knowledge ingest ./notes` extracts typed concepts and relations instead (Anthropic,
 OpenAI, a local Ollama model, or your own program through `--complete-cmd`). Inside an agent, the
 agent is the model: `ingest --method agent` hands it the chunks and the extraction prompt, and it
 writes back with `knowledge add`. No key is billed.
+
+## Examples you can open now
+
+Real public material, each read into a graph by an agent through the tool's own agent route, each
+view opening on a question someone in that job would actually ask. Every relation links to its quote.
+
+| For | Material | Ask it | What you see |
+|---|---|---|---|
+| Developers | [Python's typing PEPs](examples/python-typing/): 484, 526, 563 (four versions), 585, 604, 649, 749. Public domain / CC0. | "What replaced PEP 563's plan to make stringized annotations the default?" | The plan moved from Python 4.0 to 3.10, was put on hold for PEP 649, and "never became the default behaviour"; PEP 649 and 749's deferred evaluation replaced it. Press Play to watch it change. |
+| Researchers | [Eight arXiv abstracts](examples/scaling-laws/) on scaling laws and emergent abilities. CC0. | "What contradicts the claim that emergent abilities appear suddenly and unpredictably?" | Schaeffer et al. (2023): they "evaporate with different metrics or with better statistics". Plus how compute-optimal advice changed from Kaplan to Chinchilla, and the 2024 replication that disputes the fit. |
+| Policy, legal and operations work | [Seven US federal documents](examples/federal-ai-policy/) on agency use of AI, EO 14110 to OMB M-25-21 / M-25-22. Public domain. | "What replaced M-24-10?" | M-25-21 "rescinds and replaces" it. Drag the time slider back to see what applied in 2024, including the December 1, 2024 deadline that no longer does. |
+
+| | |
+|---|---|
+| [![Developers](docs/images/developers-poster.png)](docs/images/developers-demo.mp4) **Developers.** The history of a plan that was replaced, replayed. | [![Researchers](docs/images/scientists-poster.png)](docs/images/scientists-demo.mp4) **Researchers.** A claim and the papers that contradict it. |
+| [![Policy work](docs/images/work-poster.png)](docs/images/work-demo.mp4) **Policy work.** What applies now, and what applied then. | [![Asks back](docs/images/asks-poster.png)](docs/images/asks-demo.mp4) **It asks, not guesses.** A vague question gets a question back, with the command for each answer. |
+
+Build them yourself: `python3 scripts/build-examples.py` (no model, no key; it checks every question
+still opens the view it should).
 
 ## What it found in Amplifier's own docs
 

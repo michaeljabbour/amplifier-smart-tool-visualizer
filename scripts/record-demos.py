@@ -261,9 +261,111 @@ def scene_agent(page):
     hold(page, 1500)
 
 
-SCENES = {"gaps": scene_gaps, "evidence": scene_evidence, "path": scene_path, "time": scene_time,
+def opened(page) -> dict:
+    """What the view chose to open on (the plan behind the note in its corner)."""
+    return page.evaluate("JSON.parse(document.getElementById('data').textContent).open")
+
+
+def neighbour(name: str, concept: str, relations: tuple[str, ...]) -> str | None:
+    """A concept linked to `concept` by one of `relations` in that example's graph."""
+    import knowledge as kg
+
+    os.environ.setdefault("KNOWLEDGE_HOME", str(ROOT / ".work" / "home"))
+    shown = kg.show(str(GRAPHS / f"{name}.db"), concept)
+    for e in shown["incoming"] + shown["outgoing"]:
+        if e["relation"] in relations and not e["valid_to"]:
+            return e["other"]
+    return None
+
+
+def scene_developers(page):
+    """Python's typing PEPs: the question opens the history of a plan that was replaced."""
+    open_view(page, (ASSETS / "python-typing.html").as_uri())
+    hold(page, 5200)
+    click_el(page, page.locator("#play"))
+    hold(page, 9500)
+    other = neighbour("python-typing", opened(page)["concept"], ("planned_default", "replaces", "supersedes", "revises"))
+    if other:
+        node(page, other)
+    hold(page, 5200)
+
+
+def scene_scientists(page):
+    """arXiv abstracts: the question opens a claim with the work that contradicts it."""
+    open_view(page, (ASSETS / "scaling-laws.html").as_uri())
+    hold(page, 6500)
+    other = neighbour("scaling-laws", opened(page)["concept"], ("contradicts", "challenges"))
+    if other:
+        node(page, other)
+        hold(page, 5200)
+    page.locator("#detail").evaluate("(el) => el.scrollTo({top: 260, behavior: 'smooth'})")
+    hold(page, 3500)
+
+
+def scene_work(page):
+    """Federal AI policy: the question opens what replaced a memo; step back to see what applied then."""
+    open_view(page, (ASSETS / "federal-ai-policy.html").as_uri())
+    hold(page, 5200)
+    slider = page.locator("#slider")
+    click_el(page, slider)
+    marks = page.evaluate("JSON.parse(document.getElementById('data').textContent).time.marks.length")
+    page.evaluate(f"(() => {{ const s = document.getElementById('slider'); s.value = {max(0, marks // 2)}; "
+                  "s.dispatchEvent(new Event('input')); })()")
+    hold(page, 4200)
+    for _ in range(max(1, marks - marks // 2)):
+        page.keyboard.press("ArrowRight")
+        page.wait_for_timeout(420)
+    hold(page, 4500)
+
+
+def scene_asks(page):
+    """A vague question gets a question back, not a guess; the answer opens the view."""
+    env = {**os.environ, "KNOWLEDGE_HOME": str(ROOT / ".work" / "home")}
+    graph = str(GRAPHS / "scaling-laws.db")
+    vague = next(q["question"] for q in json.loads((ROOT / "examples" / "scaling-laws" / "questions.json").read_text())
+                 if q["expect_lens"] == "ask")
+
+    def run(*args):
+        r = subprocess.run([sys.executable, str(ROOT / "bin" / "knowledge.py"), *args, "--graph", graph],
+                           capture_output=True, text=True, env=env, timeout=60)
+        return r
+
+    asked = run("visualize", "--for", vague, "--out", str(Path(tempfile.gettempdir()) / "asks.html"), "--json")
+    doc = json.loads(asked.stdout)["result"]
+    choice = doc["choices"][0]
+    answer = run("visualize", "--lens", choice["lens"], *(["--concept", choice["concept"]] if choice["concept"] else []),
+                 *(["--to", choice["to"]] if choice["to"] else []), "--out", str(Path(tempfile.gettempdir()) / "asks.html"))
+    opened_line = next((ln for ln in answer.stderr.splitlines() if ln.startswith("Opens on")), "")
+    blocks = [
+        (f'knowledge visualize --for "{vague}" --graph scaling-laws', [doc["question"]] +
+         [f"  - {c['label']}" for c in doc["choices"][:5]] + ["(exit 1: ask the person; do not pick for them)"]),
+        (choice["command"].replace(f'"{graph}"', "scaling-laws").replace(" --open", ""), [opened_line]),
+    ]
+    body = "".join(f'<div class="cmd" data-cmd="{html.escape(cmd)}"></div>'
+                   f'<pre class="out">{html.escape(chr(10).join(lines))}</pre>' for cmd, lines in blocks)
+    style = ("body{margin:0;background:#15171a;color:#e8eaed;font:18px/1.55 ui-monospace,Menlo,monospace;padding:48px 60px}"
+             ".bar{color:#9aa0a6;font-size:15px;margin-bottom:26px} .cmd{color:#8ab4f8;min-height:28px}"
+             ".cmd:before{content:'$ ';color:#9aa0a6}"
+             ".out{margin:8px 0 26px;color:#c8ccd0;white-space:pre-wrap;opacity:0;transition:opacity .4s} .out.on{opacity:1}")
+    page.set_content(f"<!doctype html><meta charset=utf-8><style>{style}</style><div class=bar>A vague question gets a question "
+                     f"back, with the command for each answer. Real output.</div>{body}")
+    for i in range(len(blocks)):
+        cmd = page.locator(".cmd").nth(i)
+        text = cmd.get_attribute("data-cmd")
+        for k in range(1, len(text) + 1):
+            cmd.evaluate(f"(el) => el.textContent = {json.dumps(text[:k])}")
+            page.wait_for_timeout(26)
+        page.wait_for_timeout(350)
+        page.locator(".out").nth(i).evaluate("(el) => el.classList.add('on')")
+        hold(page, 5200)
+    hold(page, 1200)
+
+
+SCENES = {"developers": scene_developers, "scientists": scene_scientists, "work": scene_work, "asks": scene_asks,
+          "gaps": scene_gaps, "evidence": scene_evidence, "path": scene_path, "time": scene_time,
           "words": scene_words, "agent": scene_agent}  # live is recorded by scripts/record-live.py
-TRAILER = [("gaps", 2.5, 9), ("evidence", 2.5, 7), ("path", 2.5, 9), ("time", 3, 10), ("live", 6, 14), ("agent", 0.5, 9)]
+TRAILER = [("developers", 2.6, 10), ("scientists", 2.6, 9), ("work", 2.6, 10), ("asks", 0.5, 10), ("live", 6, 12),
+           ("agent", 0.5, 8)]
 
 
 def record(name: str, tmp: Path) -> Path:
@@ -305,7 +407,7 @@ def trailer(tmp: Path) -> None:
     listing.write_text("".join(f"file '{p}'\n" for p in parts))
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy",
                     "-movflags", "+faststart", str(OUT / "trailer.mp4")], check=True)
-    shutil.copy2(OUT / "gaps-poster.png", OUT / "trailer-poster.png")
+    shutil.copy2(OUT / "developers-poster.png", OUT / "trailer-poster.png")
 
 
 def main() -> None:

@@ -146,3 +146,11 @@ def test_shipped_contract_copies_match():
 def test_ingest_help_states_both_kinds():
     text = kg.capability_skill("ingest")
     assert "--method agent run with no model" in text
+
+
+def test_version_flags():
+    from knowledge import help as h
+
+    for flag in ("-V", "--version"):
+        p = run_cli(flag)
+        assert p.returncode == 0 and h.VERSION in p.stdout

@@ -1,0 +1,21 @@
+The files in sources/ hold arXiv metadata only: each paper's title, authors, arXiv identifier and
+abstract, as returned by the arXiv API (http://export.arxiv.org/api/query) on 2026-10-09. The paper
+bodies are not included.
+
+arXiv releases this metadata, abstracts included, under the Creative Commons CC0 1.0 Universal
+Public Domain Dedication:
+
+- arXiv API Terms of Use, https://info.arxiv.org/help/api/tou.html
+  "You are free to use descriptive metadata about arXiv e-prints under the terms of the Creative
+  Commons Universal (CC0 1.0) Public Domain Declaration."
+  Footnote 1: "Descriptive metadata includes information for discovery and identification purposes,
+  and includes fields such as title, abstract, authors, identifiers, and classification terms."
+
+- arXiv licence help page, https://info.arxiv.org/help/license/index.html
+  "Metadata license: A Creative Commons CC0 1.0 Universal Public Domain Dedication will apply to all
+  metadata."
+
+CC0 deed: https://creativecommons.org/publicdomain/zero/1.0/
+
+No endorsement by arXiv or by the authors is implied. Read the full papers at the links in
+sources.json.

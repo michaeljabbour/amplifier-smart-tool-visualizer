@@ -1,4 +1,5 @@
-This project includes material from the following sources. Each is used under the MIT License.
+This project includes material from the following sources. Items 1 to 3 are used under the MIT
+License (text below); items 5 to 7 are in the public domain or under CC0.
 
 1. rahulnyk/knowledge_graph (https://github.com/rahulnyk/knowledge_graph)
    Copyright (c) 2026 Rahul Nayak. MIT License.
@@ -16,6 +17,21 @@ This project includes material from the following sources. Each is used under th
    examples/amplifier-history/journal.json quotes commit subjects and dates from its git history.
 
 4. The site theme in site/theme/ carries its own licence: site/theme/LICENSE.
+
+5. Python Enhancement Proposals (https://github.com/python/peps)
+   Each PEP states it is placed in the public domain (or under CC0-1.0-Universal). Excerpts are
+   vendored in examples/python-typing/sources/; commits and statements are in its sources.json and
+   LICENSE-sources.
+
+6. arXiv metadata (https://arxiv.org)
+   Titles, authors and abstracts, released by arXiv under CC0 1.0. Vendored in
+   examples/scaling-laws/sources/; ids, versions and the licence statement are in its sources.json
+   and LICENSE-sources. The papers themselves are not included.
+
+7. United States federal government documents (Executive Orders 14110, 14148, 14179; OMB memoranda
+   M-24-10, M-24-18, M-25-21, M-25-22)
+   Works of the United States Government, not subject to copyright (17 U.S.C. 105). Excerpts are
+   vendored in examples/federal-ai-policy/sources/; sources are in its sources.json and LICENSE-sources.
 
 MIT License text, as it applies to items 1 to 3 with the copyright lines above:
 

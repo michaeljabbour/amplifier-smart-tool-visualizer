@@ -1,0 +1,169 @@
+[
+ {
+  "file": "pep-0484-type-hints.md",
+  "title": "PEP 484 - Type Hints",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0484.rst",
+  "date": "2014-09-29",
+  "date_basis": "Created date in the PEP header (Created: 29-Sep-2014); Status: Final, Python-Version: 3.5",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Rationale and Goals",
+   "Non-goals",
+   "Forward references (opening)"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0526-variable-annotations.md",
+  "title": "PEP 526 - Syntax for Variable Annotations",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0526.rst",
+  "date": "2016-08-09",
+  "date_basis": "Created date in the PEP header (Created: 09-Aug-2016); Status: Final, Python-Version: 3.6",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Status",
+   "Abstract",
+   "Rationale",
+   "Runtime Effects of Type Annotations (opening)"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0563-2017-12-05-accepted.md",
+  "title": "PEP 563 - Postponed Evaluation of Annotations (as accepted, 2017)",
+  "uri": "https://github.com/python/peps/blob/cfa69b62a19c959b70e806591b2c9dbe93fd6e0b/pep-0563.rst",
+  "date": "2017-12-05",
+  "date_basis": "Date of commit cfa69b6 '[pep 563] Accepted' in python/peps; Status: Accepted",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Rationale and Goals",
+   "Implementation (opening)",
+   "Enabling the future behavior in Python 3.7",
+   "Deprecation policy"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0563-2020-05-19-default-3.10.md",
+  "title": "PEP 563 - Postponed Evaluation of Annotations (2020 revision: default in 3.10)",
+  "uri": "https://github.com/python/peps/blob/f1c3a99ad5df574489e877c0456c0c714b507357/pep-0563.rst",
+  "date": "2020-05-19",
+  "date_basis": "Date of commit f1c3a99 'Make `from __future__ import annotations` the default in Python 3.10' in python/peps",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Implementation (opening)",
+   "Deprecation policy"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0563-2021-09-25-pending-649.md",
+  "title": "PEP 563 - Postponed Evaluation of Annotations (2021 revision: pending PEP 649)",
+  "uri": "https://github.com/python/peps/blob/b9b44c4eb7819553f293ff222a476f44c682714c/pep-0563.rst",
+  "date": "2021-09-25",
+  "date_basis": "Date of commit b9b44c4 'PEP 563: Correct references to 3.10 default adoption' in python/peps",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Rationale and Goals",
+   "Deprecation policy"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0563-current-superseded.md",
+  "title": "PEP 563 - Postponed Evaluation of Annotations (current: Superseded)",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0563.rst",
+  "date": "2025-05-06",
+  "date_basis": "Date of commit 9b4512f 'PEP 563: Mark as Superseded' in python/peps, the last change to this file; Status: Superseded, Superseded-By: 649, 749",
+  "licence": "Public domain (PEP Copyright section: 'This document has been placed in the public domain.')",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Resolution",
+   "Abstract",
+   "Deprecation policy"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0585-generics-in-collections.md",
+  "title": "PEP 585 - Type Hinting Generics In Standard Collections",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0585.rst",
+  "date": "2019-03-03",
+  "date_basis": "Created date in the PEP header (Created: 03-Mar-2019); Status: Final, Python-Version: 3.9",
+  "licence": "Public domain or CC0-1.0-Universal, whichever is more permissive (PEP Copyright section)",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Rationale and Goals",
+   "Backwards compatibility",
+   "Implementation (list of collections shortened)"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0604-union-operator.md",
+  "title": "PEP 604 - Allow writing union types as X | Y",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0604.rst",
+  "date": "2019-08-28",
+  "date_basis": "Created date in the PEP header (Created: 28-Aug-2019); Status: Final, Python-Version: 3.10",
+  "licence": "Public domain or CC0-1.0-Universal, whichever is more permissive (PEP Copyright section)",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Motivation",
+   "Proposal",
+   "Specification (opening of Simplified Syntax)"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0649-deferred-evaluation.md",
+  "title": "PEP 649 - Deferred Evaluation Of Annotations Using Descriptors",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0649.rst",
+  "date": "2023-05-08",
+  "date_basis": "Resolution date in the PEP header (Resolution: 08-May-2023); Created: 11-Jan-2021; Status: Final, Python-Version: 3.14",
+  "licence": "Public domain or CC0-1.0-Universal, whichever is more permissive (PEP Copyright section)",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Overview (opening and closing sentence)",
+   "Mistaken Rejection Of This Approach In November 2017",
+   "Motivation For This PEP",
+   "Backwards Compatibility With PEP 563 Semantics (opening and closing)"
+  ],
+  "repo": "python/peps"
+ },
+ {
+  "file": "pep-0749-implementing-649.md",
+  "title": "PEP 749 - Implementing PEP 649",
+  "uri": "https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0749.rst",
+  "date": "2025-05-05",
+  "date_basis": "Resolution date in the PEP header (Resolution: 05-May-2025); Created: 28-May-2024; Status: Final, Python-Version: 3.14",
+  "licence": "Public domain or CC0-1.0-Universal, whichever is more permissive (PEP Copyright section)",
+  "retrieved": "2026-10-09",
+  "sections": [
+   "header (status lines)",
+   "Abstract",
+   "Motivation",
+   "The future of from __future__ import annotations",
+   "Renaming SOURCE to STRING"
+  ],
+  "repo": "python/peps"
+ }
+]

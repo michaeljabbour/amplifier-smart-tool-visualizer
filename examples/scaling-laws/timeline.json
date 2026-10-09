@@ -1,0 +1,101 @@
+[
+ {
+  "id": "co-1",
+  "at": "2020-01-23",
+  "from": "compute-optimal allocation",
+  "relation": "recommends",
+  "to": "very large models on modest data, stopped before convergence",
+  "description": "Kaplan et al. 2020: for a fixed compute budget, train very large models on a relatively modest amount of data and stop well before convergence.",
+  "from_type": "concept",
+  "to_type": "decision",
+  "evidence": "Scaling Laws for Neural Language Models: optimally compute-efficient training involves training very large models on a relatively modest amount of data and stopping significantly before convergence",
+  "agent": "historian"
+ },
+ {
+  "id": "co-2",
+  "at": "2022-03-29",
+  "from": "compute-optimal allocation",
+  "relation": "recommends",
+  "to": "scale model size and training tokens equally",
+  "description": "Hoffmann et al. 2022: current models are undertrained; for every doubling of model size, double the training tokens (Chinchilla, 70B, 4x more data than Gopher).",
+  "from_type": "concept",
+  "to_type": "decision",
+  "supersedes": "co-1",
+  "evidence": "Training Compute-Optimal Large Language Models: for every doubling of model size the number of training tokens should also be doubled",
+  "agent": "historian"
+ },
+ {
+  "id": "dc-1",
+  "at": "2023-05-25",
+  "from": "compute-optimal allocation",
+  "relation": "allows_when_data_is_limited",
+  "to": "repeat data for up to 4 epochs",
+  "description": "Muennighoff et al. 2023: with limited unique data, up to 4 epochs of repeated data changes loss negligibly; with more repetition the value of extra compute decays to zero.",
+  "from_type": "concept",
+  "to_type": "decision",
+  "evidence": "Scaling Data-Constrained Language Models: training with up to 4 epochs of repeated data yields negligible changes to loss compared to having unique data",
+  "agent": "historian"
+ },
+ {
+  "id": "co-3",
+  "at": "2023-12-31",
+  "from": "compute-optimal allocation",
+  "relation": "recommends",
+  "to": "train smaller and longer than chinchilla-optimal when inference demand is large",
+  "description": "Sardana et al. 2023: once inference cost is counted, expecting large inference demand (~1B requests) favours smaller models trained longer than Chinchilla-optimal. This revises the 2022 advice for models that will serve heavy inference; it does not test the 2022 fit itself.",
+  "from_type": "concept",
+  "to_type": "decision",
+  "supersedes": "co-2",
+  "evidence": "Beyond Chinchilla-Optimal: Accounting for Inference in Language Model Scaling Laws: should train models smaller and longer than Chinchilla-optimal",
+  "agent": "historian"
+ },
+ {
+  "id": "fit-1",
+  "at": "2022-03-29",
+  "from": "chinchilla parametric loss fit",
+  "relation": "status",
+  "to": "published estimate",
+  "description": "Hoffmann et al. 2022 proposed three methods to estimate the compute-optimal scaling law; the third fits a parametric loss function. (Date of the Hoffmann paper; wording from the 2024 replication.)",
+  "from_type": "method",
+  "to_type": "finding",
+  "evidence": "Chinchilla Scaling: A replication attempt: Hoffmann et al. (2022) propose three methods for estimating a compute-optimal scaling law.",
+  "agent": "historian"
+ },
+ {
+  "id": "fit-2",
+  "at": "2024-04-15",
+  "from": "chinchilla parametric loss fit",
+  "relation": "status",
+  "to": "disputed by replication; refit agrees with approaches 1 and 2",
+  "description": "Besiroglu et al. 2024: the published approach-3 estimates are inconsistent with approaches 1 and 2, fail to fit the extracted data and report implausibly narrow intervals; their refit agrees with approaches 1 and 2.",
+  "from_type": "method",
+  "to_type": "finding",
+  "supersedes": "fit-1",
+  "evidence": "Chinchilla Scaling: A replication attempt: our rederivation of the scaling law using the third approach yields results that are compatible with the findings from the first two estimation procedures",
+  "agent": "historian"
+ },
+ {
+  "id": "em-1",
+  "at": "2022-06-15",
+  "from": "emergent abilities",
+  "relation": "explained_as",
+  "to": "abilities present only in larger models that extrapolation cannot predict",
+  "description": "Wei et al. 2022 describe emergence as an unpredictable phenomenon of larger models.",
+  "from_type": "concept",
+  "to_type": "claim",
+  "evidence": "Emergent Abilities of Large Language Models: emergent abilities cannot be predicted simply by extrapolating the performance of smaller models",
+  "agent": "historian"
+ },
+ {
+  "id": "em-2",
+  "at": "2023-04-28",
+  "from": "emergent abilities",
+  "relation": "explained_as",
+  "to": "artifact of the researcher's choice of metric",
+  "description": "Schaeffer et al. 2023 offer an alternative explanation: nonlinear or discontinuous metrics create the jump. Both explanations remain in the literature; this entry does not close the 2022 one.",
+  "from_type": "concept",
+  "to_type": "claim",
+  "evidence": "Are Emergent Abilities of Large Language Models a Mirage?: emergent abilities appear due to the researcher's choice of metric rather than due to fundamental changes in model behavior with scale",
+  "agent": "historian"
+ }
+]

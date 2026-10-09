@@ -1,0 +1,32 @@
+[
+ {
+  "question": "What replaced M-24-10?",
+  "expect_lens": "history",
+  "why_useful": "The headline. A compliance or policy lead has M-24-10 in their files and needs to know if it still applies. The history view on m-24-10 shows it in effect from 2024-03-28, then rescinded and replaced by M-25-21 on 2025-04-03, with the rescinding sentence as evidence, and the earlier requirements shown as closed."
+ },
+ {
+  "question": "What did agencies have to do as of 2024-12-01?",
+  "expect_lens": "history",
+  "why_useful": "A dated question, as an auditor or lawyer would ask it. The graph as it stood on 2024-12-01: Executive Order 14110 and M-24-10 in force, the December 1, 2024 deadline for the minimum practices on safety- and rights-impacting AI, and the M-24-18 contract deadline."
+ },
+ {
+  "question": "When is the AI strategy due now?",
+  "expect_lens": "history",
+  "why_useful": "A 'required by when' question. The history of ai strategy shows the deadline moving from 365 days (M-24-10) to 180 days (M-25-21), with the old one closed."
+ },
+ {
+  "question": "How does executive order 14179 connect to M-25-21?",
+  "expect_lens": "path",
+  "why_useful": "Traces authority: M-25-21 cites Executive Order 14179, which ordered OMB to revise M-24-10 and M-24-18 within 60 days."
+ },
+ {
+  "question": "What is the source for the high-impact AI rules?",
+  "expect_lens": "evidence",
+  "why_useful": "Before relying on a requirement, read the text. The evidence view on high-impact ai opens on the M-25-21 passages it came from: the direction to apply minimum practices to high-impact AI, the 'principal basis' test, and the Section 5 definition."
+ },
+ {
+  "question": "What do I need to know?",
+  "expect_lens": "ask",
+  "why_useful": "Deliberately vague. The tool does not guess; it asks what the person is trying to find out and offers the big picture, what changed over time, or one concept."
+ }
+]

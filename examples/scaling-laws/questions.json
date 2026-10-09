@@ -1,0 +1,20 @@
+[
+ {"question": "What contradicts the claim that emergent abilities appear suddenly and unpredictably?",
+  "expect_lens": "contradictions",
+  "why_useful": "The headline dispute in this literature. The view puts Wei et al. 2022 next to Schaeffer et al. 2023, which says the jump comes from the metric, and shows the quote behind each line."},
+ {"question": "What evidence says emergent abilities come from the choice of metric?",
+  "expect_lens": "evidence",
+  "why_useful": "Before citing the 'mirage' result, a reader wants to know what it rests on: InstructGPT/GPT-3 tests, a BIG-Bench meta-analysis, and metric-induced emergence in vision tasks."},
+ {"question": "How has the compute-optimal allocation advice changed over time?",
+  "expect_lens": "history",
+  "why_useful": "Shows the advice moving from very large models on modest data (2020), to scaling size and tokens equally (2022), to smaller models trained longer when inference demand is large (2023). Drag the slider to 2021-06-01 to see what held before Chinchilla."},
+ {"question": "Who disputes the Chinchilla parametric loss fit, and on what grounds?",
+  "expect_lens": "contradictions",
+  "why_useful": "A replication question: Besiroglu et al. 2024 find the published fit inconsistent, with implausibly narrow intervals, while their refit agrees with the other two methods."},
+ {"question": "How does inference cost connect to the chinchilla scaling laws?",
+  "expect_lens": "path",
+  "why_useful": "Traces why Sardana et al. revise Chinchilla-optimal: the laws leave out the cost of inference."},
+ {"question": "What about scaling?",
+  "expect_lens": "ask",
+  "why_useful": "Too vague to answer. The tool should ask which concept is meant (scaling laws, Chinchilla scaling laws, the inference-aware law, ...) instead of guessing."}
+]

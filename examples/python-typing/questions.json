@@ -1,0 +1,32 @@
+[
+ {
+  "question": "What replaced PEP 563's plan to make stringized annotations the default?",
+  "expect_lens": "history",
+  "why_useful": "The headline story. The time slider walks the planned default from Python 4.0 (2017) to 3.10 (2020) to 'unclear, pending PEP 649' (2021) to never: replaced by deferred evaluation in PEP 649 and PEP 749 (2025)."
+ },
+ {
+  "question": "When will from __future__ import annotations be removed?",
+  "expect_lens": "history",
+  "why_useful": "What developers with the import in their code need to know: PEP 749 keeps it working in 3.14, deprecates it no sooner than the first release after 3.13's end-of-life, and removes it after at least two more releases."
+ },
+ {
+  "question": "How does from __future__ import annotations relate to deferred evaluation of annotations?",
+  "expect_lens": "path",
+  "why_useful": "Shows the chain from the import (PEP 563) to its replacement (PEP 649), with the passage behind each step."
+ },
+ {
+  "question": "What is the evidence that stringized annotations caused problems?",
+  "expect_lens": "evidence",
+  "why_useful": "Lists what PEP 649 says went wrong for runtime users and wrappers: no local or free variables, eval with the right globals, eval being slow or missing, bug reports left open."
+ },
+ {
+  "question": "Which PEPs conflict with PEP 563?",
+  "expect_lens": "contradictions",
+  "why_useful": "Shows where the texts push back on PEP 563 (PEP 649's challenge) and which of its relations were closed over time (status Accepted, later Superseded)."
+ },
+ {
+  "question": "What about annotations?",
+  "expect_lens": "ask",
+  "why_useful": "Too vague on purpose: the tool should ask which kind of annotations (stringized, deferred, eager, variable, the future import) instead of guessing."
+ }
+]
