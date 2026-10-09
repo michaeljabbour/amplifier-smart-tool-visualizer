@@ -1,0 +1,29 @@
+The files in sources/ are verbatim excerpts of Python Enhancement Proposals (PEPs) from the
+python/peps repository (https://github.com/python/peps). Each PEP states its own copyright
+status in its "Copyright" section. That statement was checked in the exact version excerpted:
+
+Placed in the public domain ("This document has been placed in the public domain."):
+
+  PEP 484  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0484.rst?plain=1#L2487-L2490
+  PEP 526  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0526.rst?plain=1#L685-L688
+  PEP 563 (current)
+           https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0563.rst?plain=1#L681-L684
+  PEP 563 (as accepted, 2017, commit cfa69b6)
+           https://github.com/python/peps/blob/cfa69b62a19c959b70e806591b2c9dbe93fd6e0b/pep-0563.rst?plain=1#L670-L673
+  PEP 563 (2020 revision, commit f1c3a99)
+           https://github.com/python/peps/blob/f1c3a99ad5df574489e877c0456c0c714b507357/pep-0563.rst?plain=1#L668-L671
+  PEP 563 (2021 revision, commit b9b44c4)
+           https://github.com/python/peps/blob/b9b44c4eb7819553f293ff222a476f44c682714c/pep-0563.rst?plain=1#L674-L677
+
+Public domain or CC0-1.0-Universal, whichever is more permissive ("This document is placed in
+the public domain or under the CC0-1.0-Universal license, whichever is more permissive."):
+
+  PEP 585  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0585.rst?plain=1#L367-L371
+  PEP 604  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0604.rst?plain=1#L249-L252
+  PEP 649  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0649.rst?plain=1#L1478-L1482
+  PEP 749  https://github.com/python/peps/blob/aa5a2dfcd413f12be654b5a803be6c48102525f3/peps/pep-0749.rst?plain=1#L1125-L1129
+
+CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+
+The excerpts are unchanged apart from omissions, which are marked "[...]". sources.json gives the
+permalink, date and excerpted sections of each file.

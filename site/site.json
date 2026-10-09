@@ -4,28 +4,28 @@
   "name": "Knowledge",
   "accent": "#2f5f8a",
   "title": "Knowledge | Amplifier Smart Tools",
-  "promise": "One graph your agents remember with, and you can explore.",
-  "description": "Point it at notes, papers, docs, code or agent sessions and get a knowledge graph any agent can query and add to: concepts and typed relations, each with the passage it came from, the agent that added it, a confidence and the dates it held. Then trace how two ideas connect, see what supports or contradicts a claim, find the gaps between topics, and replay how understanding changed.",
+  "promise": "Ask your documents a question. See the answer as a map.",
+  "description": "Point it at papers, specs, policies, notes or code and it builds a knowledge graph: concepts and typed relations, each with the passage it came from, a confidence and the dates it held. Ask in plain words and the view opens on the answer: how two ideas connect, what backs or contradicts a claim, what changed and what replaced it, or what is missing. When a question is unclear, it asks you instead of guessing.",
   "image": "docs/images/trailer-poster.png",
   "video": "docs/images/trailer.mp4",
-  "alt": "A short cut of every demo, all from real material: gaps between topics of Amplifier's docs, a contested principle, a traced path, a year of amplifier-foundation decisions replayed, four agents building the graph live, and the commands an agent runs.",
-  "caption": "A minute of what it does. Every example is real: Amplifier's public docs and git history.",
+  "alt": "A short cut of the demos, all from real public material: Python's typing PEPs replayed through time, a contested claim about emergent abilities with the papers that contradict it, US federal AI policy stepped back to what applied in 2024, the tool asking back when a question is vague, four agents building a graph live, and the commands an agent runs.",
+  "caption": "A minute of what it does, on real public material: Python PEPs, arXiv abstracts and US federal policy.",
   "width": 1440,
   "height": 900,
-  "flow_title": "Read it. Ask it. Find what's missing.",
-  "flow_intro": "Start from material you already have. The graph keeps every claim with its source and its dates, so people and agents can follow a line of reasoning instead of searching for keywords.",
+  "flow_title": "Read it. Ask it. See the answer.",
+  "flow_intro": "Start from material you already have. The graph keeps every claim with its source and its dates, so you can follow a line of reasoning, check a claim, or see what applied on a given day, instead of searching for keywords.",
   "steps": [
     [
       "Read it in.",
-      "knowledge ingest ./notes has a model extract concepts and typed relations, each tied to the chunk it came from. Inside an agent, --method agent hands the agent the chunks and the prompt instead, so no key is billed. --method cooccurrence builds a word network with no model at all."
+      "knowledge ingest ./docs has a model extract concepts and typed relations, each tied to the passage it came from. Inside an agent, --method agent hands the agent the passages instead, so no key is billed. --method cooccurrence builds a word network with no model at all."
     ],
     [
-      "Ask the graph.",
-      "path shows how two ideas connect, step by step. evidence shows what supports and contradicts a claim, with the passages. contradictions finds where sources or agents disagree. context assembles numbered, citable material for any model to answer from."
+      "Ask in plain words.",
+      "knowledge visualize --for \"what replaced M-24-10?\" opens the view that answers it: a path between two ideas, the evidence for a claim, where sources disagree, what changed over time, or the gaps. If the question is unclear, it asks you which you meant, with the command for each answer."
     ],
     [
-      "Find what's missing.",
-      "analyze names the central ideas and the bridges between topics. gaps finds well-developed topics with almost nothing between them, the place the next question usually is, and questions turns each gap into research questions."
+      "Check it, and find what's missing.",
+      "evidence shows each supporting and contradicting relation with its quote. timeline and --as-of show what was believed on any date and what replaced it. gaps finds topics that should be linked but barely are: usually where the next question is."
     ]
   ],
   "detail_title": "Memory that keeps its reasons.",
@@ -43,7 +43,7 @@
       "One self-contained page with no outside requests. Export an Obsidian vault with wikilinks, topic notes, a gaps note and a Canvas map, or GraphML for Gephi, Cytoscape JSON and CSV."
     ]
   ],
-  "prompt": "Build a knowledge graph of ./notes and tell me what's missing. Use the knowledge tool: read knowledge --help, run knowledge ingest ./notes --method agent --graph notes --json, extract the relations from each chunk yourself, load them with knowledge add, then run knowledge analyze and knowledge gaps, and open knowledge visualize --open.",
+  "prompt": "Build a knowledge graph of ./docs and show me what replaced what. Use the knowledge tool: read knowledge --help, run knowledge ingest ./docs --method agent --graph docs --json, extract the relations from each passage yourself, load them with knowledge add, then open knowledge visualize --for \"what changed over time?\" --graph docs --open. If it asks a question back, ask me.",
   "install": "uv tool install \"amplifier-smart-tool-visualizer @ git+https://github.com/michaeljabbour/amplifier-smart-tool-visualizer\"\nknowledge --help",
   "prerequisites": "Python 3.10 or later, no other dependencies. Graphs are single SQLite files in your data folder; views are single HTML files that open offline.",
   "model_note": "ingest (default method), ask, report, questions and reconcile use a model: your host's own (through --complete-cmd or MCP), Anthropic, OpenAI or a local Ollama model. Inside Claude Code, Codex or Amplifier they stop and name the deterministic route instead of billing a key. Everything else needs no model.",
@@ -55,6 +55,60 @@
   ],
   "capability_demos": [
     {
+      "id": "developers",
+      "eyebrow": "For developers",
+      "title": "Python never made string annotations the default. Here is what replaced the plan.",
+      "description": "Ten real Python Enhancement Proposals on type hints, including four versions of PEP 563. Ask \"What replaced PEP 563's plan to make stringized annotations the default?\" and the view opens on that history. The plan moved from Python 4.0 (2017) to 3.10 (2020), was put on hold for PEP 649 (2021), and the PEP now says it \"never became the default behaviour\". PEP 649 and PEP 749's deferred evaluation took its place. from __future__ import annotations keeps working in 3.14, and is deprecated no sooner than the first release after 3.13 reaches its end of life.",
+      "image": "docs/images/developers-poster.png",
+      "video": "docs/images/developers-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The Python typing graph opens on stringized annotations with a note naming the question; Play replays 2014 to 2025 and the replaced plan turns dashed.",
+      "caption": "Screen recording. Public-domain PEP text from python/peps, relations extracted by an agent.",
+      "link": "assets/python-typing.html",
+      "link_text": "Open: what replaced PEP 563's plan?"
+    },
+    {
+      "id": "scientists",
+      "eyebrow": "For researchers",
+      "title": "A claim, and the papers that contradict it.",
+      "description": "Eight arXiv abstracts on scaling laws and emergent abilities (arXiv metadata is CC0). Ask \"What contradicts the claim that emergent abilities appear suddenly and unpredictably?\" and the view opens on that claim. Wei et al. (2022) say such abilities \"cannot be predicted simply by extrapolating\" smaller models. Schaeffer et al. (2023) give evidence that they \"evaporate with different metrics or with better statistics\". Each red link carries its quote. The same graph shows how compute-optimal training advice changed from Kaplan (2020) to Chinchilla (2022), and a 2024 replication that disputes Chinchilla's fit.",
+      "image": "docs/images/scientists-poster.png",
+      "video": "docs/images/scientists-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The scaling-laws graph opens on the claim that emergent abilities are unpredictable, with contradicting relations in red and their quotes in the side panel.",
+      "caption": "Screen recording. Abstracts from arXiv (CC0), relations extracted by an agent.",
+      "link": "assets/scaling-laws.html",
+      "link_text": "Open: what contradicts the emergence claim?"
+    },
+    {
+      "id": "work",
+      "eyebrow": "For policy, legal and operations work",
+      "title": "What applies now, what applied then, and what replaced it.",
+      "description": "Seven US federal documents on agency use of AI, from Executive Order 14110 (2023) to OMB memos M-25-21 and M-25-22 (2025), all public domain. Ask \"What replaced M-24-10?\" and the view opens on the memo with its history: M-25-21 \"rescinds and replaces\" it. Drag the time slider to see what agencies had to do before that, such as M-24-10's December 1, 2024 deadline for minimum practices. Revoked and rescinded rules stay in the history, dashed, with the sentence that ended them.",
+      "image": "docs/images/work-poster.png",
+      "video": "docs/images/work-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "The federal AI policy graph opens on M-24-10; the time slider steps back to 2024 and forward to now as rescinded requirements appear and close.",
+      "caption": "Screen recording. US government works (public domain), relations extracted by an agent.",
+      "link": "assets/federal-ai-policy.html",
+      "link_text": "Open: what replaced M-24-10?"
+    },
+    {
+      "id": "asks",
+      "eyebrow": "It asks, not guesses",
+      "title": "A vague question gets a question back.",
+      "description": "Ask \"What about scaling?\" and the tool does not pick a view for you. It names what it could not tell, offers the concepts you might mean, and gives the exact command for each answer (exit 1, needs_clarification). An agent puts the question to you and runs the one you choose. It never prompts by itself, so scripts and agents never hang.",
+      "image": "docs/images/asks-poster.png",
+      "video": "docs/images/asks-demo.mp4",
+      "width": 1440,
+      "height": 900,
+      "alt": "A terminal: knowledge visualize --for \"What about scaling?\" returns a question and five choices; the chosen command then opens its view.",
+      "caption": "Real output from the scaling-laws graph, replayed as typed."
+    },
+    {
       "id": "gaps",
       "eyebrow": "Find the gaps",
       "title": "Two halves of Amplifier that barely touch.",
@@ -64,51 +118,9 @@
       "width": 1440,
       "height": 900,
       "alt": "The Amplifier docs graph coloured by topic; the top gap card lights up the smart-tool and kernel topics with their bridge candidates.",
-      "caption": "Screen recording. Real public docs (MIT), relations extracted by agents.",
+      "caption": "Screen recording. Microsoft's public Amplifier docs (MIT), relations extracted by agents.",
       "link": "assets/amplifier.html",
       "link_text": "Open the Amplifier graph"
-    },
-    {
-      "id": "evidence",
-      "eyebrow": "Check a claim",
-      "title": "A principle, and the line in the same spec that strains it.",
-      "description": "The spec says a caller should not need to know whether a result came from code or a model. The skeptic agent found the same spec asks tools to say which capabilities use AI, and recorded it as a contradiction, with the quote and the passage. Every relation shows its agent, source and date.",
-      "image": "docs/images/evidence-poster.png",
-      "video": "docs/images/evidence-demo.mp4",
-      "width": 1440,
-      "height": 900,
-      "alt": "The principle 'result provenance transparency' selected, with the contradicting relation in red and the spec passage beneath.",
-      "caption": "Screen recording. Real spec text; the tension was found by an agent.",
-      "link": "assets/amplifier.html#concept=result%20provenance%20transparency",
-      "link_text": "Open this principle"
-    },
-    {
-      "id": "path",
-      "eyebrow": "Trace a line of reasoning",
-      "title": "From a smart tool's model-backed path to the kernel's first rule.",
-      "description": "Select one concept and shift-click another. The path follows typed relations, each with its sentence from the docs: model-backed capability, smart tool, cli, session, kernel, and the kernel's principle, mechanism not policy. It crosses the gap the graph found.",
-      "image": "docs/images/path-poster.png",
-      "video": "docs/images/path-demo.mp4",
-      "width": 1440,
-      "height": 900,
-      "alt": "A highlighted path across the Amplifier graph from model-backed capability to mechanism not policy.",
-      "caption": "Screen recording. Real docs.",
-      "link": "assets/amplifier.html",
-      "link_text": "Try it on the Amplifier graph"
-    },
-    {
-      "id": "time",
-      "eyebrow": "Replay what changed",
-      "title": "Seven months of amplifier-foundation, replayed.",
-      "description": "58 dated decisions from the real commit history, each citing its commit, 20 of them later replaced. Token streaming was turned on by default, paused as temporary the same day, and turned back on the next. Press Play to watch it; replaced decisions stay in the history, dashed.",
-      "image": "docs/images/time-poster.png",
-      "video": "docs/images/time-demo.mp4",
-      "width": 1440,
-      "height": 900,
-      "alt": "The time slider replays amplifier-foundation's history; token streaming's three default states appear with the dates each held.",
-      "caption": "Screen recording. Real git history of microsoft/amplifier-foundation.",
-      "link": "assets/amplifier-history.html",
-      "link_text": "Open the history graph"
     },
     {
       "id": "live",
@@ -164,5 +176,5 @@
       "note": "Add it as a local stdio server. Model-backed tools return a task for the assistant, so the host's model does the thinking."
     }
   ],
-  "install_footnote": "All examples are real: public Microsoft repositories (MIT), extracted by agents through the tool's own agent route. Extraction is a reading of the text; every relation links to its quote."
+  "install_footnote": "All examples are real public material with provenance: Python PEPs (public domain or CC0), arXiv abstracts (CC0), US federal documents (public domain), and Microsoft's Amplifier docs and history (MIT). Relations were extracted by agents through the tool's own agent route; every relation links to its quote."
 }

@@ -1,0 +1,87 @@
+[
+ {
+  "file": "eo-14110.md",
+  "title": "Executive Order 14110: Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence",
+  "uri": "https://www.federalregister.gov/documents/2023/11/01/2023-24283/safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence",
+  "date": "2023-10-30",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Heading; Sec. 1 (Purpose), first two paragraphs; Sec. 10.1(a); Sec. 10.1(b) lead-in and (i)-(vii), (ix); Sec. 10.1(e). Other sections omitted.",
+  "issuer": "The President",
+  "citation": "88 FR 75191 (FR Doc. 2023-24283), published 2023-11-01",
+  "retrieved_from": "https://www.federalregister.gov/documents/full_text/text/2023/11/01/2023-24283.txt",
+  "official_pdf": "https://www.govinfo.gov/content/pkg/FR-2023-11-01/pdf/2023-24283.pdf"
+ },
+ {
+  "file": "omb-m-24-10.md",
+  "title": "OMB Memorandum M-24-10: Advancing Governance, Innovation, and Risk Management for Agency Use of Artificial Intelligence",
+  "uri": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf",
+  "date": "2024-03-28",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Memo header and opening paragraph; 1 (Overview); 3 (lead-in, 3(a)(i)-(iv)); 4 heading and 4(a) (AI Strategies, i-ix); 5 lead-in, 5(a)(i)-(ii), 5(b), 5(c) lead-in; headings of the minimum practices in 5(c)(iv) A-I and 5(c)(v) A-F (bodies omitted); Appendix II (Consolidated Table of Actions). Footnotes omitted.",
+  "issuer": "Office of Management and Budget, Executive Office of the President",
+  "sha256": "89e548f806c3e2c6702ab9996f92344b5c05ec0f26e0d4874ddb402449c044fb"
+ },
+ {
+  "file": "omb-m-24-18.md",
+  "title": "OMB Memorandum M-24-18: Advancing the Responsible Acquisition of Artificial Intelligence in Government",
+  "uri": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2024/10/M-24-18-AI-Acquisition-Memorandum.pdf",
+  "date": "2024-09-24",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Memo header; 1 (Overview), first two paragraphs; 2(c) and 2(d). Footnotes omitted.",
+  "issuer": "Office of Management and Budget, Executive Office of the President",
+  "sha256": "eb9d3587e1556577737b9ce405053b1b18e0b664f73ce65c043898948a147e0a"
+ },
+ {
+  "file": "eo-14148.md",
+  "title": "Executive Order 14148: Initial Rescissions of Harmful Executive Orders and Actions",
+  "uri": "https://www.federalregister.gov/documents/2025/01/28/2025-01901/initial-rescissions-of-harmful-executive-orders-and-actions",
+  "date": "2025-01-20",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Heading; Sec. 2 lead-in and item (ggg) (Executive Order 14110) only; Sec. 3(b); date line. Sec. 1, the other revoked items, and the rest of Secs. 3-4 omitted.",
+  "issuer": "The President",
+  "citation": "90 FR 8237 (FR Doc. 2025-01901), published 2025-01-28",
+  "retrieved_from": "https://www.federalregister.gov/documents/full_text/text/2025/01/28/2025-01901.txt",
+  "official_pdf": "https://www.govinfo.gov/content/pkg/FR-2025-01-28/pdf/2025-01901.pdf"
+ },
+ {
+  "file": "eo-14179.md",
+  "title": "Executive Order 14179: Removing Barriers to American Leadership in Artificial Intelligence",
+  "uri": "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence",
+  "date": "2025-01-23",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Heading; Secs. 1-5 in full. Sec. 6 (General Provisions) omitted.",
+  "issuer": "The President",
+  "citation": "90 FR 8741 (FR Doc. 2025-02172), published 2025-01-31",
+  "retrieved_from": "https://www.federalregister.gov/documents/full_text/text/2025/01/31/2025-02172.txt",
+  "official_pdf": "https://www.govinfo.gov/content/pkg/FR-2025-01-31/pdf/2025-02172.pdf"
+ },
+ {
+  "file": "omb-m-25-21.md",
+  "title": "OMB Memorandum M-25-21: Accelerating Federal Use of AI through Innovation, Governance, and Public Trust",
+  "uri": "https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf",
+  "date": "2025-04-03",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Memo header; Overview; Scope; first paragraph of Guidance on Federal Use of AI; 'Agencies must ensure their use of AI works for the American people'; Appendix 2(a) first paragraph; 3 lead-in, 3(a) lead-in, 3(a)(i) first paragraph, 3(a)(ii) lead-in; 3(b)(i)-(v); 4 lead-in, 4(a) including (i)-(iv); 4(b) lead-in and practice headings i-vii (bodies omitted); 5 'High-Impact AI' definition; Consolidated Table of Actions. Footnotes omitted.",
+  "issuer": "Office of Management and Budget, Executive Office of the President",
+  "sha256": "0aab0aa4eaeac969ed93894d3940c5dc9d0b7377048171b164a439e8b9e49813",
+  "note": "The PDF is a scanned document with a machine-read text layer. Obvious character-recognition errors were corrected to the printed text (for example '0MB' to 'OMB', '11.' to 'ii.' in list labels, 'CAI Os' to 'CAIOs'); the table's column headings were read from the page image."
+ },
+ {
+  "file": "omb-m-25-22.md",
+  "title": "OMB Memorandum M-25-22: Driving Efficient Acquisition of Artificial Intelligence in Government",
+  "uri": "https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf",
+  "date": "2025-04-03",
+  "licence": "Public domain in the United States: a work of the United States Government (17 U.S.C. 105).",
+  "retrieved": "2026-10-09",
+  "sections": "Memo header; 1 (Overview), first paragraph; 2(c); 3 lead-in and 3(b) lead-in. Footnotes omitted.",
+  "issuer": "Office of Management and Budget, Executive Office of the President",
+  "sha256": "e157538371eb9665fabdacff748788fc6afc0575bb3661d15b146f3138084cd8",
+  "note": "Scanned PDF with a machine-read text layer; obvious character-recognition errors corrected as for M-25-21."
+ }
+]

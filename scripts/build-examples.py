@@ -8,6 +8,11 @@
 - amplifier-history: dated decisions from microsoft/amplifier-foundation's commit history, each
   citing its commit, replayed with `relate --supersedes` so replaced decisions stay in the history.
 - this-repo: this repository's own docs as a word network (`--method cooccurrence`).
+- python-typing (developers), scaling-laws (scientists), federal-ai-policy (policy, legal and
+  operations work): public material vendored in examples/<name>/sources with provenance, read with
+  `ingest --method agent`; relations.json was extracted from those chunks by an agent, and
+  timeline.json replays what replaced what. Each view opens on the first question in questions.json,
+  through `visualize --for`, and every question is checked to open the view it should.
 
 Writes graphs to .work/graphs/ and views to site/assets/<example>.html.
 
@@ -71,20 +76,63 @@ def amplifier(write_tasks: bool = False) -> tuple[str, str]:
     return g, bare
 
 
-def amplifier_history() -> str:
-    g = fresh("amplifier-history")
-    path = EX / "amplifier-history" / "journal.json"
+def replay(g: str, path: Path) -> int:
+    """Replay a dated journal with `relate --supersedes`, so replaced entries stay in the history."""
     if not path.exists():
-        return g
+        return 0
     ids: dict[str, str] = {}
-    for step in json.loads(path.read_text()):
+    steps = json.loads(path.read_text())
+    for step in steps:
         r = kg.relate(g, step["from"], step["relation"], step["to"], description=step.get("description", ""),
                       source_type=step.get("from_type"), target_type=step.get("to_type"),
                       agent=step.get("agent", "historian"), valid_from=step["at"],
                       evidence=step.get("evidence", ""), supersedes=ids.get(step.get("supersedes", "")))
         if step.get("id"):
             ids[step["id"]] = r["edge"]["id"]
+    return len(steps)
+
+
+def amplifier_history() -> str:
+    g = fresh("amplifier-history")
+    replay(g, EX / "amplifier-history" / "journal.json")
     return g
+
+
+AUDIENCE = {
+    "python-typing": "Python type annotations, PEP by PEP",
+    "scaling-laws": "LLM scaling laws: claims and counter-claims",
+    "federal-ai-policy": "US federal AI policy: what applies now",
+}
+
+
+def corpus(name: str) -> str:
+    """An audience example: vendored sources, the agent's relations tied to their chunks, and the timeline."""
+    g = fresh(name)
+    base = EX / name
+    for m in json.loads((base / "sources.json").read_text()):
+        kg.ingest(g, (base / "sources" / m["file"]).read_text(), uri=m["uri"], title=m["title"], method="agent",
+                  agent="librarian", at=m["date"])
+    r = kg.add(g, json.loads((base / "relations.json").read_text()))
+    if r["skipped"]:
+        raise SystemExit(f"{name}: {len(r['skipped'])} relations no longer match their chunks: {r['skipped'][:3]}")
+    steps = replay(g, base / "timeline.json")
+    print(f"{name}: {len(r['edges'])} relations, {steps} timeline entries")
+    return g
+
+
+def questions(name: str) -> list[dict]:
+    return json.loads((EX / name / "questions.json").read_text())
+
+
+def check_questions(name: str, graph: str) -> None:
+    """Every question must open the view it was written for, or ask back when it is meant to."""
+    for q in questions(name):
+        try:
+            got = kg.choose_view(graph, q["question"])["lens"]
+        except kg.ToolError as exc:
+            got = "ask" if exc.code == "needs_clarification" else exc.code
+        if got != q["expect_lens"]:
+            raise SystemExit(f"{name}: \"{q['question']}\" opens {got}, expected {q['expect_lens']}")
 
 
 def this_repo() -> str:
@@ -107,6 +155,12 @@ def main() -> None:
         "amplifier-history": (amplifier_history(), "amplifier-foundation, decisions over time"),
         "this-repo": (this_repo(), "This repository's docs, as a word network"),
     }
+    for name, title in AUDIENCE.items():
+        graph = corpus(name)
+        check_questions(name, graph)
+        first = questions(name)[0]["question"]
+        r = kg.visualize(graph, str(OUT / f"{name}.html"), title=f"Knowledge: {title}", question=first)
+        print(f"{name}: opens on {r['lens']} for \"{first}\" -> {r['path']}")
     for name, (graph, title) in built.items():
         try:
             r = kg.visualize(graph, str(OUT / f"{name}.html"), title=f"Knowledge: {title}", max_nodes=600)

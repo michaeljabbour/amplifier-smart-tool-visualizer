@@ -1,0 +1,36 @@
+The files in sources/ are excerpts of United States federal government documents:
+three Executive Orders signed by the President (14110, 14148, 14179) and four memoranda
+issued by the Director of the Office of Management and Budget, Executive Office of the
+President (M-24-10, M-24-18, M-25-21, M-25-22). See sources.json for each file's issuer,
+date and permalink.
+
+Each is a "work of the United States Government" and is not subject to copyright in the
+United States.
+
+    17 U.S.C. 105(a): "Copyright protection under this title is not available for any work
+    of the United States Government, but the United States Government is not precluded from
+    receiving and holding copyrights transferred to it by assignment, bequest, or otherwise."
+    https://www.govinfo.gov/content/pkg/USCODE-2023-title17/html/USCODE-2023-title17-chap1-sec105.htm
+    https://www.law.cornell.edu/uscode/text/17/105
+
+    17 U.S.C. 101: "A "work of the United States Government" is a work prepared by an officer
+    or employee of the United States Government as part of that person's official duties."
+    https://www.govinfo.gov/content/pkg/USCODE-2023-title17/html/USCODE-2023-title17-chap1-sec101.htm
+
+The publishing sites say the same:
+
+    whitehouse.gov (source of M-25-21 and M-25-22): "Pursuant to federal law,
+    government-produced materials appearing on this site are not copyright protected."
+    https://www.whitehouse.gov/copyright/
+
+    bidenwhitehouse.archives.gov (archived White House site, source of M-24-10 and M-24-18):
+    "Pursuant to federal law, government-produced materials appearing on this site are not
+    copyright protected."
+    https://bidenwhitehouse.archives.gov/copyright/
+
+The Executive Orders were taken from the Federal Register (federalregister.gov, published
+by the Office of the Federal Register and the Government Publishing Office); the official
+PDF for each is linked in sources.json.
+
+Statements checked on 2026-10-09. Outside the United States the status of US government
+works can differ.
