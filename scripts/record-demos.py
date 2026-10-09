@@ -261,61 +261,76 @@ def scene_agent(page):
     hold(page, 1500)
 
 
-def opened(page) -> dict:
-    """What the view chose to open on (the plan behind the note in its corner)."""
-    return page.evaluate("JSON.parse(document.getElementById('data').textContent).open")
-
-
-def neighbour(name: str, concept: str, relations: tuple[str, ...]) -> str | None:
-    """A concept linked to `concept` by one of `relations` in that example's graph."""
-    import knowledge as kg
-
-    os.environ.setdefault("KNOWLEDGE_HOME", str(ROOT / ".work" / "home"))
-    shown = kg.show(str(GRAPHS / f"{name}.db"), concept)
-    for e in shown["incoming"] + shown["outgoing"]:
-        if e["relation"] in relations and not e["valid_to"]:
-            return e["other"]
+def first(page, selector):
+    """The first visible element matching selector, or None."""
+    loc = page.locator(selector)
+    for i in range(min(loc.count(), 40)):
+        if loc.nth(i).is_visible():
+            return loc.nth(i)
     return None
 
 
 def scene_developers(page):
-    """Python's typing PEPs: the question opens the history of a plan that was replaced."""
+    """Python's typing PEPs: the question opens a timeline; a replaced plan shows what replaced it."""
     open_view(page, (ASSETS / "python-typing.html").as_uri())
-    hold(page, 5200)
-    click_el(page, page.locator("#play"))
-    hold(page, 9500)
-    other = neighbour("python-typing", opened(page)["concept"], ("planned_default", "replaces", "supersedes", "revises"))
-    if other:
-        node(page, other)
-    hold(page, 5200)
+    hold(page, 5600)
+    bar = first(page, "#vpanel rect.bar.closed")
+    if bar:
+        click_el(page, bar)
+        hold(page, 5600)
+    bar = first(page, "#vpanel rect.bar:not(.closed)")
+    if bar:
+        click_el(page, bar)
+    hold(page, 4200)
 
 
 def scene_scientists(page):
-    """arXiv abstracts: the question opens a claim with the work that contradicts it."""
+    """arXiv abstracts: the question opens an argument -- the claim, and the quotes against and for it."""
     open_view(page, (ASSETS / "scaling-laws.html").as_uri())
-    hold(page, 6500)
-    other = neighbour("scaling-laws", opened(page)["concept"], ("contradicts", "challenges"))
-    if other:
-        node(page, other)
-        hold(page, 5200)
-    page.locator("#detail").evaluate("(el) => el.scrollTo({top: 260, behavior: 'smooth'})")
-    hold(page, 3500)
+    hold(page, 5600)
+    quote = first(page, "#vpanel details.qd > summary")
+    if quote:
+        click_el(page, quote)
+        hold(page, 4800)
+    name = first(page, "#vpanel [data-node]")
+    if name:
+        click_el(page, name)
+    hold(page, 4200)
 
 
 def scene_work(page):
-    """Federal AI policy: the question opens what replaced a memo; step back to see what applied then."""
+    """Federal AI policy: the question opens a timeline of what applies now; replaced requirements stay, hollow."""
     open_view(page, (ASSETS / "federal-ai-policy.html").as_uri())
-    hold(page, 5200)
-    slider = page.locator("#slider")
-    click_el(page, slider)
-    marks = page.evaluate("JSON.parse(document.getElementById('data').textContent).time.marks.length")
-    page.evaluate(f"(() => {{ const s = document.getElementById('slider'); s.value = {max(0, marks // 2)}; "
-                  "s.dispatchEvent(new Event('input')); })()")
+    hold(page, 5600)
+    bar = first(page, "#vpanel rect.bar.closed")
+    if bar:
+        click_el(page, bar)
+        hold(page, 5200)
+    bar = first(page, "#vpanel rect.bar:not(.closed)")
+    if bar:
+        click_el(page, bar)
     hold(page, 4200)
-    for _ in range(max(1, marks - marks // 2)):
-        page.keyboard.press("ArrowRight")
-        page.wait_for_timeout(420)
-    hold(page, 4500)
+
+
+def scene_forms(page):
+    """Six forms of the same graph: the question picks one, the tabs show the rest."""
+    open_view(page, (ASSETS / "python-typing.html").as_uri())
+    hold(page, 2600)
+    for view in ("map", "timeline", "argument", "steps", "matrix", "rhythm"):
+        click_el(page, page.locator(f"#tab-{view}"))
+        hold(page, 3400)
+
+
+def scene_matrix(page):
+    """Gaps as a matrix: topics against topics, links observed against expected, gap cells outlined."""
+    open_view(page, (ASSETS / "amplifier.html").as_uri())
+    hold(page, 1600)
+    click_el(page, page.locator("#tab-matrix"))
+    hold(page, 3600)
+    cell = first(page, "#vpanel td.mc.gap")
+    if cell:
+        click_el(page, cell)
+    hold(page, 5200)
 
 
 def scene_asks(page):
@@ -361,11 +376,12 @@ def scene_asks(page):
     hold(page, 1200)
 
 
-SCENES = {"developers": scene_developers, "scientists": scene_scientists, "work": scene_work, "asks": scene_asks,
+SCENES = {"developers": scene_developers, "scientists": scene_scientists, "work": scene_work, "forms": scene_forms,
+          "matrix": scene_matrix, "asks": scene_asks,
           "gaps": scene_gaps, "evidence": scene_evidence, "path": scene_path, "time": scene_time,
           "words": scene_words, "agent": scene_agent}  # live is recorded by scripts/record-live.py
-TRAILER = [("developers", 2.6, 10), ("scientists", 2.6, 9), ("work", 2.6, 10), ("asks", 0.5, 10), ("live", 6, 12),
-           ("agent", 0.5, 8)]
+TRAILER = [("developers", 2.6, 10), ("scientists", 2.6, 9), ("work", 2.6, 9), ("forms", 2.4, 19), ("asks", 0.5, 9),
+           ("live", 6, 11), ("agent", 0.5, 7)]
 
 
 def record(name: str, tmp: Path) -> Path:
