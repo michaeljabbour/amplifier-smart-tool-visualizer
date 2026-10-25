@@ -11,7 +11,7 @@ dependencies = []
 Repository = "https://github.com/michaeljabbour/amplifier-smart-tool-visualizer"
 
 [project.optional-dependencies]
-pdf = ["pypdf>=4"]
+pdf = ["pypdf>=6.21.2"]
 
 [project.scripts]
 knowledge = "knowledge.cli:main"
