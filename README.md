@@ -1,5 +1,7 @@
 # knowledge
 
+> **Knowledge has moved.** Use the [current Knowledge repository](https://github.com/michaeljabbour/amplifier-smart-tool-knowledge) and [current site and installation guide](https://michaeljabbour.github.io/amplifier-smart-tool-knowledge/) for ongoing work. This repository preserves the original source, history, examples and install targets as a compatibility archive. The instructions below describe that preserved version; existing graphs stay in their configured data folder.
+
 [![CI](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/michaeljabbour/amplifier-smart-tool-visualizer/actions/workflows/ci.yml)
 [![Smart Tools conformance](https://img.shields.io/badge/smart--tools%20conformance-17%2F17-2f5f8a)](https://github.com/microsoft/amplifier-smart-tools/tree/main/conformance)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-2f5f8a)](pyproject.toml)
