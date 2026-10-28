@@ -1,0 +1,234 @@
+{
+  "schema": "knowledge-compatibility/v1",
+  "recorded_at": "2026-10-28T14:14:43.919890+00:00",
+  "legacy_source_commit": "6bf67b59b7bf7a15f1b9877ab724500afae2a399",
+  "canonical_source": "https://github.com/michaeljabbour/amplifier-smart-tool-knowledge",
+  "canonical_site": "https://michaeljabbour.github.io/amplifier-smart-tool-knowledge/",
+  "legacy_landing": "legacy.html",
+  "preserved_live_assets": [
+    {
+      "path": "assets/agent-demo.mp4",
+      "status": 200,
+      "bytes": 512527,
+      "sha256": "3af9098f75df08fda21eff4f5205ec5704695752b0ce078dec742b9ded5334e0",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/agent-poster.png",
+      "status": 200,
+      "bytes": 201064,
+      "sha256": "aa4ca0102cfff0f68f7c977ded9faff2b07d2aa05da0fc3ad7efd9405ce9d0dc",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/amplifier-history.html",
+      "status": 200,
+      "bytes": 152095,
+      "sha256": "2a7918825ed1c761f40bb83ac9d00ce06c680231c3e0b8c8eab11fe732cdd9e3",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/amplifier.html",
+      "status": 200,
+      "bytes": 864823,
+      "sha256": "d0b3fa141bb6ff48029f243ebc52c225b49261ca91af524c5f42385512c130b9",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/asks-demo.mp4",
+      "status": 200,
+      "bytes": 194329,
+      "sha256": "214b34046a5f75b84c73470955a9f5751ec55dc55ddc8dee6ada0d1d8c754103",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/asks-poster.png",
+      "status": 200,
+      "bytes": 85366,
+      "sha256": "c1725669432dba6423db87a3b30cd7d07f156cf84600423911fb115206b19eb6",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/developers-demo.mp4",
+      "status": 200,
+      "bytes": 529027,
+      "sha256": "e98ab7cc245e2fdff82f0ca1d373017bef70755728a6fdfd21fd99f9decc53fb",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/developers-poster.png",
+      "status": 200,
+      "bytes": 256348,
+      "sha256": "f864da47108ebc095ddf74a320d90f2392d77148673b25453ff2319a9660ee7a",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/favicon.svg",
+      "status": 200,
+      "bytes": 335,
+      "sha256": "729d7be6fb831270adf7be325909dcf6dc92d287822edf8dbc6cc8b2a8d8c182",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/federal-ai-policy.html",
+      "status": 200,
+      "bytes": 441809,
+      "sha256": "506d5e619b9bc7fb57ad0b996ea490f1f261644db9c7a9e95b7c1ef197f2d67b",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/forms-demo.mp4",
+      "status": 200,
+      "bytes": 1554014,
+      "sha256": "66b9a573ad29a8331eb9020d3e2cc1294ec2bc28da20cc34c3dcb99b442ef6e7",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/forms-poster.png",
+      "status": 200,
+      "bytes": 347017,
+      "sha256": "adb4dba16b81023c336fcd9346f1536eec9f912eb83e1200c7f12320fa47b830",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/live-demo.mp4",
+      "status": 200,
+      "bytes": 5148028,
+      "sha256": "57e35dd7d0a0db55fb294e2299c88a492c525dd819b78a5550e56dee14b07df3",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/live-poster.png",
+      "status": 200,
+      "bytes": 472292,
+      "sha256": "26f1e46a6f00da9f67b0fbc0391f724b850c6b32ee36dfcc006a375a4cee5c52",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/mark-loop.gif",
+      "status": 200,
+      "bytes": 660876,
+      "sha256": "5d56ab191e9da10c3e1505e5809cc171d5e255747797101a5f71b6ee9121206e",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/mark-loop.mp4",
+      "status": 200,
+      "bytes": 453135,
+      "sha256": "30ffe769b1ed48821a0209b5c6c2f812e1f6a060ca22be44da3d39c936f3641a",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/mark-loop.png",
+      "status": 200,
+      "bytes": 8973,
+      "sha256": "778da2e4475e1bfb64cc8add3ebd599d3892db08b47c568291e8e9a4cfc8f7e0",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/matrix-demo.mp4",
+      "status": 200,
+      "bytes": 572348,
+      "sha256": "f76a722528ef97c7088cd82f49e21a0e14244cc699a57f8c70c7c6e0889034cb",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/matrix-poster.png",
+      "status": 200,
+      "bytes": 245983,
+      "sha256": "8a4efa84c2ca84f73adf238fa67bcf04d6679dbb2fd6968b8e00ef91b72d01f0",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/python-typing.html",
+      "status": 200,
+      "bytes": 353675,
+      "sha256": "1e8c0ab6248a26c04d7f8274e75d276ba7bd347d5fee300d93d837a279e8b10a",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/scaling-laws.html",
+      "status": 200,
+      "bytes": 266261,
+      "sha256": "ffb314616449e5b9c0357eeca66f8edcf334d4a274b50e3f24c3e0c5857b6e3c",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/scientists-demo.mp4",
+      "status": 200,
+      "bytes": 908655,
+      "sha256": "91b394ff880863240765c391003de13fff7500d86ac5ca7bf0cb68a661d5e4e8",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/scientists-poster.png",
+      "status": 200,
+      "bytes": 392642,
+      "sha256": "873fc3675898c3cbfda6da38da042d509309d7e9c4df2656a7c3fe310edba502",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/site.js",
+      "status": 200,
+      "bytes": 3047,
+      "sha256": "ce8d2bf1add562fa6ab2e6b0abab74a49d51f0959863b086de7d30b37e2de122",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/style.css",
+      "status": 200,
+      "bytes": 22688,
+      "sha256": "794600af68c7fc2af0340a5acc13051886441aca4f58870e7d4d110168638d20",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/this-repo.html",
+      "status": 200,
+      "bytes": 891647,
+      "sha256": "6b74a55fc43fa70d4e100ffa3c8253b76d3be5ea3d8acb8a60d89f88e98fcc0b",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/trailer-poster.png",
+      "status": 200,
+      "bytes": 256348,
+      "sha256": "f864da47108ebc095ddf74a320d90f2392d77148673b25453ff2319a9660ee7a",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/trailer.mp4",
+      "status": 200,
+      "bytes": 4379653,
+      "sha256": "4e48a8900aeac729f5ddbac5c32da22ec62463b36bf9742f65f2462b49837dca",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/words-demo.mp4",
+      "status": 200,
+      "bytes": 2020143,
+      "sha256": "1d5adca5fb87168b0310ba904ff76c577d18a3084c3d79fe14b6d007d3f62f49",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/words-poster.png",
+      "status": 200,
+      "bytes": 409060,
+      "sha256": "56385072b2796292d57f291c095dc46da68c6f45e2fa58b53444ff7a4ffb5f23",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/work-demo.mp4",
+      "status": 200,
+      "bytes": 907157,
+      "sha256": "153c51d1e49604c45c4cf19225988ba00271ed70c1c9936aab77292ed2cca5be",
+      "equals_source_build": true
+    },
+    {
+      "path": "assets/work-poster.png",
+      "status": 200,
+      "bytes": 364265,
+      "sha256": "32308a0f15baaf9791924e77ee1dcf3bfa57f6f858a37d277f94ec4b8865a5f8",
+      "equals_source_build": true
+    }
+  ]
+}
